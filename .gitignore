@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Виртуальное окружение
+env/
+venv/
+.venv/
+ENV/
+
+# Django
+*.log
+*.pot
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# Секреты / переменные окружения
+.env
+.env.*
+secret.env
+*.env
+
+*/migrations/__pycache__/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# macOS
+.DS_Store
+
+# Дистрибутивы / сборка
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Логи установки
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Тестирование / покрытие
+.coverage
+.pytest_cache/
+htmlcov/
