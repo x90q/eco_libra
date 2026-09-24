@@ -1,16 +1,17 @@
-<hr>
-<h2> Add a new comment </h2>
-<form action = " {% url 'blog:post_comment' post.id %}" method = "POST">
+<form class = "add_comment_form" action = " {% url 'blog:post_comment' post.id %}" method = "POST">
     <!--- {{ form.as_p }} -->
-    <p>
-        <div class = "left">
-            {{ form.name.as_field_group }}
+        <div class="add_comment_form_item">
+        <label for="{{ form.name.id_for_label }}">name:</label>
+        {{ form.name }}
         </div>
-        <div class = "left">
-            {{ form.email.as_field_group}}
+        <div class="add_comment_form_item">
+        <label for="{{ form.email.id_for_label }}">email:</label>
+        {{ form.email }}
         </div>
-    </p>
-    {{ form.body.as_field_group }}
+        <div class="add_comment_form_body">
+        <label for="{{ form.body.id_for_label }}">comment:</label>
+        {{ form.body }}
+        </div>
     {% csrf_token %}
-    <p><input type = "submit" value = "Add comment"></p>
-</form>
+    <button type="submit" class="add_comment_submit_button">add comment</button>
+    </form>

@@ -1,37 +1,37 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.views.decorators.http import require_POST
-from .models import Post
+from .models import Post, Category
+from django.db.models import F
 from .forms import EmailPostForm, CommentForm
 from django.core.mail import send_mail
 
-def post_list(request):
-    post_list = Post.published.all()
-    ### 5 Posts per page
-    paginator = Paginator(post_list, 5)
-    page_number = request.GET.get('page', 1)
-
-    try:
-        posts = paginator.page(page_number)
-    except PageNotAnInteger:
-        posts = paginator.page(1)
-    except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
-    
-    return render(
-        request,
-        'blog/post/post_list.html',
-        {'posts': posts}
+def category_list(request, category):
+    category = get_object_or_404(
+        Category,
+        slug = category
     )
 
-def post_detail(request, year, month, day, post):
+    categories = Category.objects.all()
+
+    posts = Post.published.filter(category=category)
+
+    return render(
+        request,
+        'blog/category_list.html',
+        {
+            'categories' : categories,
+            'category' : category,
+            'posts' : posts
+        }
+    )
+
+def post_detail(request, category, post):
     post = get_object_or_404(
         Post,
+        category__slug__iexact=category,
         status = Post.Status.PUBLISHED,
         slug = post,
-        publish__year = year,
-        publish__month = month,
-        publish__day = day
     )
 
     # active comments list
@@ -39,10 +39,17 @@ def post_detail(request, year, month, day, post):
     # form for comment
     form = CommentForm()
 
+    Post.objects.filter(pk=post.pk).update(views=F('views') + 1)
+
+    post.refresh_from_db()
+
+    categories = Category.objects.all()
+
     return render(
         request,
         'blog/post/post_detail.html',
         {
+            'categories' : categories,
             'post': post,
             'comments' : comments,
             'form' : form
@@ -57,6 +64,8 @@ def post_share(request, post_id):
     )
 
     sent = False
+
+    categories = Category.objects.all()
 
     if request.method == 'POST':
         form = EmailPostForm(request.POST)
@@ -86,6 +95,7 @@ def post_share(request, post_id):
         request,
         'blog/post/post_share.html',
         {
+            'categories' : categories,
             'post': post,
             'form' : form,
             'sent' : sent,
@@ -99,6 +109,7 @@ def post_comment(request, post_id):
         id = post_id,
         status = Post.Status.PUBLISHED
     )
+    
     comment = None
     # comment was sent
     form = CommentForm(data = request.POST)
@@ -110,12 +121,29 @@ def post_comment(request, post_id):
         # save object to DB
         comment.save()
 
+    categories = Category.objects.all()
+
     return render(
         request,
         'blog/post/post_comment.html',
         {
             'post' : post,
             'form' : form,
-            'comment' : comment
+            'comment' : comment,
+            'categories' : categories
         }
     )
+
+def home(request):
+     posts = Post.published.all()
+
+     categories = Category.objects.all()
+
+     return render(
+         request,
+         'blog/home.html',
+         {
+             'posts' : posts,
+             'categories' : categories
+         }
+     )

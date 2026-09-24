@@ -9,6 +9,19 @@ class PublishedManager(models.Manager):
             super().get_queryset().filter(status = Post.Status.PUBLISHED)
         )
 
+class Category(models.Model):
+    name = models.CharField(max_length=15)
+    slug = models.CharField(max_length=20)
+
+    color = models.TextField(max_length=7, default = "#ffffff")
+
+    class Meta:
+        verbose_name_plural = 'categories'
+    def __str__(self):
+        return self.name
+    def get_absolute_url(self):
+        return reverse('blog:category_list', args=[self.slug])
+    
 class Post(models.Model):
 
     objects = models.Manager()
@@ -29,6 +42,13 @@ class Post(models.Model):
         on_delete=models.CASCADE,
         related_name='blog_posts'
     )
+
+    category = models.ForeignKey(
+            Category,
+            on_delete = models.CASCADE,
+            related_name = "posts"
+        )
+    
     body = models.TextField()
 
     publish = models.DateTimeField(db_default = Now())
@@ -41,8 +61,10 @@ class Post(models.Model):
         default = Status.DRAFT
     )
 
+    views = models.IntegerField(default = 0)
+
     class Meta:
-        ordering = ['publish']
+        ordering = ['-publish']
         indexes = [
             models.Index(fields = ['-publish']),
         ]
@@ -54,9 +76,7 @@ class Post(models.Model):
         return reverse(
             'blog:post_detail',
             args = [
-                self.publish.year,
-                self.publish.month,
-                self.publish.day,
+                self.category.slug,
                 self.slug
             ]
         )

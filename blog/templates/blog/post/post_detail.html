@@ -1,43 +1,53 @@
-{% extends 'blog/base.html' %}
+{% extends "blog/base.html" %}
 
-{% block title %} {{ post.title }} {% endblock %}
+{% block title %}eco_libra - {{ post.title }}{% endblock %}
 
 {% block content %}
-    <h1> {{ post.title }} </h1>
+    <div class="post_detail_page_container">
+        <div class="post_main_container">
+            <a href="{% url 'blog:home' %}" class="back_to_feed_button">← back to feed</a>
 
-    <p> {{ post.body | linebreaks }} </p>
+            <article class="post_detail_view" style="--category_color:{{ post.category.color }};">
+                <div class="post_detail_top">
+                    <span class="category_label">/{{ post.category.name|upper }}</span>
+                    <span class="created_time">{{ post.created|timesince }} ago</span>
+                </div>
 
-    <p class = "date">
-            Published {{ post.publish }} by {{ post.author }}
-    </p>
-    
-    <p>
-        <a href = '{% url 'blog:post_share' post.id %}'>
-            Share this post
-        </a>
-    </p>
-    
-    <hr>
-    
-    {% with comments.count as total_comments %}
-        <h2>
-            {{ total_comments }} comment{{ total_comments | pluralize }}
-        </h2>
-    {% endwith %}
-    {% for comment in comments %}
-        <div class = "comment">
-            <p class = "info">
-                Comment {{ forloop.counter }} by {{ comment.name }}
-                {{ comment.created }}
-            </p>
-            {{ comment.body | linebreaks }}
+                <h1>{{ post.title }}</h1>
+
+                <div class="post_body">{{ post.body|linebreaksbr }}</div>
+
+                <div class="post_foot">
+                    <span>{{ post.author }}</span>
+                    <span>{{ post.comments.count }} comments</span>
+                    {% with post.views as views %}
+                        <span>{{ views }} view{{ views|pluralize }}</span>
+                    {% endwith %}
+                </div>
+            </article>
+
+            <section class="comments">
+                <h2>comments</h2>
+
+                {% for comment in post.comments.all %}
+                    <div class="comment">
+                        <div class="comment_top">
+                            <span class="comment_name">{{ comment.name }}</span>
+                            <span class="created_time">{{ comment.created | timesince }} ago</span>
+                        </div>
+                        <p>{{ comment.body | linebreaksbr }}</p>
+                    </div>
+                {% empty %}
+                    <p class="no_comm">no comments yet</p>
+                {% endfor %}
+            </section>
+            
+            <a class = "share_post_button" href = '{% url 'blog:post_share' post.id %}'>share this post</a>
+
+            <section class = "add_comment">
+                <h2> leave a comment </h2>
+                {% include 'blog/post/includes/comment_form.html' %}
+            </section>
         </div>
-    {% empty %}
-        <p>There are no comments yet</p>
-    {% endfor %}
-    {% include 'blog/post/includes/comment_form.html' %}
-    <h4>
-       <a href="{% url 'blog:post_list' %}">Back</a>
-    </h4>
-
+    </div>
 {% endblock %}

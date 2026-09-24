@@ -1,5 +1,10 @@
 from django.contrib import admin
-from .models import Post, Comment
+from .models import Post, Comment, Category
+
+@admin.register(Category)
+class PostCategory(admin.ModelAdmin):
+    list_display = ['name', 'color']
+    prepopulated_fields = {'slug' : ('name', )}
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
@@ -9,7 +14,7 @@ class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug' : ('title', )}
     raw_id_fields = ['author']
     date_hierarchy = 'publish'
-    ordering = ['status', 'publish']
+    ordering = ['status', 'views', 'publish']
     show_facets = admin.ShowFacets.ALWAYS
 
 @admin.register(Comment)

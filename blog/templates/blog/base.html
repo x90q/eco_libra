@@ -1,31 +1,92 @@
 {% load static %}
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
         <title>{% block title %}{% endblock %}</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{% static "css/blog.css" %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital@1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     </head>
     <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        
+        <div class = "header">
+            <header class="navbar">
+                <div class="navbar-inner">
+                    <div class="website-name">eco<span>_</span>libra</div>
+                    
+                    <nav class="navbar-elements" aria-label="Main navigation">
+                        <div class="navbar-item">
+                            <a class="navbar-button active" href = "{% url 'blog:home'%}">home</a>
+                        </div>
+                        
+                        <div class="navbar-item">
+                            <button class="navbar-button" aria-haspopup="true" aria-expanded="false">categories<span class="arrow">▾</span></button>
+                            <div class="dropdown">
+                                {% for category in categories %}
+                                    <a href="{{ category.get_absolute_url }}" style="--category_color:{{ category.color }};">/{{ category.name | lower }}</a>
+                                {% empty %}
+                                    no categories
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <!-- <div class="navbar-item">
+                            <button class="navbar-button" aria-haspopup="true" aria-expanded="false">top users <span class="arrow">▾</span></button>
+                            <div class="dropdown">
+                                <a href="#">top posts</a>
+                                <a href="#">best comments</a>
+                                <a href="#">top rating <span class="tag">new</span></a>
+                            </div>
+                        </div>
+                    -->
+                    </nav>
+                    
+                    <!-- <div class="searchbar">
+                        <input type="text" placeholder="search up posts, authors, tags…">
+                    </div>
+                -->
+                </div>
+            </header>
+        </div>
+
         <div id = "content">
             {% block content %}
             {% endblock %}
         </div> 
-        <div id = "sidebar">
-            <h2>My blog</h2>
-            <p>This is my blog.</p>
-        </div> 
-        <script src="" async defer></script>
+
+        <script>
+            document.querySelectorAll('.navbar-item').forEach(function(item){
+                var button = item.querySelector('.navbar-button');
+                button.addEventListener('click', function(e){
+                    e.stopPropagation();
+                    var isOpen = item.classList.contains('open');
+                    document.querySelectorAll('.navbar-item.open').forEach(function(o) {
+                        o.classList.remove('open');
+                        var b = o.querySelector('.navbar-button');
+                        if(b) b.setAttribute('aria-expanded','false');
+                    });
+                    if(!isOpen){
+                        item.classList.add('open');
+                        button.setAttribute('aria-expanded','true');
+                    }
+                });
+            });
+            document.addEventListener('click', function(){
+                document.querySelectorAll('.navbar-item.open').forEach(function(o){
+                    o.classList.remove('open');
+                    var b = o.querySelector('.navbar-button');
+                    if(b) b.setAttribute('aria-expanded','false');
+                });
+            });
+            document.addEventListener('keydown', function(e){
+                if(e.key === 'Escape'){
+                    document.querySelectorAll('.navbar-item.open').forEach(function(o){ o.classList.remove('open'); });
+                }
+            });
+    </script>
+
     </body>
 </html>

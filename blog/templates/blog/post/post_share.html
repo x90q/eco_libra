@@ -1,26 +1,41 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}Share a post: {{ post.title }}{% endblock %}
+{% block title %}share a post: {{ post.title }}{% endblock %}
 
 {% block content %}
+    <section class = "send_mail_container">
+        <a href="{{ post.get_absolute_url }}">← back to the post</a>
     {% if sent %}
-        <h1> E-mail successfully sent </h1>
-        <p>
-            "{{ post.title }}" was successfully sent to {{ form.cleaned_data.to }}.
-        </p>
-
-    <h4>
-        <a href="{{ post.get_absolute_url }}">Back</a>
-    </h4>
-    {% else %}
-        <h1> Share "{{ post.title }}" via e-mail </h1>
-        <form method = 'post'>
-            {{ form.as_p }}
-            {% csrf_token %}
-            <input type = "submit" value = "Send e-mail">
-        </form>
-       <div style="clear: both; display: block; padding-top: 15px;">
-        <a href="{{ post.get_absolute_url }}">Back</a>
-       </div>
+        <div class = "successful_mail">
+            <h2> e-mail successfully sent </h2>
+            <p>
+                "{{ post.title }}" was successfully sent to {{ form.cleaned_data.to }}.
+            </p>
+        </div>
+        {% else %}
+        <div class = "share_post">
+            <h2> Share "{{ post.title }}" via e-mail </h2>
+            <form class="share_post_form" method = 'post'>
+                {% csrf_token %}
+                <div class="share_form_item">
+                    <label for="{{ form.name.id_for_label }}">your name:</label>
+                    {{ form.name }}
+                </div>
+                <div class="share_form_item">
+                    <label for="{{ form.email.id_for_label }}">your email:</label>
+                    {{ form.email }}
+                </div>
+                <div class="share_form_item">
+                    <label for="{{ form.to.id_for_label }}">email to:</label>
+                    {{ form.to }}
+                </div>
+                <div class="share_form_body">
+                    <label for="{{ form.comments.id_for_label }}">comments:</label>
+                    {{ form.comments }}
+                </div>
+                <button type="submit" class="share_submit_button">send e-mail</button>
+            </form>
+        </div>
     {% endif %}
-{% endblock %}
+    </section>
+{% endblock %}  
