@@ -14,7 +14,7 @@
         <h2>popular categories</h2>
         <div class="home_categories_rail">
             {% for category in categories %}
-            <a href="{{ category.get_absolute_url }}" style="--category_color: {{ category.color }}">
+            <a href="{% url 'blog:post_list_by_category' category.slug %}" style="--category_color: {{ category.color }}">
                 <span class="category_name">/{{ category.name | lower }}</span>
             </a>
             {% endfor %}

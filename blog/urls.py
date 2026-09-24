@@ -15,7 +15,7 @@ urlpatterns = [
         name = 'post_share',
     ),
     path(
-        'post/<int:post_id>/comment/',
+            'post/<int:post_id>/comment/',
         views.post_comment,
         name = 'post_comment'
     ),
@@ -26,8 +26,13 @@ urlpatterns = [
         name = 'home'
     ),
     path(
-        'category/<slug:category>/',
-        views.category_list,
-        name = 'category_list'
-        )
+        'category/<slug:category_slug>/',
+        views.post_list,
+        name = 'post_list_by_category'
+        ),
+    path(
+        'tag/<slug:tag_slug>/',
+        views.post_list,
+        name = 'post_list_by_tag'
+    )
 ]

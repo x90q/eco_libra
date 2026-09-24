@@ -1,14 +1,14 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}add a comment{% endblock %}
+{% block title %}eco_libra - add a comment{% endblock %}
 
 {% block content %}
     {% if comment %}
     <div class = "successful_comment">
         <a href = '{{ post.get_absolute_url }}'>← back to the post</a>
-        <h2>your comment has beed succesfully published.</h2>
+        <h2>your comment has been successfully published.</h2>
     </div>
     {% else %}
-        {% include 'blog/post/includes/comment_form' %}
+        {% include 'blog/post/includes/comment_form.html' %}
     {% endif %}
 {% endblock %}

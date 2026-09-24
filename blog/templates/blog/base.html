@@ -6,51 +6,48 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
         <title>{% block title %}{% endblock %}</title>
         <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{% static "css/blog.css" %}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital@1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     </head>
     <body>
-        <div class = "header">
-            <header class="navbar">
-                <div class="navbar-inner">
-                    <div class="website-name">eco<span>_</span>libra</div>
+        <header class="navbar">
+            <div class="navbar-inner">
+                <div class="website-name">eco<span>_</span>libra</div>
+                
+                <nav class="navbar-elements" aria-label="Main navigation">
+                    <div class="navbar-item">
+                        <a class="navbar-button active" href = "{% url 'blog:home'%}">home</a>
+                    </div>
                     
-                    <nav class="navbar-elements" aria-label="Main navigation">
-                        <div class="navbar-item">
-                            <a class="navbar-button active" href = "{% url 'blog:home'%}">home</a>
+                    <div class="navbar-item">
+                        <button class="navbar-button" aria-haspopup="true" aria-expanded="false">categories<span class="arrow">▾</span></button>
+                        <div class="dropdown">
+                            {% for category in categories %}
+                                <a href="{% url 'blog:post_list_by_category' category.slug %}" style="--category_color:{{ category.color }};">/{{ category.name | lower }}</a>
+                            {% empty %}
+                                no categories
+                            {% endfor %}
                         </div>
-                        
-                        <div class="navbar-item">
-                            <button class="navbar-button" aria-haspopup="true" aria-expanded="false">categories<span class="arrow">▾</span></button>
-                            <div class="dropdown">
-                                {% for category in categories %}
-                                    <a href="{{ category.get_absolute_url }}" style="--category_color:{{ category.color }};">/{{ category.name | lower }}</a>
-                                {% empty %}
-                                    no categories
-                                {% endfor %}
-                            </div>
+                    </div>
+                    <!-- <div class="navbar-item">
+                        <button class="navbar-button" aria-haspopup="true" aria-expanded="false">top users <span class="arrow">▾</span></button>
+                        <div class="dropdown">
+                            <a href="#">top posts</a>
+                            <a href="#">best comments</a>
+                            <a href="#">top rating <span class="tag">new</span></a>
                         </div>
-                        <!-- <div class="navbar-item">
-                            <button class="navbar-button" aria-haspopup="true" aria-expanded="false">top users <span class="arrow">▾</span></button>
-                            <div class="dropdown">
-                                <a href="#">top posts</a>
-                                <a href="#">best comments</a>
-                                <a href="#">top rating <span class="tag">new</span></a>
-                            </div>
-                        </div>
-                    -->
-                    </nav>
-                    
-                    <!-- <div class="searchbar">
-                        <input type="text" placeholder="search up posts, authors, tags…">
                     </div>
                 -->
+                </nav>
+                
+                <!-- <div class="searchbar">
+                    <input type="text" placeholder="search up posts, authors, tags…">
                 </div>
-            </header>
-        </div>
+            -->
+            </div>
+        </header>
 
         <div id = "content">
             {% block content %}

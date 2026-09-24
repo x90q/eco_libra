@@ -1,10 +1,24 @@
 {% extends "blog/base.html" %}
 
-{% block title %}eco_libra - home{% endblock %}
+{% block title %}
+    {% if category %}
+        eco_libra - /{{ category.name | lower}}
+    {% elif tag %}
+        eco_libra - #{{ tag.name | lower}}
+    {% else %}
+        eco_libra - home
+    {% endif %}
+{% endblock %}
 
 {% block content %}
     <div class="home_posts_container">
         <div class="home_posts">
+            {% if category %}
+            <span class="top_category_label" style="--category_color:{{ category.color }};">/{{ category.name | upper }}</span>
+            {% endif %}
+            {% if tag %}
+            <span class="top_tag_label">#{{ tag.name | upper }}</span>
+            {% endif %}
             {% for post in posts %}
             <a href = "{{ post.get_absolute_url }}">
                 <article class="post" style="--category_color:{{ post.category.color }};">
@@ -26,6 +40,7 @@
                 </article>
             </a>
             {% endfor %}
+            {% include 'pagination.html' with page=posts %}
         </div>
     </div>
 {% endblock %}
