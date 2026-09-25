@@ -1,10 +1,18 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.views.decorators.http import require_POST
 from .models import Post, Category
 from taggit.models import Tag
 from django.db.models import F
-from .forms import EmailPostForm, CommentForm
+from .forms import EmailPostForm, CommentForm, SearchForm
+
+from django.contrib.postgres.search import (
+    TrigramSimilarity,
+    SearchVector,
+    SearchQuery,
+    SearchRank
+)
+
 from django.core.mail import send_mail
 
 from django.db.models import Count
@@ -26,12 +34,15 @@ def post_list(request, category_slug = None, tag_slug = None):
         )
         post_list = post_list.filter(category = category)
 
-    if tag_slug:
+    elif tag_slug:
         tag = get_object_or_404(
             Tag,
             slug = tag_slug
         )
         post_list = post_list.filter(tags__in = [tag])
+
+    else:
+        post_list = Post.published.order_by('-publish')
 
     paginator = Paginator(post_list, 5)
     page_number = request.GET.get('page', 1)
@@ -175,3 +186,48 @@ def home(request):
              'posts' : posts,
          }
      )
+
+def post_search(request):
+    form = SearchForm()
+    query = None
+    results = []
+
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+
+            search_vector = SearchVector('title', weight='A') + SearchVector('body', weight='B')
+            search_query = SearchQuery(query)
+
+            result_list = Post.published.annotate(
+            rank=SearchRank(search_vector, search_query)
+            ).filter(rank__gte=0.1).order_by('-rank')
+
+            if not result_list.exists():
+                result_list = Post.published.annotate(
+                    similarity=(
+                    TrigramSimilarity('title', query) + 
+                    TrigramSimilarity('body', query)
+                    )
+                ).filter(similarity__gt=0.05).order_by('-similarity')
+            
+            paginator = Paginator(result_list, 5)
+            page_number = request.GET.get('page', 1)
+            try:
+                results = paginator.page(page_number)
+            except EmptyPage:
+                results = paginator.page(paginator.num_pages)
+            except PageNotAnInteger:
+                results = paginator.page(1)               
+            return render(
+                request,
+                'blog/post/search.html',
+                {
+                    'form' : form,
+                    'query' : query,
+                    'results' : results
+                }
+            )
+    else:
+        return redirect('blog:home')

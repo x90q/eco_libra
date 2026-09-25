@@ -1,0 +1,12 @@
+<section class = "categories_list">
+        <h2> categories: </h2>
+        <div class = "categories_list_container">
+        {% for category in categories %}
+        <a href = "{% url 'blog:post_list_by_category' category.slug %}" style="--category_color:{{ category.color }};">
+            <span class = "categories_list_item">
+                <span class = "cat_symbol">/</span>{{ category.name | lower }}
+            </span>
+        </a>
+        {% endfor %}
+        </div>
+</section>

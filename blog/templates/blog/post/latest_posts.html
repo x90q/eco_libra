@@ -1,0 +1,21 @@
+{% for post in latest_posts %}
+<a href = "{{ post.get_absolute_url }}">
+    <article class="post" style="--category_color:{{ post.category.color }};">
+        <div class="post_top">
+            <span class="category_label">/{{ post.category.name | upper }}</span>
+            <span class="created_time">{{ post.created | timesince }} ago</span>
+        </div>
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.body | truncatechars:250 }}</p>
+        <div class="post_foot">
+            <span>{{ post.author }}</span>
+            {% with post.comments.count as comment_count %}
+            <span>{{ comment_count }} comment{{ comment_count|pluralize }}</span>
+            {% endwith %}
+            {% with post.views as views %}
+            <span>{{ views }} view{{ views | pluralize }}</span>
+            {% endwith %}
+        </div>
+    </article>
+</a>
+{% endfor %}

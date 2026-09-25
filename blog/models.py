@@ -20,8 +20,6 @@ class Category(models.Model):
         verbose_name_plural = 'categories'
     def __str__(self):
         return self.name
-    def get_absolute_url(self):
-        return reverse('blog:category_list', args=[self.slug])
     
 class Post(models.Model):
 

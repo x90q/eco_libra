@@ -42,10 +42,11 @@
                 -->
                 </nav>
                 
-                <!-- <div class="searchbar">
-                    <input type="text" placeholder="search up posts, authors, tags…">
-                </div>
-            -->
+                <form class = "navbar_search_form" action = "{% url 'blog:post_search' %}" method = "get">
+                    <div class="searchbar">
+                        <input type="text" name = "query" placeholder="search up posts, authors, tags…" value = "{{ query | default:'' }}" autocomplete = "off" required>
+                    </div>
+                </form>
             </div>
         </header>
 

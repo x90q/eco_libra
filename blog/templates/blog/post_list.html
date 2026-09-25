@@ -11,14 +11,15 @@
 {% endblock %}
 
 {% block content %}
+    <div class = "post_list_labels">
+         {% if category %}
+            <span class="top_category_label" style="--category_color:{{ category.color }};">/{{ category.name | upper }}</span>
+        {% elif tag %}
+            <span class="top_tag_label">#{{ tag.name | upper }}</span>
+        {% endif %}
+    </div>
     <div class="home_posts_container">
         <div class="home_posts">
-            {% if category %}
-            <span class="top_category_label" style="--category_color:{{ category.color }};">/{{ category.name | upper }}</span>
-            {% endif %}
-            {% if tag %}
-            <span class="top_tag_label">#{{ tag.name | upper }}</span>
-            {% endif %}
             {% for post in posts %}
             <a href = "{{ post.get_absolute_url }}">
                 <article class="post" style="--category_color:{{ post.category.color }};">
@@ -42,5 +43,6 @@
             {% endfor %}
             {% include 'pagination.html' with page=posts %}
         </div>
+        {% include 'blog/post/includes/categories_list.html' %}
     </div>
 {% endblock %}

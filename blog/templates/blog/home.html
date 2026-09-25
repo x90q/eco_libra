@@ -1,5 +1,7 @@
 {% extends "blog/base.html" %}
 
+{% load blog_tags %}
+
 {% block title %}eco_libra - home{% endblock %}
 
 {% block content %}
@@ -13,7 +15,8 @@
     <section class="home_popular_categories">
         <h2>popular categories</h2>
         <div class="home_categories_rail">
-            {% for category in categories %}
+            {% get_most_popular_categories 10 as most_popular_categories %}
+            {% for category in most_popular_categories %}
             <a href="{% url 'blog:post_list_by_category' category.slug %}" style="--category_color: {{ category.color }}">
                 <span class="category_name">/{{ category.name | lower }}</span>
             </a>
@@ -22,32 +25,16 @@
     </section>
     
     <div class = "home_posts_newest_title">
-        <h2>newest posts</h2>
+        <h2>latest posts</h2>
     </div>
 
     <div class="home_posts_container">
         <div class="home_posts">
-            {% for post in posts %}
-            <a href = "{{ post.get_absolute_url }}">
-                <article class="post" style="--category_color:{{ post.category.color }};">
-                    <div class="post_top">
-                        <span class="category_label">/{{ post.category.name | upper }}</span>
-                        <span class="created_time">{{ post.created | timesince }} ago</span>
-                    </div>
-                    <h3>{{ post.title }}</h3>
-                    <p>{{ post.body | truncatechars:250 }}</p>
-                    <div class="post_foot">
-                        <span>{{ post.author }}</span>
-                        {% with post.comments.count as comment_count %}
-                            <span>{{ comment_count }} comment{{ comment_count|pluralize }}</span>
-                        {% endwith %}
-                        {% with post.views as views %}
-                            <span>{{ views }} view{{ views | pluralize }}</span>
-                        {% endwith %}
-                    </div>
-                </article>
-            </a>
-            {% endfor %}
+            {% show_latest_posts 5 %}
+            <div class = 'more_latest_button'>
+                <a href="{% url 'blog:post_list_all' %}">more latest posts →</a>
+            </div>
         </div>
+    {% include 'blog/post/includes/categories_list.html' %}
     </div>
 {% endblock %}
