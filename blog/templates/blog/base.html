@@ -28,7 +28,7 @@
                             {% for category in categories %}
                                 <a href="{% url 'blog:post_list_by_category' category.slug %}" style="--category_color:{{ category.color }};">/{{ category.name | lower }}</a>
                             {% empty %}
-                                no categories
+                                <span class = "empty">no categories</span>
                             {% endfor %}
                         </div>
                     </div>

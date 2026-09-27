@@ -1,0 +1,109 @@
+# 🌿 eco_libra — Forum & Social Platform built on Django
+
+> **Developed by [@x90q](https://github.com/x90q)**
+
+### 📌 About The Project
+
+**eco_libra** is an ongoing personal project aimed at building a full-featured forum and social platform from the ground up.
+
+At this moment I am developing the entire application independently - writing the backend logic in Python/Django and building the frontend layout with HTML/CSS from scratch. This repository tracks the real-time development process step-by-step as the platform evolves from a clean slate into a complete social forum.
+
+It serves as a transparent build log showcasing a hands-on, full-stack approach to web development and the step-by-step evolution of both myself and the project.
+
+---
+
+### 🛠 Tech Stack & Dependencies
+
+* **Core Framework & Language:**
+  * **Python 3.11+** & **Django 6.1+** - Main full-stack framework powering backend logic, ORM, views, and DTL templates.
+
+* **Database & Search:**
+  * **PostgreSQL** - Required relational database powering full-text search and trigram similarity support.
+  * `psycopg` (v3) & `psycopg2-binary` - High-performance database adapters connecting Django to PostgreSQL.
+
+* **Content & Features:**
+  * `django-taggit` - Flexible tagging framework for organizing forum posts, categories, and tag-based recommendations.
+  * `django.contrib.sitemaps` - Native Django sitemap framework for automated XML sitemap generation and SEO.
+
+* **Configuration & Security:**
+  * `python-decouple` - Environment variable manager for secure decoupling of credentials (`SECRET_KEY`, DB configs, SMTP) from codebase.
+
+* **Frontend:**
+  * **HTML5 & CSS3** - Custom, hand-crafted responsive templates and styles built from scratch.
+
+* **Tooling & Environment:**
+  * **Git & GitHub** - Version control and project evolution tracking.
+  * **Virtualenv (`venv`)** & `pip` - Isolated environment management and dependency tracking (`requirements.txt`).
+
+---
+
+### Key Features
+
+* **Post Sharing via Email:** Integrated SMTP configuration allowing users to share posts/content via email directly from the platform.
+* **Comment System:** Interactive, nested commenting functionality for discussion threads.
+* **Advanced PostgreSQL Search:** Powered by PostgreSQL full-text search with **trigram similarity** for accurate and fuzzy content discovery.
+* **Categorization & Tagging:** Organized content hierarchy using categories alongside `django-taggit` for tagging.
+* **Similar Content Recommendations:** Dynamic post recommendations based on shared tags and overlapping topics.
+* **Post Analytics:** Built-in view count tracking system for monitoring post popularity.
+* **SEO Optimization:** Dynamic XML sitemap generation built with `django.contrib.sitemaps`.
+* **Custom UI/UX:** Clean, user-friendly frontend interface crafted from scratch with custom HTML/CSS.
+
+### Planned Features & Roadmap
+
+- [ ] **Authentication & Profiles:** User registration, login, logout, and customizable user profile pages.
+- [ ] **User-Generated Content:** Interactive post creation, editing, and content management for registered users.
+- [ ] **OAuth Integration:** Social authentication support (Sign in with Google).
+- [ ] **Avatars & Media:** User avatar uploads and media handling.
+- [ ] **Gamification & Reputation:** User rating system.
+- [ ] **UI/UX Enhancement:** Modernizing layout responsiveness, polishing micro-interactions, and visual theme options.
+- [ ] **Security Hardening:** Implementing protection against common web threats (CSRF, XSS, rate limiting) and hardening Django settings.
+
+---
+
+### ⚙️ Local Setup Instructions
+
+1. **Prerequisites:**
+   * **Python 3.11+** installed on your system.
+   * **PostgreSQL 13+** *(Required: The project strictly relies on native PostgreSQL Full-Text Search and Trigram Similarity extensions)*.
+
+2. **Clone the repository:**
+   ```bash
+   git clone https://github.com/x90q/eco_libra.git
+   cd eco_libra
+   ```
+3. **Set up virtual environment:**
+   ```bash
+   python -m venv venv
+   # On Windows:
+   venv\Scripts\activate
+   # On macOS/Linux:
+   source venv/bin/activate
+   ```
+4. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+5. **Database Setup (PostgreSQL):**
+   
+   Create a local PostgreSQL database and enable the *pg_trgm* extension required for fuzzy/trigram search:
+   ```bash
+   CREATE DATABASE eco_libra_db;
+   ```
+6. **Configure environment variables:**
+
+   Copy .env_example to .env and add your DB data:
+   ```bash
+   cp .env_example .env
+   ```
+7. **Apply migrations & create superuser:**
+   ```bash
+   python manage.py migrate
+   python manage.py createsuperuser
+   ```
+8. **Run development server:**
+   ```bash
+   python manage.py runserver
+   ```
+9. **Access the Application & Admin Panel:**
+   * **Main Blog/Platform:** *Open [http://127.0.0.1:8000/blog/](http://127.0.0.1:8000/blog/) in your browser to view the forum interface.*
+   * **Admin Panel:** *Go to [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/), log in using the superuser credentials created in Step 7, and add initial Categories and Posts to populate the site with test content.*
