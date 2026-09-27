@@ -1,6 +1,12 @@
 {% extends 'blog/base.html' %}
 
+{% load static %}
+
 {% block title %}eco_libra - add a comment{% endblock %}
+
+{% block extra_js %}
+<link rel="stylesheet" href="{% static "css/post_comment.css" %}">
+{% endblock %}
 
 {% block content %}
     {% if comment %}
@@ -8,7 +14,5 @@
         <a href = '{{ post.get_absolute_url }}'>← back to the post</a>
         <h2>your comment has been successfully published.</h2>
     </div>
-    {% else %}
-        {% include 'blog/post/includes/comment_form.html' %}
     {% endif %}
 {% endblock %}

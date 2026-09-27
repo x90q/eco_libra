@@ -6,7 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
         <title>{% block title %}{% endblock %}</title>
         <meta name="description" content="">
-        <link rel="stylesheet" href="{% static "css/blog.css" %}">
+        <link rel="stylesheet" href="{% static "css/base.css" %}">
+        {% block extra_js %}{% endblock %}
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital@1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">

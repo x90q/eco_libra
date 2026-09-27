@@ -1,0 +1,119 @@
+section.send_mail_container {
+    max-width: 1120px;
+    margin: auto;
+    margin-top: 24px;
+    margin-bottom: -26px;
+    padding: 8px clamp(16px, 4vw, 32px) 6px;
+}
+
+.send_mail_container a {
+    display: inline-block;
+    font-size: 13.5px;
+    color: #8c8580;
+    margin-bottom: 16px;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.send_mail_container a:hover {
+    color: #f2ede6;
+}
+
+.successful_mail p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #acacac;
+    margin-bottom: 16px;
+}
+
+.share_post h2,
+.successful_mail h2 {
+    margin: 0 0 16px;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.35;
+    color: #f2ede6;
+}
+
+.share_form {
+    max-width: 580px;
+    background: #121010;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 11px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.share_form_item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.share_form_body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.share_form_item label,
+.share_form_body label {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #f2ede6;
+    min-width: 90px;
+}
+
+.share_form_item input[type="text"],
+.share_form_item input[type="email"],
+.share_form_body textarea {
+    width: 100%;
+    background: #0a0908;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    color: #f2ede6;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    padding: 9px 12px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.share_form_body textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.share_form_item input[type="text"]:focus,
+.share_form_item input[type="email"]:focus,
+.share_form_body textarea:focus {
+    border-color: rgba(230, 57, 74, 0.5);
+    box-shadow: 0 0 0 2px rgba(230, 57, 74, 0.15);
+}
+
+.share_submit_button {
+    align-self: flex-start;
+    background: #e6394a;
+    color: #f2ede6;
+    border: none;
+    border-radius: 7px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    padding: 10px 20px;
+    margin-top: 4px;
+    cursor: pointer;
+    transition: background 0.18s ease, transform 0.15s ease;
+}
+
+.share_submit_button:hover {
+    background: #d62839;
+    transform: translateY(-1px);
+}
+
+.share_submit_button:active {
+    transform: translateY(0);
+}

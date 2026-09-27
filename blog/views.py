@@ -165,7 +165,6 @@ def post_comment(request, post_id):
         # save object to DB
         comment.save()
 
-
     return render(
         request,
         'blog/post/post_comment.html',

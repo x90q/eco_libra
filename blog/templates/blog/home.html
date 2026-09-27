@@ -1,8 +1,15 @@
 {% extends "blog/base.html" %}
 
 {% load blog_tags %}
+{% load static %}
 
 {% block title %}eco_libra - home{% endblock %}
+
+{% block extra_js %}
+<link rel="stylesheet" href="{% static "css/home.css" %}">
+<link rel="stylesheet" href="{% static "css/categories_list.css" %}">
+<link rel="stylesheet" href="{% static "css/latest_posts.css" %}">
+{% endblock %}
 
 {% block content %}
 

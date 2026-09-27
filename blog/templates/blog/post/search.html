@@ -1,6 +1,14 @@
 {% extends 'blog/base.html' %}
 
+{% load static %}
+
 {% block title %}eco_libra - search results{% endblock%}
+
+{% block extra_js %}
+<link rel="stylesheet" href="{% static "css/search.css" %}">
+<link rel="stylesheet" href="{% static "css/categories_list.css" %}">
+<link rel="stylesheet" href="{% static "css/pagination.css" %}">
+{% endblock %}
 
 {% block content %}
 
@@ -9,8 +17,8 @@
             <a href="{% url 'blog:home' %}">← back to home</a>
             <h2> posts containing "{{ query | lower }}":</h2>
         </div>
-        <div class="home_posts_container">
-            <div class="home_posts">
+        <div class="search_posts_container">
+            <div class="search_posts">
                 {% for post in results %}
                     <a href = "{{ post.get_absolute_url }}">
                         <article class="post" style="--category_color:{{ post.category.color }};">

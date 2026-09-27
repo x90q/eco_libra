@@ -1,0 +1,31 @@
+.pagination {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    font-size: 13.5px;
+    color: #8c8580;
+    margin: 24px 0;
+}
+
+.pagination-left {
+    text-align: left;
+}
+
+.pagination-center {
+    text-align: center;
+    white-space: nowrap;
+}
+
+.pagination-right {
+    text-align: right;
+}
+
+.pagination a {
+    color: #8c8580;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.pagination a:hover {
+    color: #f2ede6;
+}

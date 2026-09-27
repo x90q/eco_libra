@@ -1,6 +1,14 @@
 {% extends "blog/base.html" %}
 
+{% load static %}
+
 {% block title %}eco_libra - {{ post.title }}{% endblock %}
+
+{% block extra_js %}
+<link rel="stylesheet" href="{% static "css/post_detail.css" %}">
+<link rel="stylesheet" href="{% static "css/comment_form.css" %}">
+<link rel="stylesheet" href="{% static "css/categories_list.css" %}">
+{% endblock %}
 
 {% block content %}
     <div class="post_detail_page_container">

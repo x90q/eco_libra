@@ -1,13 +1,19 @@
 {% extends 'blog/base.html' %}
 
+{% load static %}
+
 {% block title %}eco_libra - share a post: {{ post.title }}{% endblock %}
+
+{% block extra_js %}
+<link rel="stylesheet" href="{% static "css/post_share.css" %}">
+{% endblock %}
 
 {% block content %}
     <section class = "send_mail_container">
         <a href="{{ post.get_absolute_url }}">← back to the post</a>
     {% if sent %}
         <div class = "successful_mail">
-            <h2> e-mail successfully sent </h2>
+            <h2> e-mail was successfully sent. </h2>
             <p>
                 "{{ post.title }}" was successfully sent to {{ form.cleaned_data.to }}.
             </p>
@@ -15,7 +21,7 @@
         {% else %}
         <div class = "share_post">
             <h2> Share "{{ post.title }}" via e-mail </h2>
-            <form class="share_post_form" method = 'post'>
+            <form class="share_form" method = 'post'>
                 {% csrf_token %}
                 <div class="share_form_item">
                     <label for="{{ form.name.id_for_label }}">your name:</label>

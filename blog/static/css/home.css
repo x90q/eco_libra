@@ -1,0 +1,188 @@
+@media (max-width: 820px) {
+
+    .home_posts_container,
+    .post_detail_page_container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .home_page_hero_title,
+    .home_page_hero h1,
+    .home_page_hero p {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+}
+
+
+section.home_page_hero {
+    position: relative;
+    overflow: hidden;
+    padding: 78px clamp(20px, 6vw, 64px) 88px;
+    text-align: center;
+    isolation: isolate;
+
+    background-image:
+        linear-gradient(180deg, rgba(10, 9, 8, 0.65) 0%, rgba(10, 9, 8, 0.85) 100%),
+        url('../home/bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #0a0908;
+}
+
+.home_page_hero_title {
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #f2ede6;
+    margin: 0 0 18px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease-out 0.1s forwards;
+}
+
+.home_page_hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2.4rem, 6vw, 4.4rem);
+    line-height: 1.05;
+    margin: 0 0 20px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease-out 0.22s forwards;
+}
+
+.home_page_hero p {
+    max-width: 480px;
+    margin: 0 auto;
+    color: #f2ede6;
+    font-size: 15.5px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 0.7s ease-out 0.36s forwards;
+}
+
+/* categories rail */
+
+section.home_popular_categories {
+    max-width: 1120px;
+    margin: 20px auto;
+    padding: 8px clamp(16px, 4vw, 32px) 6px;
+}
+
+.home_popular_categories h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    color: #8c8580;
+    margin: 0 0 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.home_categories_rail {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin: -40px;
+    padding: 40px;
+}
+
+.home_categories_rail::-webkit-scrollbar {
+    display: none;
+}
+
+.home_categories_rail a {
+    flex: 0 0 auto;
+    min-width: 118px;
+    height: 70px;
+    border-radius: 9px;
+    background: #121010;
+    border: 1px solid color-mix(in srgb, var(--category_color) 45%, transparent);
+    text-decoration: none;
+    display: flex;
+
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    flex-direction: column;
+    padding: 9px 12px 10px;
+    transition: transform 0.18s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.home_categories_rail a span.category_name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    color: #f2ede6;
+    text-align: left;
+}
+
+.home_categories_rail a:hover {
+    transform: translateY(-3px);
+    border-color: var(--category_color);
+    box-shadow: 0 0 24px color-mix(in srgb, var(--category_color) 35%, transparent);
+}
+
+/* posts */
+
+@media (max-width: 820px) {
+    .home_posts_container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.home_posts_container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 30px clamp(16px, 4vw, 32px) 90px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 28px;
+    align-items: start;
+}
+
+
+.home_posts_newest_title {
+    max-width: 1120px;
+    margin: auto;
+    margin-bottom: -35px;
+    padding: 8px clamp(16px, 4vw, 32px) 6px;
+}
+
+.home_posts_newest_title h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    color: #8c8580;
+    margin: 0 0 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.home_posts {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.more_latest_button {
+    text-align: right;
+    font-size: 13.5px;
+    color: #8c8580;
+    margin-left: auto;
+    padding-top: 4px;
+}
+
+.more_latest_button a {
+    color: #8c8580;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.more_latest_button a:hover {
+    color: #f2ede6;
+}

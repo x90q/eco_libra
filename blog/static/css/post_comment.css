@@ -1,0 +1,22 @@
+.successful_comment {
+    max-width: 1120px;
+    margin: auto;
+    margin-top: 24px;
+    margin-bottom: -26px;
+    padding: 8px clamp(16px, 4vw, 32px) 6px;
+}
+
+.successful_comment a {
+    display: inline-block;
+    font-size: 13.5px;
+    color: #8c8580;
+    margin-bottom: 6px;
+    transition: color 0.15s ease;
+}
+
+.successful_comment h2 {
+    margin: 0 0 6px;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.35;
+}

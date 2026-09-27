@@ -1,13 +1,21 @@
 {% extends "blog/base.html" %}
 
+{% load static %}
+
 {% block title %}
     {% if category %}
         eco_libra - /{{ category.name | lower}}
     {% elif tag %}
         eco_libra - #{{ tag.name | lower}}
     {% else %}
-        eco_libra - home
+        eco_libra - latest posts
     {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<link rel="stylesheet" href="{% static "css/post_list.css" %}">
+<link rel="stylesheet" href="{% static "css/categories_list.css" %}">
+<link rel="stylesheet" href="{% static "css/pagination.css" %}">
 {% endblock %}
 
 {% block content %}
@@ -18,8 +26,8 @@
             <span class="top_tag_label">#{{ tag.name | upper }}</span>
         {% endif %}
     </div>
-    <div class="home_posts_container">
-        <div class="home_posts">
+    <div class="post_list_container">
+        <div class="post_list_posts">
             {% for post in posts %}
             <a href = "{{ post.get_absolute_url }}">
                 <article class="post" style="--category_color:{{ post.category.color }};">
