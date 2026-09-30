@@ -11,6 +11,17 @@ At this moment I am developing the entire application independently - writing th
 It serves as a transparent build log showcasing a hands-on, full-stack approach to web development and the step-by-step evolution of both myself and the project.
 
 ---
+### Preview
+<p align = 'center'>
+<img width="1427" height="723" alt="Снимок экрана 2026-09-30 в 21 07 59" src="https://github.com/user-attachments/assets/6efd8492-8680-46ad-817e-ab26c66151f9" />
+
+<img width="1423" height="727" alt="Снимок экрана 2026-09-30 в 20 54 16" src="https://github.com/user-attachments/assets/4386d425-95b2-4a37-b08f-1587404e89b2" />
+
+<img width="1427" height="723" alt="Снимок экрана 2026-09-30 в 20 54 53" src="https://github.com/user-attachments/assets/fde2c8cb-4e1f-4e56-afe4-60f5d08d1627" />
+
+</p>
+
+---
 
 ### 🛠 Tech Stack & Dependencies
 
