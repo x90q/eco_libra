@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %}
+
+{% load static %}
+
+{% block title %}eco_libra - register{% endblock %}
+
+{% block extra_js %}
+<link rel="stylesheet" href="{% static "account/css/register.css" %}">
+{% endblock %}
+
+{% block content %}
+<div class = 'register_done_container'>
+    <h1>welcome {{ new_user.username }}!</h1>
+    <p>your account has been successfully created.</p>
+    <p>now you can <a href="{% url "account:login" %}">sign in</a>.</p>
+</div>
+{% endblock %}

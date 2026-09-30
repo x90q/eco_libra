@@ -1,0 +1,74 @@
+{% extends "blog/base.html" %}
+
+{% load static %}
+
+{% block title %}eco_libra - register{% endblock %}
+
+{% block extra_js %}
+<link rel="stylesheet" href="{% static "account/css/register.css" %}">
+{% endblock %}
+
+{% block content %}
+
+<div class = 'register_container'>
+    <div class = 'register_head'>
+        <h1>join eco_libra</h1>
+    </div>
+    <form action="{% url 'account:register' %}" method="post" class="register_form">
+        {% csrf_token %}
+        <div class = 'register_form_item'>
+            <label for = '{{ user_form.username.id_for_label }}'>username:</label>
+            {{ user_form.username }}
+            {% if user_form.username.errors %}
+                <div class="field_errors">
+                    {{ user_form.username.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="register_form_item">
+            <label for="{{ user_form.email.id_for_label }}">email:</label>
+            {{ user_form.email }}
+            {% if user_form.email.errors %}
+                <div class="field_errors">
+                    {{ user_form.email.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="register_form_item">
+            <label for="{{ user_form.password.id_for_label }}">password:</label>
+            {{ user_form.password }}
+            {% if user_form.password.errors %}
+                <div class="field_errors">
+                    {{ user_form.password.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="register_form_item">
+            <label for="{{ user_form.password2.id_for_label }}">repeat password:</label>
+            {{ user_form.password2 }}
+            {% if user_form.password2.errors %}
+                <div class="field_errors">
+                    {{ user_form.password2.errors }}
+                </div>
+            {% endif %}
+        </div>
+        
+        <input type = 'hidden' name = 'next' value = '{{ next }}' />
+
+        <input type="submit" value="create account" class = 'register_submit_button' />
+
+    </form>
+    {% if user_form.non_field_errors %}
+    <span class = 'errors'>
+        <p>your passwords didn't match.</p>
+        <p>please try again.</p>
+    </span>
+    {% endif %}
+    <span class = 'back_to_login_button'>
+        <a href = '{% url 'account:login' %}'>already have an account?</a>
+    </span>
+</div>
+{% endblock %}

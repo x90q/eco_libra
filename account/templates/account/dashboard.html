@@ -1,0 +1,41 @@
+{% extends "blog/base.html" %}
+
+{% load static %}
+
+{% block title %}eco_libra - dashboard{% endblock %}
+
+{% block extra_js %}
+<link rel="stylesheet" href="{% static "account/css/dashboard.css" %}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard_container">
+    {% if request.user.is_authenticated %}
+        <h1>dashboard</h1>
+        <h2>hello {{ request.user.username }}</h2>
+        
+        <ul class="menu">
+            <li {% if section == "dashboard" %}class="selected"{% endif %}>
+                <a href="{% url "account:dashboard" %}">dashboard</a>
+            </li>
+            <li {% if section == "images" %}class="selected"{% endif %}>
+                <a href="#">images</a>
+            </li>
+            <li {% if section == "people" %}class="selected"{% endif %}>
+                <a href="#">people</a>
+            </li>
+        </ul>
+    {% endif %}
+
+    <div class="user">
+        {% if request.user.is_authenticated %}
+            <form action="{% url "account:logout" %}" method="post">
+                {% csrf_token %}
+                <button type="submit">logout</button>
+            </form>
+        {% else %}
+            <a href="{% url "account:login" %}">sign in</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

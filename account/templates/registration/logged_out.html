@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %}
+
+{% load static %}
+
+{% block title %}eco_libra - logout{% endblock %}
+
+{% block extra_js %}
+<link rel="stylesheet" href="{% static "account/css/login.css" %}">
+{% endblock %}
+
+{% block content %}
+<div class = 'logged_out_container'>
+    <h1>logged out</h1>
+    <p>you have been successfully logged out.</p>
+    <p>you can <a href="{% url "account:login" %}">sign in</a> again.</p>
+</div>
+{% endblock %}

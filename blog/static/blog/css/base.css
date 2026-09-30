@@ -164,11 +164,11 @@ a {
 
 .searchbar {
     position: relative;
-    width: 220px;
+    flex-shrink: 0;
 }
 
 .searchbar input {
-    width: 100%;
+    width: 200px;
     background: #151212;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 8px;
@@ -177,7 +177,7 @@ a {
     font-size: 13.5px;
     padding: 9px 12px;
     outline: none;
-    transition: border-color 0.2s ease, width 0.2s ease;
+    transition: border-color 0.2s ease, width 0.2s ease, background 0.2s ease;
 }
 
 .searchbar input::placeholder {
@@ -186,7 +186,79 @@ a {
 
 .searchbar input:focus {
     border-color: rgba(230, 57, 74, 0.5);
-    width: 260px;
+    width: 250px;
+}
+
+.user_navbar_info {
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.18s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user_navbar_info:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 2px 4px rgba(235, 200, 204, 0.1);
+}
+
+
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+}
+
+.login_button,
+.register_button {
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.18s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register_button {
+    background: #151212;
+    color: #f2ede6;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.register_button:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 2px 4px rgba(235, 200, 204, 0.1);
+}
+
+.login_button {
+    background: #ff4e5fd9;
+    color: #ffffff;
+    border: 1px solid #e6394a;
+}
+
+.login_button:hover {
+    background: #e6394a;
+    box-shadow: 0 2px 4px rgba(230, 57, 74, 0.3);
+}
+
+.login_button:active,
+.register_button:active {
+    transform: translateY(1px);
 }
 
 /* header end */

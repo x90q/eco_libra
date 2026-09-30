@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
         <title>{% block title %}{% endblock %}</title>
         <meta name="description" content="">
-        <link rel="stylesheet" href="{% static "css/base.css" %}">
+        <link rel="stylesheet" href="{% static "blog/css/base.css" %}">
         {% block extra_js %}{% endblock %}
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,6 +48,20 @@
                         <input type="text" name = "query" placeholder="search up posts, authors, tags…" value = "{{ query | default:'' }}" autocomplete = "off" required>
                     </div>
                 </form>
+
+                <div class = 'login'>
+                    {% if request.user.is_authenticated %}
+                    <a href = "{% url 'account:dashboard' %}">
+                        <div class = 'user_navbar_info'>
+                            <span class = 'username'>{{ request.user.username }}</span>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class = 'auth_buttons'>
+                        <a href = '{% url 'account:login' %}'><button type="submit" class="login_button">sign in</button></a>
+                        <a href = '{% url 'account:register' %}'><button type="submit" class="register_button">create account</button></a>
+                    </div>
+                    {% endif %}
             </div>
         </header>
 

@@ -1,0 +1,55 @@
+{% extends "blog/base.html" %}
+
+{% load static %}
+
+{% block title %}eco_libra - sign in{% endblock %}
+
+{% block extra_js %}
+<link rel="stylesheet" href="{% static "account/css/login.css" %}">
+{% endblock %}
+
+{% block content %}
+
+
+<div class = 'login_container'>
+    <div class = 'login_head'>
+        <h1>sign in to your account</h1>
+    </div>
+    <form action="{% url 'account:login' %}" method="post" class="login_form">
+        {% csrf_token %}
+        <div class = 'login_form_item'>
+            <label for = '{{ form.username.id_for_label }}'>username:</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+                <div class="field_errors">
+                    {{ form.username.errors }}
+                </div>
+                {% endif %}
+        </div>
+        <div class = 'login_form_item'>
+            <label for = '{{ form.password.id_for_label }}'>password:</label>
+            {{ form.password }}
+            {% if form.password.errors %}
+                <div class="field_errors">
+                    {{ form.password.errors }}
+                </div>
+                {% endif %}
+        </div>
+        
+        <input type = 'hidden' name = 'next' value = '{{ next }}' />
+
+        <input type="submit" value="sign in" class = 'login_submit_button' />
+
+        <a href = '{% url 'account:register' %}' class="form_register_button">register</a>
+    </form>
+    {% if form.non_field_errors %}
+    <span class = 'errors'>
+        <p>your username and password didn't match.</p>
+        <p>please try again.</p>
+    </span>
+    {% endif %}
+    <span class = 'password_reset_link'>
+        <a href = '{% url 'account:password_reset' %}'>forgot your password?</a>
+    </span>
+</div>
+{% endblock %}
