@@ -1,0 +1,209 @@
+.search_users_container {
+    display: block;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.search_users_container h3 {
+    margin: 0;
+    margin-bottom: 10px;
+    margin-top: 6px;
+    font-size: 24px;
+}
+
+.search_users_rail {
+    display: flex;
+    gap: 6px;
+}
+
+.search_users_rail>a {
+    width: 126px;
+    flex-shrink: 0;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.search_users_block {
+    width: 100%;
+    height: 60px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: transparent;
+    padding: 7px 8px 7px 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.18s ease;
+    border: 1px solid #272725;
+
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search_users_block:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.search_users_username {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    text-align: left;
+    font-size: 13px;
+    text-align: center;
+
+    white-space: nowrap;
+    overflow: hidden;
+    letter-spacing: normal;
+    text-overflow: ellipsis;
+
+    min-width: 0;
+    flex: 1;
+}
+
+
+.user_search_avatar_container {
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    flex-shrink: 0;
+    border-radius: 0;
+}
+
+.user_search_avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.user_search_avatar_placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #1a1717;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: #e6394a;
+
+}
+
+.search_result {
+    max-width: 1120px;
+    margin: auto;
+    margin-top: 24px;
+    margin-bottom: -26px;
+    padding: 8px clamp(16px, 4vw, 32px) 6px;
+}
+
+.search_result h2 {
+    padding: 0;
+    margin: 0;
+}
+
+.search_result a {
+    display: inline-block;
+    font-size: 13.5px;
+    color: #8c8580;
+    margin-bottom: 6px;
+    transition: color 0.15s ease;
+}
+
+.search_result a:hover {
+    color: #f2ede6;
+}
+
+.search_posts_container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 30px clamp(16px, 4vw, 32px) 90px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 28px;
+    align-items: start;
+}
+
+.search_posts {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.post {
+    --category_color: #e6394a;
+    background: #121010;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 11px;
+    padding: 18px 20px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: rise 0.5s ease-out forwards;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.post:hover {
+    border-color: color-mix(in srgb, var(--category_color, #e6394a) 45%, rgba(255, 255, 255, 0.14));
+    transform: translateY(-2px);
+}
+
+.post_top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.post_top .category_label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    color: var(--category_color);
+    border: 1px solid color-mix(in srgb, var(--category_color, #e6394a) 45%, transparent);
+    padding: 2px 10px 2px 8px;
+    border-radius: 20px;
+}
+
+.post_top .created_time {
+    font-size: 12.5px;
+    color: #8c8580;
+}
+
+.post h3 {
+    margin: 0 0 6px;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.post p {
+    margin: 0;
+    font-size: 14px;
+    color: #8c8580;
+    line-height: 1.6;
+}
+
+.post_foot {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 12px;
+    font-size: 12.5px;
+    color: #8c8580;
+}
+
+.no_result p {
+    padding: 0;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #acacac;
+    margin-bottom: 16px;
+}

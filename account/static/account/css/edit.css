@@ -1,0 +1,221 @@
+.edit_container {
+    background: #121010;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 22px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 420px;
+    margin: 12px auto;
+    box-sizing: border-box;
+
+    opacity: 0;
+    transform: translateY(10px);
+    animation: rise 0.5s ease-out forwards;
+}
+
+.edit_container h1 {
+    color: #f2ede6;
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+}
+
+.edit_form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+}
+
+.edit_form_item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.edit_form_item label {
+    color: #a0a0a0;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+}
+
+.edit_form_item input[type="text"],
+.edit_form_item input[type="email"],
+.edit_form_item input[type="date"] {
+    width: 100%;
+    height: 42px;
+    padding: 0 14px;
+    background: #1a1818;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    color: #f2ede6;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.edit_form_item input[type="text"]:focus,
+.edit_form_item input[type="email"]:focus,
+.edit_form_item input[type="date"]:focus,
+.edit_form_item textarea:focus {
+    border-color: #f2ede6;
+    background: #201d1d;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.8);
+    cursor: pointer;
+}
+
+.edit_form_item textarea {
+    width: 100%;
+    min-height: 80px;
+    height: 80px;
+    padding: 10px 14px;
+    background: #1a1818;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    color: #f2ede6;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.photo_upload_row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #1a1818;
+    padding: 10px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+}
+
+.photo_preview_box {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #242020;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.photo_preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo_placeholder {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: #e6394a;
+}
+
+.file_input_wrapper {
+    font-size: 0;
+    overflow: hidden;
+    width: 100%;
+}
+
+.file_input_wrapper a,
+.file_input_wrapper br,
+.file_input_wrapper label,
+.file_input_wrapper input[type="checkbox"],
+.file_input_wrapper label[for$="-clear_id"] {
+    display: none !important;
+}
+
+.file_input_wrapper input[type="file"] {
+    font-size: 13px;
+    color: #a0a0a0;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+}
+
+.file_input_wrapper input[type="file"]::-webkit-file-upload-button {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 6px;
+    color: #f2ede6;
+    padding: 6px 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background 0.2s ease;
+}
+
+.file_input_wrapper input[type="file"]::-webkit-file-upload-button:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.edit_nav_buttons {
+    display: grid;
+    gap: 14px;
+}
+
+.edit_form_submit_button,
+.edit_form_back_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 42px;
+    background: #f2ede6;
+    color: #0a0908;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.2s ease;
+}
+
+.edit_form_submit_button:hover {
+    opacity: 0.8;
+}
+
+.edit_form_back_button {
+    background: #f2ede619;
+    color: #f2ede6;
+    border: 1px solid #f2ede61b;
+}
+
+.edit_form_back_button:hover {
+    background: #f2ede627;
+    border: 1px solid #f2ede625;
+}
+
+
+.field_errors {
+    margin-top: 2px;
+}
+
+.field_errors ul.errorlist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.field_errors ul.errorlist li {
+    color: #e6394a;
+    font-size: 12px;
+}

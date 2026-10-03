@@ -1,0 +1,379 @@
+:root {
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* {
+    box-sizing: inherit;
+}
+
+html {
+    scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+body {
+    margin: 0;
+    background: #0a0908;
+    color: #f2ede6;
+    font-family: 'Inter', sans-serif;
+    min-height: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* header, "new_base.html" */
+
+.navbar {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 40;
+    background: rgba(10, 9, 8, 0.86);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.navbar-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 8px clamp(16px, 4vw, 32px);
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.website-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 21px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.navbar-elements {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+}
+
+.navbar-item {
+    position: relative;
+}
+
+.navbar-button {
+    background: none;
+    border: none;
+    color: #8c8580;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 7px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.18s ease, background 0.18s ease;
+}
+
+.navbar-button:hover {
+    color: #f2ede6;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.navbar-button.active {
+    color: #f2ede6;
+}
+
+.navbar-button.active::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 2px;
+    height: 2px;
+    background: #e6394a;
+    border-radius: 2px;
+}
+
+.navbar-button .arrow {
+    font-size: 10px;
+    transition: transform 0.2s ease;
+}
+
+.navbar-item.open .nav-btn .chev {
+    transform: rotate(180deg);
+}
+
+.navbar-item.open .navbar-button {
+    color: #f2ede6;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 180px;
+    background: #151212;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 9px;
+    padding: 6px;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+    transform-origin: top left;
+    pointer-events: none;
+    transition: opacity 0.16s ease, transform 0.16s ease;
+}
+
+.dropdown .empty {
+    font-size: 12.5px;
+    color: #8c8580;
+}
+
+.navbar-item.open .dropdown {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.dropdown a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: 6px;
+    font-size: 13.5px;
+    text-decoration: none;
+    color: #8c8580;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.dropdown a:hover {
+    background: color-mix(in srgb, var(--category_color, #e6394a) 25%, transparent);
+    color: #f2ede6;
+}
+
+.searchbar {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.searchbar input {
+    width: 200px;
+    background: #151212;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    color: #f2ede6;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    padding: 10.5px 12px;
+    outline: none;
+    transition: border-color 0.2s ease, width 0.2s ease, background 0.2s ease;
+}
+
+.searchbar input::placeholder {
+    color: #8c8580;
+}
+
+.searchbar input:focus {
+    border-color: rgba(230, 57, 74, 0.5);
+    width: 250px;
+}
+
+.user_navbar_info {
+    position: relative;
+    display: inline-flex;
+}
+
+.user_navbar_button {
+    height: 40px;
+    padding: 4px 7px 4px 9px;
+    border-radius: 8px;
+    background: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.18s ease;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #f2ede6;
+}
+
+.user_navbar_button:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.user_navbar_avatar_container {
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    flex-shrink: 0;
+    border-radius: 0;
+}
+
+.user_navbar_avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.user_navbar_avatar_placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #1a1717;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px;
+    color: #e6394a;
+}
+
+.user_navbar_menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    left: auto;
+    min-width: 150px;
+    background: #151212;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 9px;
+    padding: 6px;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+    transform-origin: top right;
+    pointer-events: none;
+    transition: opacity 0.16s ease, transform 0.16s ease;
+    z-index: 100;
+}
+
+.navbar-item.open .account_navbar_menu {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.user_navbar_dropdown {
+    margin: 0;
+    padding: 0;
+}
+
+.user_navbar_dropdown_item,
+.user_navbar_dropdown_logout_button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 9px 10px;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    text-decoration: none;
+    color: #8c8580;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.user_navbar_dropdown_item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #f2ede6;
+}
+
+.user_navbar_dropdown_logout_button {
+    color: #e6394a;
+}
+
+.user_navbar_dropdown_logout_button:hover {
+    background: rgba(230, 57, 74, 0.12);
+    color: #ff4e5f;
+}
+
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+}
+
+.login_button,
+.register_button {
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.18s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register_button {
+    background: #151212;
+    color: #f2ede6;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.register_button:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 2px 4px rgba(235, 200, 204, 0.1);
+}
+
+.login_button {
+    background: #ff4e5fd9;
+    color: #ffffff;
+    border: 1px solid #e6394a;
+}
+
+.login_button:hover {
+    background: #e6394a;
+    box-shadow: 0 2px 4px rgba(230, 57, 74, 0.3);
+}
+
+.login_button:active,
+.register_button:active {
+    transform: translateY(1px);
+}
+
+/* header end */
+
+@keyframes rise {
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}

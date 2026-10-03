@@ -1,0 +1,56 @@
+{% extends "feed/base.html" %}
+
+{% load static %}
+
+{% block title %}
+    {% if category %}
+        eco_libra - /{{ category.name | lower}}
+    {% elif tag %}
+        eco_libra - #{{ tag.name | lower}}
+    {% else %}
+        eco_libra - latest posts
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<link rel="stylesheet" href="{% static "feed/css/post_list.css" %}">
+<link rel="stylesheet" href="{% static "feed/css/categories_list.css" %}">
+<link rel="stylesheet" href="{% static "feed/css/pagination.css" %}">
+{% endblock %}
+
+{% block content %}
+    <div class = "post_list_labels">
+         {% if category %}
+            <span class="top_category_label" style="--category_color:{{ category.color }};">/{{ category.name | upper }}</span>
+        {% elif tag %}
+            <span class="top_tag_label">#{{ tag.name | upper }}</span>
+        {% endif %}
+    </div>
+    <div class="post_list_container">
+        <div class="post_list_posts">
+            {% for post in posts %}
+            <a href = "{{ post.get_absolute_url }}">
+                <article class="post" style="--category_color:{{ post.category.color }};">
+                    <div class="post_top">
+                        <span class="category_label">/{{ post.category.name | upper }}</span>
+                        <span class="created_time">{{ post.created | timesince }} ago</span>
+                    </div>
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.body | truncatechars:250 }}</p>
+                    <div class="post_foot">
+                        <span>{{ post.author }}</span>
+                        {% with post.comments.count as comment_count %}
+                            <span>{{ comment_count }} comment{{ comment_count|pluralize }}</span>
+                        {% endwith %}
+                        {% with post.views as views %}
+                            <span>{{ views }} view{{ views | pluralize }}</span>
+                        {% endwith %}
+                    </div>
+                </article>
+            </a>
+            {% endfor %}
+            {% include 'pagination.html' with page=posts %}
+        </div>
+        {% include 'feed/post/includes/categories_list.html' %}
+    </div>
+{% endblock %}

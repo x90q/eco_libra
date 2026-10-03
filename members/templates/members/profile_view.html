@@ -1,0 +1,74 @@
+{% extends 'feed/base.html' %}
+
+{% load static %}
+
+{% block title %}eco_libra - {{ user_profile.user.username }}'s profile{% endblock %}
+
+{% block extra_js %}
+<link rel = "stylesheet" href = "{% static 'members/css/profile_view.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class = 'profile_view_container'>
+    <div class = 'profile_view_main'>
+        <div class = 'profile_view_main_header'>
+            <span class = 'profile_view_username'>
+                {{ user_profile.user.username }}
+            </span>
+            <span class = 'profile_view_last_online'>
+                <span class = 'profile_view_last_online_label'>last login: </span>
+                <span class = 'profile_view_meta_item'>{{ user_profile.user.last_login | timesince }} ago</span>
+            </span>
+        </div>
+        <div class = 'profile_view_meta'>
+            <div class = 'profile_view_joined'>
+                <span class ='profile_view_joined_label'>joined: </span>
+                <span class = 'profile_view_meta_item'>{{ user_profile.user.date_joined | date:"j M Y" | lower }}</span>
+            </div>
+            <div class = 'profile_view_date_of_birth'>
+                {% if user_profile.date_of_birth %}
+                    <span class = 'profile_view_date_of_birth_label'>date of birth: </span>
+                    <span class = 'profile_view_meta_item'>{{ user_profile.date_of_birth | date:" j M Y" | lower }}</span>
+                {% else %}
+                    <span class = 'profile_view_date_of_birth_label'>date of birth: </span>
+                    <span class = 'profile_view_meta_item'>-</span>
+                {% endif %}
+            </div>
+            <div class = 'profile_view_bio'>
+                {% if user_profile.bio %}
+                <span class = 'profile_view_bio_label'>bio:</span> 
+                <span class = 'profile_view_meta_item'>{{ user_profile.bio }}</span>
+                {% else %}
+                <span class = 'profile_view_bio_label'>bio:</span> 
+                <span class = 'profile_view_meta_item'>-</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class = 'profile_view_right'>
+        <div class = 'profile_view_avatar_container'>
+            {% if user_profile.photo %}
+            <img src="{{ user_profile.photo.url }}" alt="{{ user_profile.user.username }}" class="profile_view_avatar">
+            {% else %}
+            <span class="profile_view_avatar_placeholder">
+                {{ user_profile.user.username|slice:":1"|upper }}
+            </span>
+            {% endif %}
+        </div>
+        {% if is_me %}
+        <div class = 'profile_view_user_logged'>
+            <div class = 'profile_view_edit_button'>
+                <a href="{% url 'account:edit' %}" class="profile_edit_link">edit profile</a>
+            </div>
+            <form method="post" action="{% url 'account:logout' %}" class="profile_view_logout_form">
+                {% csrf_token %}
+                <button type="submit" class="profile_view_logout_button">
+                    logout
+                </button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

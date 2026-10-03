@@ -1,0 +1,80 @@
+{% extends 'feed/base.html' %}
+
+{% load static %}
+
+{% block title %}eco_libra - search results{% endblock%}
+
+{% block extra_js %}
+<link rel="stylesheet" href="{% static "search/css/search_results.css" %}">
+<link rel="stylesheet" href="{% static "feed/css/categories_list.css" %}">
+<link rel="stylesheet" href="{% static "feed/css/pagination.css" %}">
+{% endblock %}
+
+{% block content %}
+
+    {% if query %}
+        <div class = "search_result">
+            <a class = 'search_result_back' href="{% url 'feed:home' %}">← back to home</a>
+            {% if users %}
+            <div class = "search_users_container">
+                <h3>matching users:</h3>
+                <div class = 'search_users_rail'>
+                 {% for user_profile in users %}
+                 <a href = '{% url 'members:profile_view' user_id=user_profile.user.id %}'>
+                    <div class = 'search_users_block'>
+                        <span class = 'search_users_username'>{{ user_profile.user.username }}</span>
+                        <div class = 'user_search_avatar_container'>
+                            {% if user_profile.photo %}
+                            <img src="{{ user_profile.photo.url }}" alt="{{ user_profile.user.username }}" class="user_search_avatar">
+                            {% else %}
+                            <span class="user_search_avatar_placeholder">
+                                {{ user_profile.user.username|slice:":1"|upper }}
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            <h2> posts containing "{{ query | lower }}":</h2>
+        </div>
+        <div class="search_posts_container">
+            <div class="search_posts">
+                {% for post in results %}
+                    <a href = "{{ post.get_absolute_url }}">
+                        <article class="post" style="--category_color:{{ post.category.color }};">
+                            <div class="post_top">
+                                <span class="category_label">/{{ post.category.name | upper }}</span>
+                                <span class="created_time">{{ post.created | timesince }} ago</span>
+                            </div>
+                            <h3>{{ post.title }}</h3>
+                            <p>{{ post.body | truncatechars:250 }}</p>
+                            <div class="post_foot">
+                                <span>{{ post.author }}</span>
+                                {% with post.comments.count as comment_count %}
+                                    <span>{{ comment_count }} comment{{ comment_count|pluralize }}</span>
+                                {% endwith %}
+                                {% with post.views as views %}
+                                    <span>{{ views }} view{{ views | pluralize }}</span>
+                                {% endwith %}
+                            </div>
+                        </article>
+                    </a>
+                {% empty %}
+                    <div class = "no_result">
+                        <p>sorry, no posts matched your search</p>
+                    </div>
+                {% endfor %}
+                {% if results %}
+                    {% include 'pagination.html' with page=results %}
+                {% endif %}
+            </div>
+            {% if results %}
+                {% include 'feed/post/includes/categories_list.html' %}
+            {% endif %}
+        </div>
+    {% endif%}
+{% endblock %}
+

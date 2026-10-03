@@ -1,0 +1,85 @@
+{% extends 'feed/base.html' %}
+
+{% load static %}
+
+{% block extra_js %}
+<link rel="stylesheet" href="{% static 'account/css/edit.css' %}">
+{% endblock %}
+
+{% block title %}eco_libra - profile edit{% endblock %}
+
+{% block content %}
+<div class="edit_container">
+    <h1>edit your profile</h1>
+    <form method="post" class="edit_form" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="edit_form_item">
+            <label for="{{ user_form.username.id_for_label }}">username:</label>
+            {{ user_form.username }}
+            {% if user_form.username.errors %}
+                <div class="field_errors">
+                    {{ user_form.username.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="edit_form_item">
+            <label for="{{ user_form.email.id_for_label }}">email:</label>
+            {{ user_form.email }}
+            {% if user_form.email.errors %}
+            <div class="field_errors">
+                {{ user_form.email.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="edit_form_item">
+            <label>photo:</label>
+            <div class="photo_upload_row">
+                <div class="photo_preview_box">
+                    {% if request.user.profile.photo %}
+                        <img src="{{ request.user.profile.photo.url }}" alt="Profile photo" class="photo_preview">
+                    {% else %}
+                        <span class="photo_placeholder">{{ request.user.username|slice:":1"|upper }}</span>
+                    {% endif %}
+                </div>
+                
+                <div class="file_input_wrapper">
+                    {{ profile_form.photo }}
+                </div>
+            </div>
+            {% if profile_form.photo.errors %}
+            <div class="field_errors">
+                {{ profile_form.photo.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="edit_form_item">
+            <label for="{{ profile_form.date_of_birth.id_for_label }}">date of birth:</label>
+            {{ profile_form.date_of_birth }}
+            {% if profile_form.date_of_birth.errors %}
+            <div class="field_errors">
+                {{ profile_form.date_of_birth.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="edit_form_item">
+            <label for="{{ profile_form.bio.id_for_label }}">bio:</label>
+            {{ profile_form.bio }}
+            {% if profile_form.bio.errors %}
+            <div class="field_errors">
+                {{ profile_form.bio.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class 'edit_nav_buttons'>
+            <input type="submit" value="save changes" class="edit_form_submit_button">
+            <a href="{% url 'members:profile_view' user_id=request.user.id %}" class="edit_form_back_button">back to profile</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

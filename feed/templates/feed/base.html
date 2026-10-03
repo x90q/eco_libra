@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+        <title>{% block title %}{% endblock %}</title>
+        <meta name="description" content="">
+        <link rel="stylesheet" href="{% static "feed/css/base.css" %}">
+        {% block extra_js %}{% endblock %}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital@1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header class="navbar">
+            <div class="navbar-inner">
+                <div class="website-name">eco<span>_</span>libra</div>
+                
+                <nav class="navbar-elements" aria-label="Main navigation">
+                    <div class="navbar-item">
+                        <a class="navbar-button active" href = "{% url 'feed:home'%}">home</a>
+                    </div>
+                    
+                    <div class="navbar-item">
+                        <button class="navbar-button" aria-haspopup="true" aria-expanded="false">categories<span class="arrow">▾</span></button>
+                        <div class="dropdown">
+                            {% for category in categories %}
+                                <a href="{% url 'feed:post_list_by_category' category.slug %}" style="--category_color:{{ category.color }};">/{{ category.name | lower }}</a>
+                            {% empty %}
+                                <span class = "empty">no categories</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <!-- <div class="navbar-item">
+                        <button class="navbar-button" aria-haspopup="true" aria-expanded="false">top users <span class="arrow">▾</span></button>
+                        <div class="dropdown">
+                            <a href="#">top posts</a>
+                            <a href="#">best comments</a>
+                            <a href="#">top rating <span class="tag">new</span></a>
+                        </div>
+                    </div>
+                -->
+                </nav>
+                
+                <form class = "navbar_search_form" action = "{% url 'search:search_results' %}" method = "get">
+                    <div class="searchbar">
+                        <input type="text" name = "query" placeholder="search up posts, users, tags…" value = "{{ query | default:'' }}" autocomplete = "off" required>
+                    </div>
+                </form>
+
+                <div class = 'login'>
+                    {% if request.user.is_authenticated %}
+                    <div class="user_navbar_info navbar-item">
+                        <button type="button" class="navbar-button user_navbar_button" aria-haspopup="true" aria-expanded="false">
+                            <span class="username">{{ request.user.username }}</span>
+                            <div class="user_navbar_avatar_container">
+                                {% if request.user.profile.photo %}
+                                <img src="{{ request.user.profile.photo.url }}" alt="{{ request.user.username }}" class="user_navbar_avatar">
+                                {% else %}
+                                <span class="user_navbar_avatar_placeholder">
+                                    {{ request.user.username|slice:":1"|upper }}
+                                </span>
+                                {% endif %}
+                            </div>
+                        </button>
+
+                        <div class="user_navbar_menu dropdown">
+                            <a href="{% url 'members:profile_view' user_id=request.user.id %}" class="user_navbar_dropdown_item">
+                                go to profile
+                            </a>
+                            <form method="post" action="{% url 'account:logout' %}" class="user_navbar_dropdown">
+                                {% csrf_token %}
+                                <button type="submit" class="user_navbar_dropdown_logout_button">
+                                    logout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class = 'auth_buttons'>
+                        <a href = '{% url 'account:login' %}'><button type="submit" class="login_button">sign in</button></a>
+                        <a href = '{% url 'account:register' %}'><button type="submit" class="register_button">create account</button></a>
+                    </div>
+                    {% endif %}
+            </div>
+        </header>
+
+        <div id = "content">
+            {% block content %}
+            {% endblock %}
+        </div> 
+
+        <script>
+            document.querySelectorAll('.navbar-item').forEach(function(item){
+                var button = item.querySelector('.navbar-button');
+                button.addEventListener('click', function(e){
+                    e.stopPropagation();
+                    var isOpen = item.classList.contains('open');
+                    document.querySelectorAll('.navbar-item.open').forEach(function(o) {
+                        o.classList.remove('open');
+                        var b = o.querySelector('.navbar-button');
+                        if(b) b.setAttribute('aria-expanded','false');
+                    });
+                    if(!isOpen){
+                        item.classList.add('open');
+                        button.setAttribute('aria-expanded','true');
+                    }
+                });
+            });
+            document.addEventListener('click', function(){
+                document.querySelectorAll('.navbar-item.open').forEach(function(o){
+                    o.classList.remove('open');
+                    var b = o.querySelector('.navbar-button');
+                    if(b) b.setAttribute('aria-expanded','false');
+                });
+            });
+            document.addEventListener('keydown', function(e){
+                if(e.key === 'Escape'){
+                    document.querySelectorAll('.navbar-item.open').forEach(function(o){ o.classList.remove('open'); });
+                }
+            });
+    </script>
+
+    </body>
+</html>

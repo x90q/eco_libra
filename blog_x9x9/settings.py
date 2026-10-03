@@ -35,7 +35,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'taggit',
-    'blog.apps.BlogConfig',
+    'feed.apps.FeedConfig',
+    'members.apps.MembersConfig',
+    'search.apps.SearchConfig',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +62,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'blog.context_processors.categories_processor',
+                'feed.context_processors.categories_processor',
             ],
         },
     },
@@ -135,6 +137,9 @@ MAILERS = {
 
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='webmaster@localhost')
 
-LOGIN_REDIRECT_URL = 'account:dashboard'
+LOGIN_REDIRECT_URL = 'feed:home'
 LOGIN_URL = 'account:login'
 LOGOUT_URL = 'account:login'
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
