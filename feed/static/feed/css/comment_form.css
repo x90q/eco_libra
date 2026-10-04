@@ -8,19 +8,6 @@
     gap: 16px;
 }
 
-.add_comment_form_item {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-.add_comment_form_item label {
-    font-size: 13.5px;
-    font-weight: 600;
-    color: #f2ede6;
-    min-width: 60px;
-}
-
 .add_comment_form_body {
     display: flex;
     flex-direction: column;

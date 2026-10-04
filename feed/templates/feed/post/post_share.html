@@ -24,20 +24,12 @@
             <form class="share_form" method = 'post'>
                 {% csrf_token %}
                 <div class="share_form_item">
-                    <label for="{{ form.name.id_for_label }}">your name:</label>
-                    {{ form.name }}
-                </div>
-                <div class="share_form_item">
-                    <label for="{{ form.email.id_for_label }}">your email:</label>
-                    {{ form.email }}
-                </div>
-                <div class="share_form_item">
                     <label for="{{ form.to.id_for_label }}">email to:</label>
                     {{ form.to }}
                 </div>
                 <div class="share_form_body">
-                    <label for="{{ form.comments.id_for_label }}">comments:</label>
-                    {{ form.comments }}
+                    <label for="{{ form.comment.id_for_label }}">comment:</label>
+                    {{ form.comment }}
                 </div>
                 <button type="submit" class="share_submit_button">send e-mail</button>
             </form>

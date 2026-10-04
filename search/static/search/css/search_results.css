@@ -1,7 +1,8 @@
 .search_users_container {
     display: block;
-    gap: 10px;
     margin-bottom: 14px;
+    width: 100%;
+    min-width: 0;
 }
 
 .search_users_container h3 {
@@ -12,13 +13,18 @@
 }
 
 .search_users_rail {
-    display: flex;
-    gap: 6px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 .search_users_rail>a {
-    width: 126px;
-    flex-shrink: 0;
+    width: 100%;
+    min-width: 0;
     text-decoration: none;
     color: inherit;
     display: block;

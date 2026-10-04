@@ -161,6 +161,14 @@
     font-size: 14px;
 }
 
+.comment_top .comment_name a {
+    transition: all 0.15s ease;
+}
+
+.comment_top .comment_name a:hover {
+    color: #b85151;
+}
+
 .comment_top .created_time {
     font-size: 13px;
     color: #8c8580;

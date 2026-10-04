@@ -40,7 +40,7 @@ def search_results(request):
                 similarity = (
                     TrigramSimilarity('user__username', query)
                 )
-            ).filter(similarity__gt=0.1).order_by('-similarity')[:8]
+            ).filter(similarity__gt=0.1).order_by('-similarity')[:7]
 
             paginator = Paginator(result_list, 5)
             page_number = request.GET.get('page', 1)

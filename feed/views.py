@@ -6,6 +6,8 @@ from taggit.models import Tag
 from django.db.models import F
 from .forms import EmailPostForm, CommentForm
 
+from django.contrib.auth import get_user_model
+
 from django.core.mail import send_mail
 
 from django.db.models import Count
@@ -98,6 +100,7 @@ def post_detail(request, category, post):
         }
     )
 
+@login_required
 def post_share(request, post_id):
     post = get_object_or_404(
         Post,
@@ -115,12 +118,12 @@ def post_share(request, post_id):
                 post.get_absolute_url()
             )
             subject = (
-                f"{cd['name']} ({cd['email']}) recommends you read "
+                f"{ request.user.username } ({ request.user.email }) recommends you read "
                 f'"{post.title}"'
             )
             message = (
                 f'Read "{post.title}" at {post_url}\n\n'
-                f"{cd['name']}\'s comments: {cd['comments']}"
+                f"{ request.user.username }\'s comments: {cd['comment']}"
             )
             send_mail(
                 subject,
@@ -141,7 +144,9 @@ def post_share(request, post_id):
         }
     )
 
+User = get_user_model()
 
+@login_required
 @require_POST
 def post_comment(request, post_id):
     post = get_object_or_404(
@@ -149,7 +154,7 @@ def post_comment(request, post_id):
         id = post_id,
         status = Post.Status.PUBLISHED
     )
-    
+
     comment = None
     # comment was sent
     form = CommentForm(data = request.POST)
@@ -158,6 +163,7 @@ def post_comment(request, post_id):
         comment = form.save(commit = False)
         # make comment related to post
         comment.post = post
+        comment.user = request.user
         # save object to DB
         comment.save()
 
@@ -170,6 +176,8 @@ def post_comment(request, post_id):
             'comment' : comment,
         }
     )
+
+
 
 def home(request):
      posts = Post.published.all()

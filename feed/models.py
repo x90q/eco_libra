@@ -88,8 +88,11 @@ class Comment(models.Model):
         related_name = 'comments'
     )
 
-    name = models.CharField(max_length = 25)
-    email = models.EmailField()
+    user = models.ForeignKey(
+            settings.AUTH_USER_MODEL,
+            on_delete=models.CASCADE,
+            related_name='comments'
+        )
     body = models.TextField()
     created = models.DateTimeField(auto_now_add = True)
     updated = models.DateTimeField(auto_now = True)
@@ -102,5 +105,5 @@ class Comment(models.Model):
         ]
 
     def __str__(self):
-        return f"Comment by { self.name } on { self.post }"
+        return f"Comment by { self.user.username } on { self.post }"
     

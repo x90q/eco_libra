@@ -26,7 +26,7 @@
                 <div class="post_body">{{ post.body|linebreaksbr }}</div>
 
                 <div class="post_detail_foot">
-                    <a href = "{% url 'members:profile_view' user_id=post.author.id %}"><span>{{ post.author }}</span></a>
+                    <span><a href = "{% url 'members:profile_view' user_id=post.author.id %}">{{ post.author }}</a></span>
                     <span>{{ post.comments.count }} comments</span>
                     {% with post.views as views %}
                         <span>{{ views }} view{{ views|pluralize }}</span>
@@ -44,10 +44,10 @@
             <section class="comments">
                 <h2>comments</h2>
 
-                {% for comment in post.comments.all %}
+                {% for comment in comments %}
                     <div class="comment">
                         <div class="comment_top">
-                            <span class="comment_name">{{ comment.name }}</span>
+                            <span class="comment_name"><a href = "{% url 'members:profile_view' user_id=comment.user.id %}">{{ comment.user.username }}</a></span>
                             <span class="created_time">{{ comment.created | timesince }} ago</span>
                         </div>
                         <p>{{ comment.body | linebreaksbr }}</p>
@@ -57,12 +57,15 @@
                 {% endfor %}
             </section>
             
-            <a class = "share_post_button" href = '{% url 'feed:post_share' post.id %}'>share this post</a>
-
+            {% if request.user.is_authenticated %}
+            <a class = "share_post_button" href = '{% url 'feed:post_share' post.id %}'>share this post via email</a>
+            {% endif %}
+            {% if request.user.is_authenticated %}
             <section class = "add_comment">
                 <h2> leave a comment </h2>
                 {% include 'feed/post/includes/comment_form.html' %}
             </section>
+            {% endif %}
         </div>
         <div class = 'detail_sidebar'>
             {% if similar_posts %}

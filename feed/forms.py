@@ -4,10 +4,8 @@ from .models import Comment
 from django.contrib.postgres.search import SearchVectorField
 
 class EmailPostForm(forms.Form):
-    name = forms.CharField(max_length=25)
-    email = forms.EmailField()
     to = forms.EmailField()
-    comments = forms.CharField(
+    comment = forms.CharField(
         required=False,
         widget=forms.Textarea
     )
@@ -15,4 +13,4 @@ class EmailPostForm(forms.Form):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ['name', 'email', 'body']
+        fields = ['body']
