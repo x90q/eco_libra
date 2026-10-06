@@ -56,9 +56,12 @@
             {% endif %}
         </div>
         {% if is_me %}
-        <div class = 'profile_view_user_logged'>
-            <div class = 'profile_view_edit_button'>
-                <a href="{% url 'account:edit' %}" class="profile_edit_link">edit profile</a>
+        <div class = 'profile_view_edit_button'>
+            <a href="{% url 'account:edit' %}" class="profile_edit_link">edit profile</a>
+        </div>
+        <div class = 'profile_view_security_links'>
+            <div class = 'profile_view_change_password_edit_button'>
+                <a href="{% url 'account:password_change' %}" class="profile_view_password_edit_link">change password</a>
             </div>
             <form method="post" action="{% url 'account:logout' %}" class="profile_view_logout_form">
                 {% csrf_token %}

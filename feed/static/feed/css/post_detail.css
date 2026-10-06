@@ -127,7 +127,7 @@
     background: #121010;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 11px;
-    padding: 18px 20px;
+    padding: 18px 20px 0 20px;
 }
 
 .comments h2 {
@@ -174,11 +174,15 @@
     color: #8c8580;
 }
 
-.comment p {
+.comment_body {
     margin: 0;
     font-size: 13px;
     color: #8c8580;
     line-height: 1.6;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    white-space: pre-line;
 }
 
 .comments .no_comm {

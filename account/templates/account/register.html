@@ -21,7 +21,7 @@
             {{ user_form.username }}
             {% if user_form.username.errors %}
                 <div class="field_errors">
-                    {{ user_form.username.errors }}
+                    {{ user_form.username.errors | lower }}
                 </div>
             {% endif %}
         </div>
@@ -31,7 +31,7 @@
             {{ user_form.email }}
             {% if user_form.email.errors %}
                 <div class="field_errors">
-                    {{ user_form.email.errors }}
+                    {{ user_form.email.errors | lower }}
                 </div>
             {% endif %}
         </div>
@@ -41,7 +41,7 @@
             {{ user_form.password }}
             {% if user_form.password.errors %}
                 <div class="field_errors">
-                    {{ user_form.password.errors }}
+                    {{ user_form.password.errors | lower }}
                 </div>
             {% endif %}
         </div>
@@ -51,7 +51,7 @@
             {{ user_form.password2 }}
             {% if user_form.password2.errors %}
                 <div class="field_errors">
-                    {{ user_form.password2.errors }}
+                    {{ user_form.password2.errors | lower }}
                 </div>
             {% endif %}
         </div>

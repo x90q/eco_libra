@@ -22,7 +22,7 @@
             {{ form.username }}
             {% if form.username.errors %}
                 <div class="field_errors">
-                    {{ form.username.errors }}
+                    {{ form.username.errors | lower }}
                 </div>
                 {% endif %}
         </div>
@@ -31,7 +31,7 @@
             {{ form.password }}
             {% if form.password.errors %}
                 <div class="field_errors">
-                    {{ form.password.errors }}
+                    {{ form.password.errors | lower }}
                 </div>
                 {% endif %}
         </div>

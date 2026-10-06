@@ -1,0 +1,129 @@
+.dashboard_container {
+    background: #121010;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 400px;
+    margin: 60px auto;
+    box-sizing: border-box;
+
+    opacity: 0;
+    transform: translateY(10px);
+    animation: rise 0.5s ease-out forwards;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.dashboard_container h1 {
+    color: #f2ede6;
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
+}
+
+.dashboard_container h2 {
+    color: #8c8580;
+    font-size: 13px;
+    font-weight: 400;
+    margin: -6px 0 8px 0;
+    text-align: center;
+}
+
+.dashboard_container ul.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    text-align: center;
+}
+
+.dashboard_container ul.menu li {
+    border: 1.2px solid #2c2c2c;
+    border-radius: 8px;
+    padding: 0;
+    background: transparent;
+    transition: all 0.2s ease;
+}
+
+.dashboard_container ul.menu li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+}
+
+.dashboard_container ul.menu li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    color: #aeaeae;
+    font-size: 13px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.dashboard_container ul.menu li:hover {
+    border-color: #e6394a;
+    background: rgba(230, 57, 74, 0.08);
+}
+
+.dashboard_container ul.menu li:hover a {
+    color: #f2ede6;
+}
+
+.dashboard_container ul.menu li.selected {
+    border-color: #e6394a;
+    background: #e6394a;
+}
+
+.dashboard_container ul.menu li.selected a {
+    color: #f2ede6;
+    font-weight: 600;
+}
+
+.dashboard_container .user {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dashboard_container .user form {
+    width: 100%;
+}
+
+.dashboard_container .user button[type="submit"] {
+    width: 100%;
+    height: 38px;
+    background: transparent;
+    color: #e6394a;
+    border: 1px solid rgba(230, 57, 74, 0.3);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dashboard_container .user button[type="submit"]:hover {
+    background: rgba(230, 57, 74, 0.12);
+    border-color: #e6394a;
+    color: #ff4d4d;
+}
+
+.dashboard_container .user a {
+    color: #8c8580;
+    font-size: 13px;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.dashboard_container .user a:hover {
+    color: #f2ede6;
+}

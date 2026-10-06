@@ -4,7 +4,7 @@ from account.models import Profile
 def profile_view(request, user_id):
     user_profile = get_object_or_404(
         Profile.objects.select_related('user'),
-        user_id=user_id,
+        user__id=user_id,
     )
 
     is_me = request.user.is_authenticated and request.user == user_profile.user

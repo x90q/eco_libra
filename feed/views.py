@@ -14,6 +14,10 @@ from django.db.models import Count
 
 from django.contrib.auth.decorators import login_required
 
+from django.contrib import messages
+
+from django.conf import settings
+
 def post_list(request, category_slug = None, tag_slug = None):
 
     post_list = Post.published.select_related('category', 'author') # 1 request to DB
@@ -108,8 +112,6 @@ def post_share(request, post_id):
         status = Post.Status.PUBLISHED
     )
 
-    sent = False
-
     if request.method == 'POST':
         form = EmailPostForm(request.POST)
         if form.is_valid():
@@ -123,24 +125,36 @@ def post_share(request, post_id):
             )
             message = (
                 f'Read "{post.title}" at {post_url}\n\n'
-                f"{ request.user.username }\'s comments: {cd['comment']}"
+                f"{ request.user.username }\'s comments: {cd.get('comment', '')}"
             )
             send_mail(
                 subject,
                 message,
-                'en4crypted@gmail.com',
+                settings.DEFAULT_FROM_EMAIL,
                 [cd['to']]
             )
             sent = True
+
+            messages.success(
+                request,
+                'post was successfully shared via e-mail'
+            )
+
+        else:
+            error_msg = '; '.join([f"{error}" for errors in form.errors.values() for error in errors]).lower()
+            messages.error(
+                request,
+                f'error while sharing post: {error_msg}'
+            )
     else:
         form = EmailPostForm()
+
     return render(
         request,
         'feed/post/post_share.html',
         {
             'post': post,
-            'form' : form,
-            'sent' : sent,
+            'form': form
         }
     )
 
@@ -155,8 +169,6 @@ def post_comment(request, post_id):
         status = Post.Status.PUBLISHED
     )
 
-    comment = None
-    # comment was sent
     form = CommentForm(data = request.POST)
     if form.is_valid():
         # create object Comment, but not saving it to DB
@@ -166,18 +178,19 @@ def post_comment(request, post_id):
         comment.user = request.user
         # save object to DB
         comment.save()
+        messages.success(
+            request,
+            'comment was successfully published'
+        )
 
-    return render(
-        request,
-        'feed/post/post_comment.html',
-        {
-            'post' : post,
-            'form' : form,
-            'comment' : comment,
-        }
-    )
+    else:
+        error_msg = '; '.join([f"{error}" for errors in form.errors.values() for error in errors]).lower()
+        messages.error(
+            request,
+            f'error while publishing comment: {error_msg}'
+        )
 
-
+    return redirect(post.get_absolute_url())
 
 def home(request):
      posts = Post.published.all()

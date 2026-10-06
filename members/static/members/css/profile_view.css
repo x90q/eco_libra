@@ -67,6 +67,13 @@
     width: 100%;
 }
 
+.profile_view_security_links {
+    display: grid;
+    gap: 8px;
+    padding: 18px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 .profile_edit_link {
     display: flex;
     align-items: center;
@@ -88,6 +95,34 @@
     background: #a282854f;
     color: #ffffff;
 }
+
+
+.profile_view_password_edit_button {
+    width: 100%;
+}
+
+.profile_view_password_edit_link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 16px;
+    background: rgba(83, 115, 134, 0.12);
+    color: #40559b;
+    border: 1px solid rgba(83, 115, 134, 0.8);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.profile_view_password_edit_link:hover {
+    background: rgba(83, 115, 134, 0.4);
+    color: #ffffff;
+}
+
 
 
 .profile_view_logout_form {

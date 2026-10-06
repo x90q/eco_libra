@@ -359,6 +359,79 @@ a {
 
 /* header end */
 
+/* messages */
+
+.messages {
+    position: sticky;
+    top: 70px;
+    height: 0;
+    overflow: visible;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.messages_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    pointer-events: auto;
+}
+
+.messages_list li {
+    background-color: #121915;
+    border: 1px solid #1e2c24;
+    padding: 10px 24px;
+    border-radius: 40px;
+
+    animation:
+        slideDown 0.4s ease-out forwards,
+        slideDown 0.4s ease-out reverse forwards 3s;
+}
+
+.messages_list li.error {
+    background-color: #431b22f4;
+    border-color: #79373c;
+    box-shadow: 0 4px 22px rgba(179, 67, 67, 0.2);
+}
+
+.messages_list li.error .message_text {
+    color: #f2ede6;
+}
+
+.messages_list li.success {
+    background-color: #192b22f6;
+    border-color: #2d4b3b;
+    box-shadow: 0 4px 22px rgba(51, 115, 51, 0.2);
+}
+
+.messages_list li.success .message_text {
+    color: #f2ede6;
+}
+
+.messages_list li .message_text {
+    color: #f2ede6;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 @keyframes rise {
     to {
         opacity: 1;

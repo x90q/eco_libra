@@ -50,7 +50,7 @@
                             <span class="comment_name"><a href = "{% url 'members:profile_view' user_id=comment.user.id %}">{{ comment.user.username }}</a></span>
                             <span class="created_time">{{ comment.created | timesince }} ago</span>
                         </div>
-                        <p>{{ comment.body | linebreaksbr }}</p>
+                        <span class = 'comment_body'>{{ comment.body | linebreaks }}</span>
                     </div>
                 {% empty %}
                     <p class="no_comm">no comments yet</p>

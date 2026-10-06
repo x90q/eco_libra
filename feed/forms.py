@@ -7,7 +7,8 @@ class EmailPostForm(forms.Form):
     to = forms.EmailField()
     comment = forms.CharField(
         required=False,
-        widget=forms.Textarea
+        widget=forms.Textarea,
+        max_length=500
     )
 
 class CommentForm(forms.ModelForm):
