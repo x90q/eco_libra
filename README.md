@@ -13,11 +13,15 @@ It serves as a transparent build log showcasing a hands-on, full-stack approach 
 ---
 ### Preview
 <p align="center">
-<img width="1427" height="723" alt="Снимок экрана 2026-09-30 в 21 07 59" src="https://github.com/user-attachments/assets/6efd8492-8680-46ad-817e-ab26c66151f9" />
+<img width="1420" height="730" alt="Снимок экрана 2026-10-09 в 00 06 01" src="https://github.com/user-attachments/assets/51da1817-0451-4678-9619-215dbbc6447e" />
 
-<img width="1423" height="727" alt="Снимок экрана 2026-09-30 в 20 54 16" src="https://github.com/user-attachments/assets/4386d425-95b2-4a37-b08f-1587404e89b2" />
+<img width="1425" height="731" alt="Снимок экрана 2026-10-09 в 00 07 09" src="https://github.com/user-attachments/assets/316e4c20-acb7-4b9b-a23d-42f025e7549e" />
 
-<img width="1427" height="723" alt="Снимок экрана 2026-09-30 в 20 54 53" src="https://github.com/user-attachments/assets/fde2c8cb-4e1f-4e56-afe4-60f5d08d1627" />
+<img width="1420" height="730" alt="Снимок экрана 2026-10-09 в 00 06 21" src="https://github.com/user-attachments/assets/d4ba4796-07d1-4770-be62-3de2ad6b100d" />
+
+<img width="1420" height="729" alt="Снимок экрана 2026-10-09 в 00 12 34" src="https://github.com/user-attachments/assets/e844a382-2529-4255-8ef3-a823f41b2075" />
+
+
 </p>
 
 ---
