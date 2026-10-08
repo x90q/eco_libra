@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comment
+from .models import Comment, Post
 
 from django.contrib.postgres.search import SearchVectorField
 
@@ -15,3 +15,8 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['body']
+
+class PostCreateForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'body', 'category']

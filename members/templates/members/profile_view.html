@@ -25,6 +25,10 @@
                 <span class ='profile_view_joined_label'>joined: </span>
                 <span class = 'profile_view_meta_item'>{{ user_profile.user.date_joined | date:"j M Y" | lower }}</span>
             </div>
+            <div class = 'profile_view_id'>
+                <span class = 'profile_view_id_label'>id: </span>
+                <span class = 'profile_view_meta_item'>{{ user.profile.user.id}}</span>
+            </div>
             <div class = 'profile_view_date_of_birth'>
                 {% if user_profile.date_of_birth %}
                     <span class = 'profile_view_date_of_birth_label'>date of birth: </span>
@@ -42,6 +46,24 @@
                 <span class = 'profile_view_bio_label'>bio:</span> 
                 <span class = 'profile_view_meta_item'>-</span>
                 {% endif %}
+            </div>
+        </div>
+        <div class = 'profile_view_counts'>
+            <div class = 'profile_view_posts_count'>
+                <span class = 'profile_view_count_title'>posts count:</span>
+                <span class = 'profile_view_count_element'>
+                    <a class = 'profile_view_count_link' href = '{% url 'search:posts_from_user' user_id=user_profile.user.id %}'>
+                        {{ published_posts_count }}
+                    </a>
+                </span>
+            </div>
+            <div class = 'profile_view_comments_count'>
+                <span class = 'profile_view_count_title'>comments count:</span>
+                <span class = 'profile_view_count_element'>
+                    <a class = 'profile_view_count_link' href = '{% url 'search:comments_from_user' user_id=user_profile.user.id %}'>
+                         {{ published_comments_count }}
+                    </a>
+                </span>
             </div>
         </div>
     </div>

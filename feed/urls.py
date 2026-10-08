@@ -40,4 +40,9 @@ urlpatterns = [
         views.post_list,
         name = 'post_list_by_tag'
     ),
+    path(
+        'post/create/',
+        views.post_create,
+        name = 'post_create'
+    )
 ]

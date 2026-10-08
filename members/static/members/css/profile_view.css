@@ -184,13 +184,14 @@
 
 .profile_view_joined,
 .profile_view_date_of_birth,
-.profile_view_bio {
+.profile_view_bio,
+.profile_view_id {
     display: grid;
     grid-template-columns: 150px minmax(0, 1fr);
 }
 
 .profile_view_meta_item {
-    font-weight: 600;
+    font-weight: 500;
     color: #bab5ae;
     overflow-wrap: anywhere;
     word-break: break-word;

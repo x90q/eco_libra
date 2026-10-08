@@ -4,7 +4,7 @@ from django.views.decorators.http import require_POST
 from .models import Post, Category
 from taggit.models import Tag
 from django.db.models import F
-from .forms import EmailPostForm, CommentForm
+from .forms import EmailPostForm, CommentForm, PostCreateForm
 
 from django.contrib.auth import get_user_model
 
@@ -17,6 +17,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from django.conf import settings
+
+from slugify import slugify
 
 def post_list(request, category_slug = None, tag_slug = None):
 
@@ -191,6 +193,30 @@ def post_comment(request, post_id):
         )
 
     return redirect(post.get_absolute_url())
+
+@login_required
+def post_create(request):
+    if request.method == 'POST':
+        form = PostCreateForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            post = form.save(commit=False)
+            post.author = request.user
+            post.slug = slugify(post.title)
+            post.status = Post.Status.PUBLISHED
+
+            post.save()
+            return redirect('feed:home')
+    else:
+        form = PostCreateForm()
+
+    return render(
+        request,
+        'feed/post/post_create.html',
+        {
+            'form' : form
+        }
+    )
 
 def home(request):
      posts = Post.published.all()

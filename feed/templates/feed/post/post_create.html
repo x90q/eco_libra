@@ -1,0 +1,48 @@
+{% extends 'feed/base.html' %}
+
+{% load static %}
+
+{% block title %}eco_libra - create post{% endblock %}
+
+{% block extra_js %}
+<link rel = 'stylesheet' href = '{% static "static/css/post_create.css" %}'>
+{% endblock %}
+
+{% block content %}
+
+<div class = 'post_create_container'>
+    <a href="{% url 'feed:home' %}">← back to feed</a>
+    <form class = 'post_create_form' method = 'post'>
+        {% csrf_token %}
+        <div class = 'post_create_form_title'>
+            <label for = '{{ form.title.id_for_label }}'>title:</label>
+            {{ form.title }}
+            {% if form.title.errors %}
+            <div class="field_errors">
+                {{ form.title.errors | lower }}
+            </div>
+            {% endif %}
+        </div>
+        <div class = 'post_create_form_body'>
+            <label for = '{{ form.body.id_for_label }}'>content:</label>
+            {{ form.body }}
+            {% if form.body.errors %}
+            <div class="field_errors">
+                {{ form.body.errors | lower }}
+            </div>
+            {% endif %}
+        </div>
+        <div class = 'post_create_form_category'>
+            <label for = '{{ form.category.id_for_label }}'>category:</label>
+            {{ form.category }}
+            {% if form.category.errors %}
+            <div class = "field_errors">
+                {{ form.category.errors | lower }}
+            </div>
+            {% endif %}
+        </div>
+
+        <button type = 'submit' class = 'post_create_submit_button'>post</button>
+    </form>
+</div>
+{% endblock %}

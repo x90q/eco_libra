@@ -25,6 +25,8 @@ staticfiles/
 .env.*
 secret.env
 *.env
+*.crt
+*.key
 
 */migrations/__pycache__/
 

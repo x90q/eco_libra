@@ -14,6 +14,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('feed/', include('feed.urls', namespace='feed')),
     path('account/', include('account.urls', namespace = 'account')),
+    path(
+        'social-auth/',
+        include(
+            'social_django.urls',
+            namespace = 'social'
+        ),
+        ),
     path('search/', include('search.urls', namespace = 'search')),
     path('members/', include('members.urls', namespace = 'members')),
     path(
@@ -22,6 +29,7 @@ urlpatterns = [
         { 'sitemaps' : sitemaps },
         name = 'django.contrib.sitemaps.views.sitemap'
     )
+    
 ]
 
 if settings.DEBUG:

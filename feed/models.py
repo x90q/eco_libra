@@ -81,6 +81,14 @@ class Post(models.Model):
             ]
         )
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if self.status != Post.Status.PUBLISHED:
+            self.comments.filter(active=True).update(active=False)
+        else:
+            self.comments.filter(active=False).update(active=True)
+
 class Comment(models.Model):
     post = models.ForeignKey(
         Post,
@@ -106,4 +114,13 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment by { self.user.username } on { self.post }"
+
+    def get_absolute_url(self):
+            return reverse(
+                'feed:post_detail',
+                args = [
+                    self.post.category.slug,
+                    self.post.slug
+                ]
+            )
     

@@ -1,0 +1,48 @@
+{% extends 'feed/base.html' %}
+
+{% load static %}
+
+{% block title %}eco_libra - search results{% endblock%}
+
+{% block extra_js %}
+<link rel="stylesheet" href="{% static "search/css/search_results.css" %}">
+<link rel="stylesheet" href="{% static "feed/css/categories_list.css" %}">
+<link rel="stylesheet" href="{% static "feed/css/pagination.css" %}">
+{% endblock %}
+
+{% block content %}
+
+        <div class = "search_result">
+            <a class = 'search_result_back' href="{% url 'members:profile_view' comments_user.id %}">← back to {{ comments_user.username}}'s profile</a>
+            <h2> comments from {{ comments_user.username}}:</h2>
+        </div>
+        <div class="search_posts_container">
+            <div class="search_posts">
+                {% for comment in comments %}
+                    <a href = "{{ comment.get_absolute_url }}">
+                        <article class="post" style="--category_color:{{ post.category.color }};">
+                            <div class="post_top">
+                                <span class="created_time">{{ comment.created | timesince }} ago</span>
+                            </div>
+                            <h3>{{ comment.user.username }}</h3>
+                            <p>{{ comment.body|truncatechars:150 }}</p>
+                            <div class="post_foot">
+                                <span>{{ comment.user.username }}</span>
+                            </div>
+                        </article>
+                    </a>
+                {% empty %}
+                    <div class = "no_result">
+                        <p>sorry, {{ comments_user.username }} hasn't left any comments yet.</p>
+                    </div>
+                {% endfor %}
+                {% if comments %}
+                    {% include 'pagination.html' with page=comments %}
+                {% endif %}
+            </div>
+            {% if posts %}
+                {% include 'feed/post/includes/categories_list.html' %}
+            {% endif %}
+        </div>
+{% endblock %}
+

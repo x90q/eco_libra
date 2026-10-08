@@ -1,0 +1,55 @@
+{% extends 'feed/base.html' %}
+
+{% load static %}
+
+{% block title %}eco_libra - search results{% endblock%}
+
+{% block extra_js %}
+<link rel="stylesheet" href="{% static "search/css/search_results.css" %}">
+<link rel="stylesheet" href="{% static "feed/css/categories_list.css" %}">
+<link rel="stylesheet" href="{% static "feed/css/pagination.css" %}">
+{% endblock %}
+
+{% block content %}
+
+        <div class = "search_result">
+            <a class = 'search_result_back' href="{% url 'members:profile_view' posts_user.id %}">← back to {{ posts_user.username}}'s profile</a>
+            <h2> posts from {{ posts_user.username}}:</h2>
+        </div>
+        <div class="search_posts_container">
+            <div class="search_posts">
+                {% for post in posts %}
+                    <a href = "{{ post.get_absolute_url }}">
+                        <article class="post" style="--category_color:{{ post.category.color }};">
+                            <div class="post_top">
+                                <span class="category_label">/{{ post.category.name | upper }}</span>
+                                <span class="created_time">{{ post.created | timesince }} ago</span>
+                            </div>
+                            <h3>{{ post.title }}</h3>
+                            <p>{{ post.body | truncatechars:250 }}</p>
+                            <div class="post_foot">
+                                <span>{{ post.author }}</span>
+                                {% with post.comments.count as comment_count %}
+                                    <span>{{ comment_count }} comment{{ comment_count|pluralize }}</span>
+                                {% endwith %}
+                                {% with post.views as views %}
+                                    <span>{{ views }} view{{ views | pluralize }}</span>
+                                {% endwith %}
+                            </div>
+                        </article>
+                    </a>
+                {% empty %}
+                    <div class = "no_result">
+                        <p>sorry, {{ posts_user.username }} hasn't created any posts yet.</p>
+                    </div>
+                {% endfor %}
+                {% if posts %}
+                    {% include 'pagination.html' with page=posts %}
+                {% endif %}
+            </div>
+            {% if posts %}
+                {% include 'feed/post/includes/categories_list.html' %}
+            {% endif %}
+        </div>
+{% endblock %}
+
