@@ -1,7 +1,7 @@
 .register_container,
 .register_done_container {
-    background: #121010;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--containers_background);
+    border: 1px solid var(--divider_border);
     border-radius: 12px;
     padding: 32px 28px;
     display: flex;
@@ -20,16 +20,16 @@
 
 .register_head h1,
 .register_done_container h1 {
-    color: #f2ede6;
-    font-size: 22px;
+    color: var(--white_text_headers);
+    font-size: 23px;
     font-weight: 600;
     margin: 0;
     text-align: center;
 }
 
 .register_done_container p {
-    color: #8c8580;
-    font-size: 13px;
+    color: var(--main_text);
+    font-size: 14.5px;
     font-weight: 400;
     margin: 0;
     margin-top: 8px;
@@ -38,13 +38,13 @@
 
 .register_done_container a {
     color: #e6394a;
-    font-size: 13px;
+    font-size: 14.5px;
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 .register_done_container a:hover {
-    color: #f2ede6;
+    color: var(--white_text_headers);
 }
 
 .register_form {
@@ -61,8 +61,8 @@
 }
 
 .register_form_item label {
-    color: #a0a0a0;
-    font-size: 13px;
+    color: var(--half_white_text);
+    font-size: 14.5px;
     font-weight: 500;
 }
 
@@ -70,11 +70,11 @@
     width: 100%;
     height: 42px;
     padding: 0 14px;
-    background: #1a1818;
+    background: var(--forms_input);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 8px;
-    color: #f2ede6;
-    font-size: 14px;
+    color: var(--white_text_headers);
+    font-size: 14.5px;
     box-sizing: border-box;
     outline: none;
     transition: border-color 0.2s ease;
@@ -82,16 +82,17 @@
 
 .register_form_item input:focus {
     border-color: #f2ede6;
+    background-color: var(--forms_input_focus);
 }
 
 .register_submit_button {
     width: 100%;
     height: 42px;
-    background: #f2ede6;
+    background: var(--white_text_headers);
     color: #0a0908;
     border: none;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 14.5px;
     font-weight: 600;
     cursor: pointer;
     margin-top: 6px;
@@ -103,8 +104,8 @@
 }
 
 .errors p {
-    color: #8c8580;
-    font-size: 13px;
+    color: var(--main_text);
+    font-size: 13.5px;
     text-align: center;
     margin: 0;
     margin-bottom: 4px;
@@ -115,14 +116,14 @@
 }
 
 .back_to_login_button a {
-    color: #8c8580;
-    font-size: 13px;
+    color: var(--main_text);
+    font-size: 13.5px;
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 .back_to_login_button a:hover {
-    color: #f2ede6;
+    color: var(--white_text_headers);
 }
 
 .field_errors {
@@ -143,7 +144,7 @@ ul.errorlist {
 .field_errors ul.errorlist li,
 ul.errorlist li {
     color: #ff6b6b;
-    font-size: 12px;
+    font-size: 13.5px;
     font-weight: 400;
     line-height: 1.3;
 }

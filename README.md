@@ -13,11 +13,19 @@ It serves as a transparent build log showcasing a hands-on, full-stack approach 
 ---
 ### Preview
 <p align="center">
-<img width="1427" height="723" alt="Снимок экрана 2026-09-30 в 21 07 59" src="https://github.com/user-attachments/assets/6efd8492-8680-46ad-817e-ab26c66151f9" />
 
-<img width="1423" height="727" alt="Снимок экрана 2026-09-30 в 20 54 16" src="https://github.com/user-attachments/assets/4386d425-95b2-4a37-b08f-1587404e89b2" />
+<img width="1917" height="966" alt="Capture" src="https://github.com/user-attachments/assets/99c01bfc-ecf8-4851-9764-d7b288042330" />
 
-<img width="1427" height="723" alt="Снимок экрана 2026-09-30 в 20 54 53" src="https://github.com/user-attachments/assets/fde2c8cb-4e1f-4e56-afe4-60f5d08d1627" />
+<img width="1920" height="966" alt="Capture5" src="https://github.com/user-attachments/assets/68e1f693-1be7-4cb1-abac-ee4bc129f2fb" />
+
+<img width="1920" height="966" alt="Capture3" src="https://github.com/user-attachments/assets/c2b99db6-d894-4970-83d2-f6f6731eebff" />
+
+<img width="1920" height="966" alt="Capture2" src="https://github.com/user-attachments/assets/5666b9ed-70f2-4de4-84a1-63b909b0a465" />
+
+<img width="1920" height="966" alt="Capture77" src="https://github.com/user-attachments/assets/e2a6b241-6b30-4575-87e2-43035be4e59c" />
+
+<img width="1920" height="963" alt="Capture6" src="https://github.com/user-attachments/assets/0a06f58a-eb63-4540-9417-a970f55e636f" />
+
 </p>
 
 ---
@@ -75,7 +83,7 @@ It serves as a transparent build log showcasing a hands-on, full-stack approach 
 - [x] **User-Generated Content:** Post creation and management for registered users.
 - [x] **OAuth Integration:** Social authentication support (Sign in with Google).
 - [x] **Avatars & Profile Analytics:** User avatar handling and clickable post/comment statistics.
-- [ ] **UI/UX Enhancement & Polishing:** Completing CSS styling for newly added UI elements, responsive layout refinements, and micro-interactions.
+- [x] **UI/UX Enhancement & Polishing:** Completing CSS styling for newly added UI elements, responsive layout refinements, and micro-interactions.
 - [ ] **Gamification & Reputation:** User rating and reputation system.
 - [ ] **Security Hardening:** Implementing protection against common web threats and hardening Django settings for production.
 

@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
         <title>{% block title %}{% endblock %}</title>
         <meta name="description" content="">
-        <link rel="stylesheet" href="{% static "feed/css/base.css" %}">
+        <link rel="stylesheet" href="{% static 'feed/css/base.css' %}">
         {% block extra_js %}{% endblock %}
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,7 +26,7 @@
                         <button class="navbar-button" aria-haspopup="true" aria-expanded="false">categories<span class="arrow">▾</span></button>
                         <div class="dropdown">
                             {% for category in categories %}
-                                <a href="{% url 'feed:post_list_by_category' category.slug %}" style="--category_color:{{ category.color }};">/{{ category.name | lower }}</a>
+                                <a href='{% url "feed:post_list_by_category" category.slug %}' style="--category_color: {{ category.color }};">/{{ category.name | lower }}</a>
                             {% empty %}
                                 <span class = "empty">no categories</span>
                             {% endfor %}
@@ -51,6 +51,7 @@
 
                 <div class = 'login'>
                     {% if request.user.is_authenticated %}
+
                     <div class="user_navbar_info navbar-item">
                         <button type="button" class="navbar-button user_navbar_button" aria-haspopup="true" aria-expanded="false">
                             <span class="username">{{ request.user.username }}</span>
@@ -69,6 +70,7 @@
                             <a href="{% url 'members:profile_view' user_id=request.user.id %}" class="user_navbar_dropdown_item">
                                 go to profile
                             </a>
+                            <span class = 'divider_dropdown'></span>
                             <form method="post" action="{% url 'account:logout' %}" class="user_navbar_dropdown">
                                 {% csrf_token %}
                                 <button type="submit" class="user_navbar_dropdown_logout_button">
@@ -79,8 +81,8 @@
                     </div>
                     {% else %}
                     <div class = 'auth_buttons'>
-                        <a href = '{% url 'account:login' %}'><button type="submit" class="login_button">sign in</button></a>
-                        <a href = '{% url 'account:register' %}'><button type="submit" class="register_button">create account</button></a>
+                        <a href = '{% url "account:login" %}'><button type="submit" class="login_button">sign in</button></a>
+                        <a href = '{% url "account:register" %}'><button type="submit" class="register_button">create account</button></a>
                     </div>
                     {% endif %}
             </div>

@@ -1,5 +1,5 @@
 section.send_mail_container {
-    max-width: 1120px;
+    max-width: 1140px;
     margin: auto;
     margin-top: 24px;
     margin-bottom: -26px;
@@ -8,37 +8,37 @@ section.send_mail_container {
 
 .send_mail_container a {
     display: inline-block;
-    font-size: 13.5px;
-    color: #8c8580;
+    font-size: 14.5px;
+    color: var(--main_text);
     margin-bottom: 16px;
     text-decoration: none;
     transition: color 0.15s ease;
 }
 
 .send_mail_container a:hover {
-    color: #f2ede6;
+    color: var(--white_text_headers);
 }
 
 .successful_mail p {
-    font-size: 15px;
+    font-size: 15.5px;
     line-height: 1.7;
-    color: #acacac;
+    color: var(--half_white_text);
     margin-bottom: 16px;
 }
 
 .share_post h2,
 .successful_mail h2 {
     margin: 0 0 16px;
-    font-size: 17px;
+    font-size: 17.5px;
     font-weight: 600;
     line-height: 1.35;
-    color: #f2ede6;
+    color: var(--white_text_headers);
 }
 
 .share_form {
     max-width: 580px;
-    background: #121010;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--containers_background);
+    border: 1px solid var(--divider_border);
     border-radius: 11px;
     padding: 24px;
     display: flex;
@@ -60,9 +60,9 @@ section.send_mail_container {
 
 .share_form_item label,
 .share_form_body label {
-    font-size: 13.5px;
+    font-size: 14.5px;
     font-weight: 600;
-    color: #f2ede6;
+    color: var(--white_text_headers);
     min-width: 90px;
 }
 
@@ -71,11 +71,11 @@ section.send_mail_container {
 .share_form_body textarea {
     width: 100%;
     background: #0a0908;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--divider_border);
     border-radius: 8px;
-    color: #f2ede6;
+    color: var(--white_text_headers);
     font-family: 'Inter', sans-serif;
-    font-size: 13.5px;
+    font-size: 14.5px;
     padding: 9px 12px;
     outline: none;
     box-sizing: border-box;
@@ -92,16 +92,17 @@ section.send_mail_container {
 .share_form_body textarea:focus {
     border-color: rgba(230, 57, 74, 0.5);
     box-shadow: 0 0 0 2px rgba(230, 57, 74, 0.15);
+    background-color: var(--forms_input_focus);
 }
 
 .share_submit_button {
     align-self: flex-start;
     background: #e6394a;
-    color: #f2ede6;
+    color: var(--white_text_headers);
     border: none;
     border-radius: 7px;
     font-family: 'Inter', sans-serif;
-    font-size: 13.5px;
+    font-size: 14.5px;
     font-weight: 500;
     padding: 10px 20px;
     margin-top: 4px;

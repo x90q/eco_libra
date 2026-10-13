@@ -25,10 +25,12 @@
             {% get_most_popular_categories 10 as most_popular_categories %}
             {% for category in most_popular_categories %}
             <a href="{% url 'feed:post_list_by_category' category.slug %}" style="--category_color: {{ category.color }}">
+                <span class = 'category_count'>{{ category.total_posts }} post{{category.total_posts|pluralize}}</span>
                 <span class="category_name">/{{ category.name | lower }}</span>
             </a>
             {% endfor %}
         </div>
+        <hr>
     </section>
     
     <div class = "home_posts_newest_title">
@@ -44,4 +46,43 @@
         </div>
     {% include 'feed/post/includes/categories_list.html' %}
     </div>
+    
+    <script>
+        document.querySelectorAll('.home_categories_rail').forEach(rail => {
+            let target = rail.scrollLeft;
+            let animationId = null;
+
+            rail.addEventListener('wheel', e => {
+                if (rail.scrollWidth <= rail.clientWidth) return;
+
+                if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+
+                e.preventDefault();
+
+                target += e.deltaY * 0.7;
+
+                target = Math.max(
+                    0,
+                    Math.min(target, rail.scrollWidth - rail.clientWidth)
+                );
+
+                if (animationId !== null) return;
+
+                function animate() {
+                    const distance = target - rail.scrollLeft;
+
+                    if (Math.abs(distance) < 0.5) {
+                        rail.scrollLeft = target;
+                        animationId = null;
+                        return;
+                    }
+
+                    rail.scrollLeft += distance * 0.12;
+                    animationId = requestAnimationFrame(animate);
+                }
+
+                animationId = requestAnimationFrame(animate);
+            }, { passive: false });
+        });
+</script>
 {% endblock %}

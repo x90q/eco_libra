@@ -1,6 +1,6 @@
 .edit_container {
-    background: #121010;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--containers_background);
+    border: 1px solid var(--divider_border);
     border-radius: 12px;
     padding: 22px 28px;
     display: flex;
@@ -17,7 +17,7 @@
 }
 
 .edit_container h1 {
-    color: #f2ede6;
+    color: var(--white_text_headers);
     font-size: 22px;
     font-weight: 600;
     margin: 0;
@@ -39,7 +39,7 @@
 }
 
 .edit_form_item label {
-    color: #a0a0a0;
+    color: var(--half_white_text);
     font-size: 13px;
     font-weight: 500;
     font-family: 'Inter', sans-serif;
@@ -51,10 +51,10 @@
     width: 100%;
     height: 42px;
     padding: 0 14px;
-    background: #1a1818;
+    background: var(--forms_input);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 8px;
-    color: #f2ede6;
+    color: var(--white_text_headers);
     font-size: 14px;
     font-family: 'Inter', sans-serif;
     box-sizing: border-box;
@@ -66,8 +66,8 @@
 .edit_form_item input[type="email"]:focus,
 .edit_form_item input[type="date"]:focus,
 .edit_form_item textarea:focus {
-    border-color: #f2ede6;
-    background: #201d1d;
+    border-color: var(--white_text_headers);
+    background: var(--forms_input_focus);
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
@@ -80,10 +80,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     min-height: 80px;
     height: 80px;
     padding: 10px 14px;
-    background: #1a1818;
+    background: var(--forms_input);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 8px;
-    color: #f2ede6;
+    color: var(--white_text_headers);
     font-size: 14px;
     font-family: 'Inter', sans-serif;
     box-sizing: border-box;
@@ -96,7 +96,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     display: flex;
     align-items: center;
     gap: 16px;
-    background: #1a1818;
+    background: var(--forms_input);
     padding: 10px 14px;
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 8px;
@@ -143,7 +143,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .file_input_wrapper input[type="file"] {
     font-size: 13px;
-    color: #a0a0a0;
+    color: var(--half_white_text);
     cursor: pointer;
     font-family: 'Inter', sans-serif;
 }
@@ -152,7 +152,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 6px;
-    color: #f2ede6;
+    color: var(--white_text_headers);
     padding: 6px 12px;
     font-family: 'Inter', sans-serif;
     font-size: 13px;
@@ -177,7 +177,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     justify-content: center;
     width: 100%;
     height: 42px;
-    background: #f2ede6;
+    background: var(--white_text_headers);
     color: #0a0908;
     border: none;
     border-radius: 8px;
@@ -195,7 +195,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .edit_form_back_button {
     background: #f2ede619;
-    color: #f2ede6;
+    color: var(--white_text_headers);
     border: 1px solid #f2ede61b;
 }
 

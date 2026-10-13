@@ -1,5 +1,5 @@
 .add_comment_form {
-    background: #121010;
+    background: var(--containers_background);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 11px;
     padding: 20px;
@@ -15,9 +15,9 @@
 }
 
 .add_comment_form_body label {
-    font-size: 13.5px;
+    font-size: 14.5px;
     font-weight: 600;
-    color: #f2ede6;
+    color: var(--half_white_text);
 }
 
 .add_comment_form input[type="text"],
@@ -25,11 +25,11 @@
 .add_comment_form textarea {
     width: 100%;
     background: #0a0908;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--divider_border);
     border-radius: 8px;
-    color: #f2ede6;
+    color: var(--white_text_headers);
     font-family: 'Inter', sans-serif;
-    font-size: 13.5px;
+    font-size: 14.5px;
     padding: 9px 12px;
     outline: none;
     box-sizing: border-box;
@@ -51,11 +51,11 @@
 .add_comment_submit_button {
     align-self: flex-start;
     background: #e6394a;
-    color: #ffffff;
+    color: var(--white_text_headers);
     border: none;
     border-radius: 7px;
     font-family: 'Inter', sans-serif;
-    font-size: 13.5px;
+    font-size: 14.5px;
     font-weight: 500;
     padding: 9px 18px;
     cursor: pointer;

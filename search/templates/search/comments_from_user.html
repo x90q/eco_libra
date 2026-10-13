@@ -24,7 +24,7 @@
                             <div class="post_top">
                                 <span class="created_time">{{ comment.created | timesince }} ago</span>
                             </div>
-                            <h3>{{ comment.user.username }}</h3>
+                            <h3>{{ comment.post.title }}</h3>
                             <p>{{ comment.body|truncatechars:150 }}</p>
                             <div class="post_foot">
                                 <span>{{ comment.user.username }}</span>

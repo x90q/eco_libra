@@ -10,62 +10,90 @@
 
 {% block content %}
 <div class = 'profile_view_container'>
-    <div class = 'profile_view_main'>
-        <div class = 'profile_view_main_header'>
-            <span class = 'profile_view_username'>
-                {{ user_profile.user.username }}
-            </span>
-            <span class = 'profile_view_last_online'>
-                <span class = 'profile_view_last_online_label'>last login: </span>
-                <span class = 'profile_view_meta_item'>{{ user_profile.user.last_login | timesince }} ago</span>
-            </span>
-        </div>
-        <div class = 'profile_view_meta'>
-            <div class = 'profile_view_joined'>
-                <span class ='profile_view_joined_label'>joined: </span>
-                <span class = 'profile_view_meta_item'>{{ user_profile.user.date_joined | date:"j M Y" | lower }}</span>
+    <div class = 'profile_view_left'>
+        <div class = 'profile_view_main'>
+            <div class = 'profile_view_main_header'>
+                <span class = 'profile_view_username'>
+                    {{ user_profile.user.username }}
+                </span>
+                <span class = 'profile_view_last_online'>
+                    <span class = 'profile_view_last_online_label'>last seen: </span>
+                    <span class = 'profile_view_meta_item'>{{ user_profile.user.last_login | timesince }} ago</span>
+                </span>
             </div>
-            <div class = 'profile_view_id'>
-                <span class = 'profile_view_id_label'>id: </span>
-                <span class = 'profile_view_meta_item'>{{ user.profile.user.id}}</span>
-            </div>
-            <div class = 'profile_view_date_of_birth'>
-                {% if user_profile.date_of_birth %}
-                    <span class = 'profile_view_date_of_birth_label'>date of birth: </span>
-                    <span class = 'profile_view_meta_item'>{{ user_profile.date_of_birth | date:" j M Y" | lower }}</span>
-                {% else %}
-                    <span class = 'profile_view_date_of_birth_label'>date of birth: </span>
+            <div class = 'profile_view_meta'>
+                <div class = 'profile_view_joined'>
+                    <span class ='profile_view_joined_label'>joined: </span>
+                    <span class = 'profile_view_meta_item'>{{ user_profile.user.date_joined | date:"j M Y" | lower }}</span>
+                </div>
+                <div class = 'profile_view_id'>
+                    <span class = 'profile_view_id_label'>id: </span>
+                    <span class = 'profile_view_meta_item'>{{ user.profile.user.id}}</span>
+                </div>
+                <div class = 'profile_view_date_of_birth'>
+                    {% if user_profile.date_of_birth %}
+                        <span class = 'profile_view_date_of_birth_label'>date of birth: </span>
+                        <span class = 'profile_view_meta_item'>{{ user_profile.date_of_birth | date:" j M Y" | lower }}</span>
+                    {% else %}
+                        <span class = 'profile_view_date_of_birth_label'>date of birth: </span>
+                        <span class = 'profile_view_meta_item'>-</span>
+                    {% endif %}
+                </div>
+                <div class = 'profile_view_bio'>
+                    {% if user_profile.bio %}
+                    <span class = 'profile_view_bio_label'>bio:</span> 
+                    <span class = 'profile_view_meta_item'>{{ user_profile.bio }}</span>
+                    {% else %}
+                    <span class = 'profile_view_bio_label'>bio:</span> 
                     <span class = 'profile_view_meta_item'>-</span>
-                {% endif %}
+                    {% endif %}
+                </div>
             </div>
-            <div class = 'profile_view_bio'>
-                {% if user_profile.bio %}
-                <span class = 'profile_view_bio_label'>bio:</span> 
-                <span class = 'profile_view_meta_item'>{{ user_profile.bio }}</span>
-                {% else %}
-                <span class = 'profile_view_bio_label'>bio:</span> 
-                <span class = 'profile_view_meta_item'>-</span>
-                {% endif %}
-            </div>
-        </div>
-        <div class = 'profile_view_counts'>
-            <div class = 'profile_view_posts_count'>
-                <span class = 'profile_view_count_title'>posts count:</span>
-                <span class = 'profile_view_count_element'>
-                    <a class = 'profile_view_count_link' href = '{% url 'search:posts_from_user' user_id=user_profile.user.id %}'>
+            <div class = 'profile_view_counts'>
+                <a class = 'profile_view_count_link' href = '{% url "search:posts_from_user" user_id=user_profile.user.id %}'>
+                <div class = 'profile_view_posts_count'>
+                    <span class = 'profile_view_count_element'>
                         {{ published_posts_count }}
-                    </a>
-                </span>
-            </div>
-            <div class = 'profile_view_comments_count'>
-                <span class = 'profile_view_count_title'>comments count:</span>
-                <span class = 'profile_view_count_element'>
-                    <a class = 'profile_view_count_link' href = '{% url 'search:comments_from_user' user_id=user_profile.user.id %}'>
-                         {{ published_comments_count }}
-                    </a>
-                </span>
+                    </span>
+                    <span class = 'profile_view_count_title'>posts</span>
+                </div>
+                </a>
+                <a class = 'profile_view_count_link' href = '{% url "search:comments_from_user" user_id=user_profile.user.id %}'>
+                <div class = 'profile_view_comments_count'>
+                    <span class = 'profile_view_count_element'>
+                        {{ published_comments_count }}
+                    </span>
+                    <span class = 'profile_view_count_title'>comments</span>
+                </div>
+                </a>
             </div>
         </div>
+        {% if user_posts %}
+        <div class = 'profile_view_topics_container'>
+            <h3>{{ user_profile.user.username }}'s latest posts:</h3>
+            
+            {% for post in user_posts %}
+            <a href = '{{ post.get_absolute_url }}'>
+                <div class = 'profile_view_topic' style = "--category_color:{{ post.category.color }};">
+                    <div class = 'profile_view_topic_top'>
+                        <span class = 'profile_view_topic_category'>/{{ post.category | upper }}</span>
+                        <span class = 'profile_view_topic_created'>{{ post.created | timesince }} ago</span>
+                    </div>
+                    
+                    
+                    <span class = 'profile_view_topic_title'>{{ post.title }}</span>
+
+                    <div class = 'profile_view_topic_bottom'>
+                        <span class = 'profile_view_topic_username'>{{ post.author }}</span>
+                        <span class = 'profile_view_topic_comments'>{{ post.comments.count }} comment{{post.views|pluralize}}</span>
+                        <span class = 'profile_view_topic_views'>{{ post.views }} view{{post.views |pluralize}}</span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+            <a class = "more_posts_link" href = '{% url "search:posts_from_user" user_profile.user.id %}'>more from {{ user_profile.user.username }} →</a>
+        </div>
+        {% endif %}
     </div>
     <div class = 'profile_view_right'>
         <div class = 'profile_view_avatar_container'>

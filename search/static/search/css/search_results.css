@@ -49,14 +49,14 @@
 }
 
 .search_users_block:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--divider_border);
 }
 
 .search_users_username {
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     text-align: left;
-    font-size: 13px;
+    font-size: 14px;
     text-align: center;
 
     white-space: nowrap;
@@ -94,13 +94,13 @@
     align-items: center;
     justify-content: center;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
+    font-size: 23px;
     color: #e6394a;
 
 }
 
 .search_result {
-    max-width: 1120px;
+    max-width: 1140px;
     margin: auto;
     margin-top: 24px;
     margin-bottom: -26px;
@@ -114,18 +114,18 @@
 
 .search_result a {
     display: inline-block;
-    font-size: 13.5px;
-    color: #8c8580;
+    font-size: 14px;
+    color: var(--main_text);
     margin-bottom: 6px;
     transition: color 0.15s ease;
 }
 
 .search_result a:hover {
-    color: #f2ede6;
+    color: var(--white_text_headers);
 }
 
 .search_posts_container {
-    max-width: 1120px;
+    max-width: 1140px;
     margin: 0 auto;
     padding: 30px clamp(16px, 4vw, 32px) 90px;
     display: grid;
@@ -142,8 +142,8 @@
 
 .post {
     --category_color: #e6394a;
-    background: #121010;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--containers_background);
+    border: 1px solid var(--divider_border);
     border-radius: 11px;
     padding: 18px 20px;
     opacity: 0;
@@ -170,7 +170,7 @@
     align-items: center;
     gap: 6px;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 12px;
+    font-size: 13.5px;
     letter-spacing: 0.03em;
     color: var(--category_color);
     border: 1px solid color-mix(in srgb, var(--category_color, #e6394a) 45%, transparent);
@@ -179,21 +179,21 @@
 }
 
 .post_top .created_time {
-    font-size: 12.5px;
-    color: #8c8580;
+    font-size: 13.5px;
+    color: var(--main_text);
 }
 
 .post h3 {
     margin: 0 0 6px;
-    font-size: 17px;
+    font-size: 17.5px;
     font-weight: 600;
     line-height: 1.35;
 }
 
 .post p {
     margin: 0;
-    font-size: 14px;
-    color: #8c8580;
+    font-size: 14.5px;
+    color: var(--main_text);
     line-height: 1.6;
     overflow-wrap: anywhere;
     word-break: break-word;
@@ -204,15 +204,15 @@
     align-items: center;
     gap: 16px;
     margin-top: 12px;
-    font-size: 12.5px;
-    color: #8c8580;
+    font-size: 13.5px;
+    color: #ce6d6d;
 }
 
 .no_result p {
     padding: 0;
     margin: 0;
-    font-size: 15px;
+    font-size: 15.5x;
     line-height: 1.7;
-    color: #acacac;
+    color: var(--half_white_text);
     margin-bottom: 16px;
 }

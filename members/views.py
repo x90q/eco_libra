@@ -9,11 +9,13 @@ def profile_view(request, user_id):
         user__id=user_id,
     )
 
-    published_posts_count = user_profile.user.feed_posts.filter(status = Post.Status.PUBLISHED).count()
+    user_posts = user_profile.user.feed_posts.filter(status = Post.Status.PUBLISHED).order_by('-publish')[:3]
+
+    published_posts_count = user_posts.count()
 
     published_comments_count = user_profile.user.comments.filter(active = True).count()
 
-    is_me = request.user.is_authenticated and request.user == user_profile.user
+    is_me = request.user.is_authenticated and request.user == user_profile.user 
 
     return render(
         request,
@@ -22,6 +24,7 @@ def profile_view(request, user_id):
             'user_id' : user_id,
             'user_profile' : user_profile,
             'is_me' : is_me,
+            'user_posts' : user_posts,
             'published_posts_count' : published_posts_count,
             'published_comments_count' : published_comments_count,
         }

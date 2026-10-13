@@ -202,11 +202,21 @@ def post_create(request):
             cd = form.cleaned_data
             post = form.save(commit=False)
             post.author = request.user
-            post.slug = slugify(post.title)
+            post.slug = slugify(post.title)[:255]
             post.status = Post.Status.PUBLISHED
 
             post.save()
+            messages.success(
+                    request,
+                    'post was successfully published.'
+                    )
             return redirect('feed:home')
+
+        else:
+            messages.error(
+                request,
+                'invalid input.'
+            )
     else:
         form = PostCreateForm()
 

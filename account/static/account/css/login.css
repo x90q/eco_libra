@@ -1,7 +1,7 @@
 .login_container,
 .logged_out_container {
-    background: #121010;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--containers_background);
+    border: 1px solid var(--divider_border);
     border-radius: 12px;
     padding: 32px 28px;
     display: flex;
@@ -20,8 +20,8 @@
 
 .login_head h1,
 .logged_out_container h1 {
-    color: #f2ede6;
-    font-size: 22px;
+    color: var(--white_text_headers);
+    font-size: 23px;
     font-weight: 600;
     margin: 0;
     text-align: center;
@@ -29,8 +29,8 @@
 
 .login p,
 .logged_out_container p {
-    color: #8c8580;
-    font-size: 13px;
+    color: var(--main_text);
+    font-size: 14.5px;
     font-weight: 400;
     margin: 0;
     margin-top: 8px;
@@ -39,13 +39,13 @@
 
 .logged_out_container a {
     color: #e6394a;
-    font-size: 13px;
+    font-size: 14.5px;
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 .logged_out_container a:hover {
-    color: #f2ede6;
+    color: var(--white_text_headers);
 }
 
 .login_form {
@@ -62,8 +62,8 @@
 }
 
 .login_form_item label {
-    color: #a0a0a0;
-    font-size: 13px;
+    color: var(--half_white_text);
+    font-size: 14.5px;
     font-weight: 500;
 }
 
@@ -71,28 +71,31 @@
     width: 100%;
     height: 42px;
     padding: 0 14px;
-    background: #1a1818;
+    background: var(--forms_input);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 8px;
-    color: #f2ede6;
-    font-size: 14px;
+    font-weight: 550;
+    font-size: 14.5px;
+    color: var(--white_text_headers);
+    font-size: 14.5px;
     box-sizing: border-box;
     outline: none;
     transition: border-color 0.2s ease;
 }
 
 .login_form_item input:focus {
-    border-color: #f2ede6;
+    border-color: var(--white_text_headers);
+    background-color: var(--forms_input_focus);
 }
 
 .login_submit_button {
     width: 100%;
     height: 42px;
-    background: #f2ede6;
-    color: #0a0908;
+    background: var(--white_text_headers);
+    color: #292827;
     border: none;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 14.5px;
     font-weight: 600;
     cursor: pointer;
     margin-top: 6px;
@@ -110,10 +113,10 @@
     width: 100%;
     height: 42px;
     background: transparent;
-    color: #8c8580;
-    border: 1px solid #8c8580;
+    color: var(--main_text);
+    border: 1px solid var(--main_text);
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 14.5px;
     font-weight: 500;
     text-decoration: none;
     box-sizing: border-box;
@@ -121,7 +124,7 @@
 }
 
 .form_register_button:hover {
-    color: #f2ede6;
+    color: var(--white_text_headers);
     border-color: rgba(255, 255, 255, 0.4);
 }
 
@@ -132,19 +135,19 @@
 }
 
 .password_reset_link a {
-    color: #8c8580;
-    font-size: 13px;
+    color: var(--main_text);
+    font-size: 13.5px;
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 .password_reset_link a:hover {
-    color: #f2ede6;
+    color: var(--white_text_headers);
 }
 
 .errors p {
-    color: #8c8580;
-    font-size: 13px;
+    color: var(--main_text);
+    font-size: 13.5px;
     text-align: center;
     margin: 0;
 }
@@ -154,8 +157,9 @@
     align-items: center;
     text-align: center;
     width: 100%;
-    color: #8c8580;
-    font-size: 14px;
+    color: var(--main_text);
+    font-size: 14.5px;
+    font-weight: 600;
     margin-top: -8px;
 }
 
@@ -163,7 +167,7 @@
 .third-party-login::after {
     content: "";
     flex: 1;
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid var(--half_white_text);
 }
 
 .third-party-login::before {
@@ -186,15 +190,15 @@
 .gsi-material-button {
     background-color: #131314;
     background-image: none;
-    border: 1px solid #8e918f;
+    border: 1px solid var(--half_white_text);
     -webkit-border-radius: 4px;
     border-radius: 4px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    color: #f2ede6;
+    color: var(--white_text_headers);
     cursor: pointer;
     font-family: 'Roboto', arial, sans-serif;
-    font-size: 14px;
+    font-size: 14.5px;
     height: 40px;
     letter-spacing: 0.25px;
     outline: none;
@@ -241,7 +245,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: top;
-    color: #f2ede6;
+    color: var(--white_text_headers);
 }
 
 .gsi-material-button .gsi-material-button-state {
@@ -268,7 +272,7 @@
 
 .gsi-material-button:not(:disabled):active .gsi-material-button-state,
 .gsi-material-button:not(:disabled):focus .gsi-material-button-state {
-    background-color: #e3e3e3;
+    background-color: var(--white_text_headers);
     opacity: 12%;
 }
 
@@ -278,7 +282,7 @@
 }
 
 .gsi-material-button:not(:disabled):hover .gsi-material-button-state {
-    background-color: #e3e3e3;
+    background-color: var(--white_text_headers);
     opacity: 8%;
 }
 

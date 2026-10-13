@@ -2,6 +2,14 @@
     box-sizing: border-box;
     padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
+    --divider_border: rgba(255, 255, 255, 0.08);
+    --main_text: #7c8c8f;
+    --white_text_headers: #f2ede6;
+    --half_white_text: #bab5ae;
+    --post_list_body: #a0acad;
+    --containers_background: #121010;
+    --forms_input: #1a1818;
+    --forms_input_focus: #201d1d;
 }
 
 * {
@@ -14,8 +22,8 @@ html {
 
 body {
     margin: 0;
-    background: #0a0908;
-    color: #f2ede6;
+    background: #0f0d0c;
+    color: var(--white_text_headers);
     font-family: 'Inter', sans-serif;
     min-height: 100%;
 }
@@ -25,19 +33,29 @@ a {
     text-decoration: none;
 }
 
+p, span, div, a, li, h1, h2, h3 {
+    overflow-wrap: anywhere;
+    min-width: 0;
+}
+
+input, textarea {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
 /* header, "new_base.html" */
 
 .navbar {
     position: sticky;
     top: env(safe-area-inset-top, 0px);
     z-index: 40;
-    background: rgba(10, 9, 8, 0.86);
-    backdrop-filter: blur(10px);
+    background: #0f0d0cdc;
+    backdrop-filter: blur(6px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .navbar-inner {
-    max-width: 1120px;
+    max-width: 1140px;
     margin: 0 auto;
     padding: 8px clamp(16px, 4vw, 32px);
     display: flex;
@@ -47,12 +65,16 @@ a {
 
 .website-name {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 21px;
+    font-size: 23px;
     letter-spacing: 0.03em;
     white-space: nowrap;
     display: flex;
     align-items: center;
     gap: 6px;
+}
+
+.website-name span {
+    color: #b95656;
 }
 
 .navbar-elements {
@@ -69,26 +91,26 @@ a {
 .navbar-button {
     background: none;
     border: none;
-    color: #8c8580;
+    color: var(--main_text);
     font-family: 'Inter', sans-serif;
-    font-size: 14px;
+    font-size: 14.5px;
     font-weight: 500;
     padding: 8px 12px;
     border-radius: 7px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 2px;
     transition: color 0.18s ease, background 0.18s ease;
 }
 
 .navbar-button:hover {
-    color: #f2ede6;
+    color: var(--white_text_headers);
     background: rgba(255, 255, 255, 0.05);
 }
 
 .navbar-button.active {
-    color: #f2ede6;
+    color: var(--white_text_headers);
 }
 
 .navbar-button.active::after {
@@ -103,7 +125,8 @@ a {
 }
 
 .navbar-button .arrow {
-    font-size: 10px;
+    margin-top:3.5px;
+    font-size: 14.5px;
     transition: transform 0.2s ease;
 }
 
@@ -112,7 +135,7 @@ a {
 }
 
 .navbar-item.open .navbar-button {
-    color: #f2ede6;
+    color: var(--white_text_headers);
     background: rgba(255, 255, 255, 0.06);
 }
 
@@ -134,8 +157,8 @@ a {
 }
 
 .dropdown .empty {
-    font-size: 12.5px;
-    color: #8c8580;
+    font-size: 14.5px;
+    color: var(--main_text);
 }
 
 .navbar-item.open .dropdown {
@@ -151,15 +174,15 @@ a {
     gap: 10px;
     padding: 9px 10px;
     border-radius: 6px;
-    font-size: 13.5px;
+    font-size: 14.5px;
     text-decoration: none;
-    color: #8c8580;
+    color: var(--main_text);
     transition: background 0.15s ease, color 0.15s ease;
 }
 
 .dropdown a:hover {
     background: color-mix(in srgb, var(--category_color, #e6394a) 25%, transparent);
-    color: #f2ede6;
+    color: var(--white_text_headers);
 }
 
 .searchbar {
@@ -172,7 +195,7 @@ a {
     background: #151212;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 8px;
-    color: #f2ede6;
+    color: var(--white_text_headers);
     font-family: 'Inter', sans-serif;
     font-size: 13.5px;
     padding: 10.5px 12px;
@@ -181,13 +204,14 @@ a {
 }
 
 .searchbar input::placeholder {
-    color: #8c8580;
+    color: var(--main_text);
 }
 
 .searchbar input:focus {
     border-color: rgba(230, 57, 74, 0.5);
     width: 250px;
 }
+
 
 .user_navbar_info {
     position: relative;
@@ -207,9 +231,9 @@ a {
     gap: 8px;
     align-items: center;
     font-family: 'Inter', sans-serif;
-    font-size: 13.5px;
+    font-size: 14.5px;
     font-weight: 500;
-    color: #f2ede6;
+    color: var(--white_text_headers);
 }
 
 .user_navbar_button:hover {
@@ -241,7 +265,7 @@ a {
     align-items: center;
     justify-content: center;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 15px;
+    font-size: 16px;
     color: #e6394a;
 }
 
@@ -254,7 +278,7 @@ a {
     background: #151212;
     border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 9px;
-    padding: 6px;
+    padding: 10px 6px;
     box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
     opacity: 0;
     transform: translateY(-6px) scale(0.98);
@@ -275,6 +299,16 @@ a {
     padding: 0;
 }
 
+.divider_dropdown {
+    display: block;
+    justify-content: center;
+    width: 90%;
+    height: 1px;
+    margin: 4px auto;
+    background-color: rgba(255, 255, 255, 0.14);
+}
+
+
 .user_navbar_dropdown_item,
 .user_navbar_dropdown_logout_button {
     display: flex;
@@ -283,9 +317,9 @@ a {
     padding: 9px 10px;
     border-radius: 6px;
     font-family: 'Inter', sans-serif;
-    font-size: 13.5px;
+    font-size: 14.5px;
     text-decoration: none;
-    color: #8c8580;
+    color: var(--main_text);
     background: transparent;
     border: none;
     cursor: pointer;
@@ -294,8 +328,8 @@ a {
 }
 
 .user_navbar_dropdown_item:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: #f2ede6;
+    background: var(--divider_border);
+    color: var(--white_text_headers);
 }
 
 .user_navbar_dropdown_logout_button {
@@ -317,7 +351,7 @@ a {
 .login_button,
 .register_button {
     font-family: 'Inter', sans-serif;
-    font-size: 13.5px;
+    font-size: 14px;
     font-weight: 500;
     padding: 8px 16px;
     border-radius: 8px;
@@ -331,19 +365,19 @@ a {
 
 .register_button {
     background: #151212;
-    color: #f2ede6;
+    color: var(--white_text_headers);
     border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .register_button:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.25);
+    background: var(--divider_border);
+    border-color: rgba(255, 255, 255, 0.349);
     box-shadow: 0 2px 4px rgba(235, 200, 204, 0.1);
 }
 
 .login_button {
     background: #ff4e5fd9;
-    color: #ffffff;
+    color: var(--white_text_headers);
     border: 1px solid #e6394a;
 }
 
@@ -401,7 +435,7 @@ a {
 }
 
 .messages_list li.error .message_text {
-    color: #f2ede6;
+    color: var(--white_text_headers);
 }
 
 .messages_list li.success {
@@ -411,12 +445,12 @@ a {
 }
 
 .messages_list li.success .message_text {
-    color: #f2ede6;
+    color: var(--white_text_headers);
 }
 
 .messages_list li .message_text {
-    color: #f2ede6;
-    font-size: 15px;
+    color: var(--white_text_headers);
+    font-size: 16px;
     font-weight: 500;
 }
 

@@ -2,8 +2,8 @@
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    font-size: 13.5px;
-    color: #8c8580;
+    font-size: 14.5px;
+    color: var(--main_text);
     margin: 24px 0;
 }
 
@@ -21,11 +21,11 @@
 }
 
 .pagination a {
-    color: #8c8580;
+    color: var(--main_text);
     text-decoration: none;
     transition: color 0.15s ease;
 }
 
 .pagination a:hover {
-    color: #f2ede6;
+    color: var(--white_text_headers);
 }

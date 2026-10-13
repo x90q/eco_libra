@@ -33,7 +33,7 @@ class Post(models.Model):
     
     title = models.CharField(max_length=255)
     slug = models.SlugField(
-        max_length=250,
+        max_length=255,
         unique_for_date='publish'
     )
 
@@ -49,7 +49,7 @@ class Post(models.Model):
             related_name = "posts"
         )
     
-    body = models.TextField()
+    body = models.TextField(max_length=2500)
 
     publish = models.DateTimeField(db_default = Now())
     created = models.DateTimeField(auto_now_add=True)

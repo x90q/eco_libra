@@ -45,12 +45,30 @@
                 <h2>comments</h2>
 
                 {% for comment in comments %}
-                    <div class="comment">
-                        <div class="comment_top">
-                            <span class="comment_name"><a href = "{% url 'members:profile_view' user_id=comment.user.id %}">{{ comment.user.username }}</a></span>
-                            <span class="created_time">{{ comment.created | timesince }} ago</span>
+                    <div class="comment_container">
+                        {% if comment.user.profile.photo %}
+                        <a class = 'comment_avatar_link' href = "{% url 'members:profile_view' user_id=comment.user.id %}">
+                            <span class = "comment_avatar">
+                                <img src="{{ comment.user.profile.photo.url }}" alt="{{ comment.user.username }}">
+                            </span>
+                        </a>
+                        {% else %}
+                        <a class = 'comment_avatar_placeholder_link' href = "{% url 'members:profile_view' user_id=comment.user.id %}">
+                            <span class = "comment_avatar_placeholder">
+                                    {{ comment.user.username|slice:":1"|upper }}
+                            </span>
+                        </a>
+                        {% endif %}
+                        <div class = 'comment_meta'>
+                            <div class = "comment_info">
+                                <span class="comment_name"><a href = "{% url 'members:profile_view' user_id=comment.user.id %}">{{ comment.user.username }}</a></span>
+                                <span class="created_time">{{ comment.created | timesince }} ago</span>
+                            </div>
+                            <span class = 'comment_body'>{{ comment.body | linebreaks }}</span>
                         </div>
-                        <span class = 'comment_body'>{{ comment.body | linebreaks }}</span>
+                    </div>
+                    <div class = 'add_comment_container'>
+                        
                     </div>
                 {% empty %}
                     <p class="no_comm">no comments yet</p>

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comment, Post
+from .models import Comment, Post, Category
 
 from django.contrib.postgres.search import SearchVectorField
 
@@ -16,7 +16,14 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['body']
 
+class SlashModelChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return f"/{obj.name}"
+
 class PostCreateForm(forms.ModelForm):
+    category = SlashModelChoiceField(
+    queryset=Category.objects.all()
+    )
     class Meta:
         model = Post
         fields = ['title', 'body', 'category']

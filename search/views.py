@@ -103,6 +103,7 @@ def posts_from_user(request, user_id):
         }
     )
 
+@login_required
 def comments_from_user(request, user_id):
 
     User = get_user_model()
