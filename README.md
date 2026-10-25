@@ -14,17 +14,17 @@ It serves as a transparent build log showcasing a hands-on, full-stack approach 
 ### Preview
 <p align="center">
 
-<img width="1917" height="966" alt="Capture" src="https://github.com/user-attachments/assets/99c01bfc-ecf8-4851-9764-d7b288042330" />
+<img width="1920" height="965" alt="1" src="https://github.com/user-attachments/assets/3ae91cc8-1f47-4a92-962b-3375b5fddd01" />
 
-<img width="1920" height="966" alt="Capture5" src="https://github.com/user-attachments/assets/68e1f693-1be7-4cb1-abac-ee4bc129f2fb" />
+<img width="1920" height="967" alt="2" src="https://github.com/user-attachments/assets/8b6254d7-42f2-4c53-8e8b-db5e9868ed6d" />
 
-<img width="1920" height="966" alt="Capture3" src="https://github.com/user-attachments/assets/c2b99db6-d894-4970-83d2-f6f6731eebff" />
+<img width="1920" height="966" alt="3" src="https://github.com/user-attachments/assets/16fa109c-0299-4342-9487-94f9d2fd083a" />
 
-<img width="1920" height="966" alt="Capture2" src="https://github.com/user-attachments/assets/5666b9ed-70f2-4de4-84a1-63b909b0a465" />
+<img width="1920" height="968" alt="5" src="https://github.com/user-attachments/assets/53ad0a25-58b0-4068-bf6d-2395d7f218a6" />
 
-<img width="1920" height="966" alt="Capture77" src="https://github.com/user-attachments/assets/e2a6b241-6b30-4575-87e2-43035be4e59c" />
+<img width="1920" height="966" alt="7" src="https://github.com/user-attachments/assets/7c30a395-ca73-4e1e-a1b3-9baca1e8d072" />
 
-<img width="1920" height="963" alt="Capture6" src="https://github.com/user-attachments/assets/0a06f58a-eb63-4540-9417-a970f55e636f" />
+<img width="1920" height="966" alt="8" src="https://github.com/user-attachments/assets/9dcf28bd-0bb0-4f65-bab9-966772060971" />
 
 </p>
 
@@ -32,58 +32,62 @@ It serves as a transparent build log showcasing a hands-on, full-stack approach 
 
 ### 🛠 Tech Stack & Dependencies
 
-* **Core Framework & Language:**
-  * **Python 3.11+** & **Django 6.1+** - Main full-stack framework powering backend logic, ORM, views, and DTL templates.
+- **Core Framework & Language:**
+  * **Python 3.11+** & **Django 6.1+** — Main full-stack framework powering backend logic, ORM, views, and DTL templates.
 
-* **Authentication & Social Auth:**
-  * **Email & Google OAuth2 Integration** - Dual authentication flow via native Django auth and Google API over HTTPS.
-  * `django-extensions` & `Werkzeug` - Advanced development server tools for HTTPS local debugging (`runserver_plus`).
+- **Authentication & Social Auth:**
+  * **`django-allauth`** — Robust authentication suite handling user registration, login, and security flows.
+  * **Google OAuth2 Integration** — Social sign-in via Google API over HTTPS.
+  * `django-extensions` & `Werkzeug` — Advanced development server tools for HTTPS local debugging (`runserver_plus`).
 
-* **Database & Search:**
-  * **PostgreSQL** - Required relational database powering full-text search and trigram similarity support.
-  * `psycopg` (v3) / `psycopg2-binary` - High-performance database adapters connecting Django to PostgreSQL.
+- **Frontend & Styling:**
+  * **Tailwind CSS** (`django-tailwind` & `pytailwindcss`) — Modern utility-first CSS framework powering the complete UI design.
+  * `django-widget-tweaks` — Helper library for fine-tuning HTML form rendering.
 
-* **Content & Features:**
-  * `django-taggit` - Flexible tagging framework for organizing forum posts, categories, and tag-based recommendations.
-  * `django.contrib.sitemaps` & `django.contrib.sites` - Sitemap generation and domain site management for OAuth callbacks.
-  * `Pillow` - Image handling for user avatars.
+- **Database & Search:**
+  * **PostgreSQL** — Relational database powering full-text search and trigram similarity support.
+  * `psycopg` (v3) / `psycopg-binary` — High-performance database adapters connecting Django to PostgreSQL.
 
-* **Configuration & Security:**
-  * `python-decouple` - Environment variable manager for secure decoupling of credentials (`SECRET_KEY`, OAuth keys, DB configs, SMTP).
+- **Content & Features:**
+  * `django-taggit` — Flexible tagging framework for organizing forum posts, categories, and tag-based recommendations.
+  * `django.contrib.sitemaps` & `django.contrib.sites` — Sitemap generation and domain site management for OAuth callbacks.
+  * `Pillow` — Image handling for user avatars.
 
-* **Frontend:**
-  * **HTML5 & CSS3** - Custom, hand-crafted responsive templates and styles built from scratch.
+- **Configuration & Security:**
+  * `python-decouple` — Environment variable manager for secure decoupling of credentials (`SECRET_KEY`, OAuth keys, DB configs, SMTP).
 
-* **Tooling & Environment:**
-  * **Git & GitHub** - Version control and project evolution tracking.
-  * **Virtualenv (`venv`)** & `pip` - Isolated environment management and dependency tracking (`requirements.txt`).
-
+- **Tooling & Environment:**
+  * **Git & GitHub** — Version control and project evolution tracking.
+  * **Virtualenv (`venv`)** & `pip` — Isolated environment management and dependency tracking (`requirements.txt`).
+  
 ---
-
 ### Key Features
 
-* **Multi-Method Authentication:** Authentication via email address alongside social sign-in via **Google OAuth2**.
-* **Strict Email Uniqueness:** Validation preventing users from registering or changing their profile email to an address already registered on the platform.
-* **User Profile Statistics:** Profile pages displaying active post and comment counters with clickable links to inspect all posts or comments written by a specific user.
-* **User-Generated Post Creation:** Initial draft implementation allowing registered users to create and publish posts directly on the site.
-* **User Avatars:** Custom user avatar upload and media handling.
-* **Post Sharing via Email:** Integrated SMTP configuration allowing users to share posts/content via email directly from the platform.
-* **Comment System:** Interactive commenting functionality for discussion threads with text wrapping protections.
-* **Advanced PostgreSQL Search:** Powered by PostgreSQL full-text search with **trigram similarity** for accurate and fuzzy content discovery.
-* **Categorization & Tagging:** Organized content hierarchy using categories alongside `django-taggit` for tagging.
-* **Similar Content Recommendations:** Dynamic post recommendations based on shared tags and overlapping topics.
-* **Post Analytics:** Built-in view count tracking system for monitoring post popularity.
-* **SEO Optimization:** Dynamic XML sitemap generation built with `django.contrib.sitemaps`.
+- **Multi-Method Authentication:** Secure authentication via email and social sign-in via **Google OAuth2** powered by `django-allauth`.
+- **One-Time Code (OTP) Login:** Secure login option utilizing one-time verification codes for enhanced user access.
+- **Customized `django-allauth` Templates:** Fully tailored authentication views and forms styled with Tailwind CSS, bypassing default component tags for complete layout and design control.
+- **Email Verification & Security:** Mandatory or managed email address verification upon registration and robust account creation safeguards.
+- **Secure Email Management & Uniqueness:** Protected email change workflow with confirmation steps and strict uniqueness validation preventing duplicate addresses across profiles.
+- **Modern Tailwind UI:** Fully redesigned responsive interface utilizing Tailwind CSS utility classes and custom components.
+- **User Profile Statistics:** Profile pages displaying active post and comment counters with clickable links to inspect all posts or comments written by a specific user.
+- **User-Generated Post Creation:** Initial draft implementation allowing registered users to create and publish posts directly on the site.
+- **User Avatars:** Custom user avatar upload and media handling.
+- **Comment System:** Interactive commenting functionality for discussion threads with text wrapping protections.
+- **Advanced PostgreSQL Search:** Powered by PostgreSQL full-text search with **trigram similarity** for accurate and fuzzy content discovery.
+- **Categorization & Tagging:** Organized content hierarchy using categories alongside `django-taggit` for tagging.
+- **Similar Content Recommendations:** Dynamic post recommendations based on shared tags and overlapping topics.
+- **Post Analytics:** Built-in view count tracking system for monitoring post popularity.
+- **SEO Optimization:** Dynamic XML sitemap generation built with `django.contrib.sitemaps`.
 
 ---
 
 ### Roadmap
 
-- [x] **Authentication & Profiles:** User registration, login, email uniqueness validation, and profile pages.
+- [x] **Authentication & Profiles:** User registration, login, email uniqueness validation, and profile pages via `django-allauth`.
 - [x] **User-Generated Content:** Post creation and management for registered users.
 - [x] **OAuth Integration:** Social authentication support (Sign in with Google).
+- [x] **UI/UX Overhaul & Tailwind CSS:** Full migration to Tailwind CSS with responsive design and modern layouts.
 - [x] **Avatars & Profile Analytics:** User avatar handling and clickable post/comment statistics.
-- [x] **UI/UX Enhancement & Polishing:** Completing CSS styling for newly added UI elements, responsive layout refinements, and micro-interactions.
 - [ ] **Gamification & Reputation:** User rating and reputation system.
 - [ ] **Security Hardening:** Implementing protection against common web threats and hardening Django settings for production.
 
@@ -112,38 +116,51 @@ It serves as a transparent build log showcasing a hands-on, full-stack approach 
    ```bash
    pip install -r requirements.txt
    ```
-5. **Database Setup (PostgreSQL):**
+   
+5. **Install Tailwind CSS & Node packages:**
+   ```bash
+   python manage.py tailwind install
+   ```
+   (This command automatically downloads and installs the required Node.js modules for the Tailwind theme).
+   
+6. **Database Setup (PostgreSQL):**
    
    Create a local PostgreSQL database and enable the *pg_trgm* extension required for fuzzy/trigram search:
    ```bash
    CREATE DATABASE eco_libra_db;
    ```
-6. **Configure environment variables:**
+7. **Configure environment variables:**
 
    Copy .env_example to .env and add your DB data:
    ```bash
    cp .env_example .env
    ```
    Make sure to include your GOOGLE_OAUTH_CLIENT_ID and GOOGLE_OAUTH_CLIENT_SECRET in .env if testing Google Login.
-7. **Apply migrations & create superuser:**
+
+8. **Apply migrations & create superuser:**
    ```bash
    python manage.py migrate
    python manage.py createsuperuser
    ```
 
-8. **Django Sites Framework Setup (Admin Panel):**
-   1. Log into Django Admin (`/admin/`).
-   2. Go to Sites (`/admin/sites/site/`) and set the *Domain Name* to match your local setup for OAuth callbacks to work properly.
-
-9. **Run development server:**
-   For Google OAuth testing over local SSL:
-   ```bash
-   python manage.py runserver_plus --cert-file cert.crt
-   ```
-   (Or standard server without HTTPS):
-   ```bash
-   python manage.py runserver
-   ```
-10. **Access the Application & Admin Panel:**
+9. **Django Sites Framework Setup (Admin Panel):**
+    
+   * Log into Django Admin (`/admin/`).
+   
+   * Go to Sites (`/admin/sites/site/`) and set the *Domain Name* to match your local setup (`127.0.0.1:8000`) for OAuth callbacks to work properly.
+      
+10. **Run development server:**
+    
+    Terminal 1 (Tailwind CSS Watcher):
+    ```bash
+    python manage.py tailwind start
+    ```
+    Terminal 2 (Django Development Server with HTTPS support for Google OAuth):
+    ```bash
+    python manage.py runserver_plus --cert-file cert.crt
+    ```
+    (Or standard server without HTTPS: (`python manage.py runserver`)
+    
+11. **Access the Application & Admin Panel:**
    * **Main Blog/Platform:** *Open [https://127.0.0.1:8000/feed/](https://127.0.0.1:8000/feed/) in your browser to view the forum interface.*
    * **Admin Panel:** *Go to [https://127.0.0.1:8000/admin/](https://127.0.0.1:8000/admin/), log in using the superuser credentials created in Step 7, and add initial Categories and Posts to populate the site with test content.*
