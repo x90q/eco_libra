@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pompiere&display=swap');
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme {
+  --font-geist: 'Geist', sans-serif;
+  --font-work: 'Work Sans', sans-serif;
+  --font-pompiere: 'Pompiere', sans-serif;
+  --animate-message: slideDown 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+                                slideDown 1.2s cubic-bezier(0.16, 1, 0.3, 1) reverse forwards 3s;
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+}
+
+/**
+  * A catch-all path to Django template files, JavaScript, and Python files
+  * that contain Tailwind CSS classes and will be scanned by Tailwind to generate the final CSS file.
+  *
+  * If your final CSS file is not being updated after code changes, you may want to broaden or narrow
+  * the scope of this path.
+  */
+@source "../../../**/*.{html,py,js}";

@@ -1,0 +1,16 @@
+{% extends "feed/base.html" %}
+
+
+{% load allauth account %}
+
+{% block title %}eco_libra - verify email{% endblock title %}
+
+{% block content %}
+    <div class = 'flex flex-col gap-2 w-full max-w-sm rounded-xl px-6 py-4 mx-auto border border-slate-700 mt-20 font-geist'>
+        <span class = "w-full text-center text-lg font-semibold text-slate-200">Verify your email adress</span>
+        <span class = "w-full text-center text-sm text-slate-400">We have sent an email to you for verification. Follow the link provided to finalize the signup process.</span>
+        <span class = "w-full text-center text-sm text-slate-400">Follow the link provided to finalize the signup process.</span>
+        <span class = "w-full text-center text-sm text-slate-400">If you do not see the verification email in your main inbox, check your spam folder.</span>
+        <span class = "w-full text-center text-sm text-slate-400">Please contact us if you do not receive the verification email within a few minutes.</span>
+    </div>
+{% endblock %}

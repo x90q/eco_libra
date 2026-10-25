@@ -4,7 +4,7 @@ from django.views.decorators.http import require_POST
 from .models import Post, Category
 from taggit.models import Tag
 from django.db.models import F
-from .forms import EmailPostForm, CommentForm, PostCreateForm
+from .forms import CommentForm, PostCreateForm
 
 from django.contrib.auth import get_user_model
 
@@ -106,60 +106,6 @@ def post_detail(request, category, post):
         }
     )
 
-@login_required
-def post_share(request, post_id):
-    post = get_object_or_404(
-        Post,
-        id=post_id,
-        status = Post.Status.PUBLISHED
-    )
-
-    if request.method == 'POST':
-        form = EmailPostForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            post_url = request.build_absolute_uri(
-                post.get_absolute_url()
-            )
-            subject = (
-                f"{ request.user.username } ({ request.user.email }) recommends you read "
-                f'"{post.title}"'
-            )
-            message = (
-                f'Read "{post.title}" at {post_url}\n\n'
-                f"{ request.user.username }\'s comments: {cd.get('comment', '')}"
-            )
-            send_mail(
-                subject,
-                message,
-                settings.DEFAULT_FROM_EMAIL,
-                [cd['to']]
-            )
-            sent = True
-
-            messages.success(
-                request,
-                'post was successfully shared via e-mail'
-            )
-
-        else:
-            error_msg = '; '.join([f"{error}" for errors in form.errors.values() for error in errors]).lower()
-            messages.error(
-                request,
-                f'error while sharing post: {error_msg}'
-            )
-    else:
-        form = EmailPostForm()
-
-    return render(
-        request,
-        'feed/post/post_share.html',
-        {
-            'post': post,
-            'form': form
-        }
-    )
-
 User = get_user_model()
 
 @login_required
@@ -229,12 +175,14 @@ def post_create(request):
     )
 
 def home(request):
-     posts = Post.published.all()
+     hotest_posts = Post.published.annotate(
+         comments_count=Count('comments')
+     ).order_by('-comments_count', '-views', '-created')[:4]
 
      return render(
          request,
          'feed/home.html',
          {
-             'posts' : posts,
+             'hotest_posts' : hotest_posts
          }
      )

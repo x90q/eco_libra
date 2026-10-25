@@ -1,158 +1,151 @@
 {% load static %}
+{% load static tailwind_tags %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-pt-[env(safe-area-inset-top,0px)]">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
         <title>{% block title %}{% endblock %}</title>
         <meta name="description" content="">
-        <link rel="stylesheet" href="{% static 'feed/css/base.css' %}">
         {% block extra_js %}{% endblock %}
+        {% tailwind_css %}
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital@1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     </head>
-    <body>
-        <header class="navbar">
-            <div class="navbar-inner">
-                <div class="website-name">eco<span>_</span>libra</div>
-                
-                <nav class="navbar-elements" aria-label="Main navigation">
-                    <div class="navbar-item">
-                        <a class="navbar-button active" href = "{% url 'feed:home'%}">home</a>
+    <body class = "min-h-screen m-0 bg-slate-950/80 text-zinc-100 font-inter">
+        <main class = "pt-14.5">
+            <header class="w-full fixed top-1.5 z-50 flex justify-center px-1.5 pointer-events-auto transition-all duration-300">
+                <nav id="navbar" class="navbar p-0 min-h-13 max-w-6xl backdrop-blur-xs bg-transparent rounded-3xl border border-transparent px-6 relative flex items-center justify-between transition-all duration-100">
+                    <div class=" flex-1 items-center flex justify-start pointer-events-none text-lg font-work tracking-tight font-light gap-1">
+                        ECO<span class="text-md font-medium text-pink-300">_</span>LIBRA
                     </div>
-                    
-                    <div class="navbar-item">
-                        <button class="navbar-button" aria-haspopup="true" aria-expanded="false">categories<span class="arrow">▾</span></button>
-                        <div class="dropdown">
-                            {% for category in categories %}
-                                <a href='{% url "feed:post_list_by_category" category.slug %}' style="--category_color: {{ category.color }};">/{{ category.name | lower }}</a>
-                            {% empty %}
-                                <span class = "empty">no categories</span>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <!-- <div class="navbar-item">
-                        <button class="navbar-button" aria-haspopup="true" aria-expanded="false">top users <span class="arrow">▾</span></button>
-                        <div class="dropdown">
-                            <a href="#">top posts</a>
-                            <a href="#">best comments</a>
-                            <a href="#">top rating <span class="tag">new</span></a>
-                        </div>
-                    </div>
-                -->
-                </nav>
-                
-                <form class = "navbar_search_form" action = "{% url 'search:search_results' %}" method = "get">
-                    <div class="searchbar">
-                        <input type="text" name = "query" placeholder="search up posts, users, tags…" value = "{{ query | default:'' }}" autocomplete = "off" required>
-                    </div>
-                </form>
 
-                <div class = 'login'>
-                    {% if request.user.is_authenticated %}
-
-                    <div class="user_navbar_info navbar-item">
-                        <button type="button" class="navbar-button user_navbar_button" aria-haspopup="true" aria-expanded="false">
-                            <span class="username">{{ request.user.username }}</span>
-                            <div class="user_navbar_avatar_container">
-                                {% if request.user.profile.photo %}
-                                <img src="{{ request.user.profile.photo.url }}" alt="{{ request.user.username }}" class="user_navbar_avatar">
-                                {% else %}
-                                <span class="user_navbar_avatar_placeholder">
-                                    {{ request.user.username|slice:":1"|upper }}
+                    <div class="flex justify-center items-center gap-2">
+                        <a href="{% url 'feed:home'%}" class="my-auto hover:bg-slate-800/50
+                        rounded-md py-1.5 px-2 flex items-center text-slate-400
+                        hover:text-slate-200 transition-colors duration-250 font-geist font-semibold text-sm">
+                            Home
+                        </a>
+                        <div class="dropdown dropdown-start p-0 flex items-center">
+                            <div tabindex="0" role="button" class="group my-auto
+                             flex items-center gap-1 
+                             rounded-md py-1.5 px-2 
+                           text-slate-400 hover:bg-slate-800/50 focus:bg-slate-800/50 hover:text-slate-200 focus:text-slate-200
+                             cursor-pointer transition-colors duration-250 font-geist font-semibold text-sm">
+                                <span>Categories</span>
+                                <span>
+                                    <svg class="w-3 h-3 self-center transition-transform duration-200 group-focus:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                    </svg>
                                 </span>
-                                {% endif %}
                             </div>
-                        </button>
-
-                        <div class="user_navbar_menu dropdown">
-                            <a href="{% url 'members:profile_view' user_id=request.user.id %}" class="user_navbar_dropdown_item">
-                                go to profile
-                            </a>
-                            <span class = 'divider_dropdown'></span>
-                            <form method="post" action="{% url 'account:logout' %}" class="user_navbar_dropdown">
-                                {% csrf_token %}
-                                <button type="submit" class="user_navbar_dropdown_logout_button">
-                                    logout
-                                </button>
-                            </form>
+                            <ul tabindex="0" class="dropdown-content menu menu-md min-w-40 rounded-box z-10 mt-3 p-2 shadow bg-slate-900/95 top-full">
+                                {% for category in categories %}
+                                    <li>
+                                        <a class = "block w-full text-left px-1.5 font-geist text-slate-200 hover:text-slate-100 hover:bg-(--cat-bg) transition-colors duration-300" href="{% url 'feed:post_list_by_category' category.slug %} " style="--cat-bg: color-mix(in srgb, {{ category.color }} 15%, transparent);">/{{ category.name|lower }}</a>
+                                    </li>   
+                                {% empty %}
+                                    <span class="block text-center text-geist text-slate-400/95">No categories yet.</span>
+                                {% endfor %}
+                            </ul>
                         </div>
                     </div>
-                    {% else %}
-                    <div class = 'auth_buttons'>
-                        <a href = '{% url "account:login" %}'><button type="submit" class="login_button">sign in</button></a>
-                        <a href = '{% url "account:register" %}'><button type="submit" class="register_button">create account</button></a>
-                    </div>
-                    {% endif %}
-            </div>
-        </header>
 
+                    <div class="flex-1 flex justify-end items-center gap-4">
+                        <form class = 'flex items-center relative group' action="{% url 'search:search_results' %}" method="get">
+                            <div class="absolute flex items-center text-slate-500 group-focus-within:text-slate-400 transition-colors duration-300">
+                                <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 ml-3"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                />
+                                </svg>
+                            </div>
+                            <input class = "text-sm pl-10 px-2.5 py-1.5 max-w-30 outline-0 border 
+                            border-slate-800/60 rounded-md transition-[colors, width] 
+                            duration-300  md:focus:max-w-40 lg:focus:max-w-50 text-slate-200 focus:border-slate-500 focus:placeholder:text-slate-400 placeholder:text-slate-500"
+                            type="text" name="query" placeholder="Search..." 
+                              value="{{ query | default:'' }}" 
+                              autocomplete="off" required>
+                        </form>
+                        <div class="flex items-center">
+                            {% if request.user.is_authenticated %}
+                            <div class="dropdown dropdown-end flex items-center">
+                                <div tabindex="0" role="button" class="cursor-pointer flex gap-2 items-center transition-colors duration-300 hover:bg-slate-800/50 focus:bg-slate-800/50 py-1 pl-1.5 pr-2.5 rounded-full group">
+                                    <div class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center shadow bg-slate-800/70 group-focus:bg-slate-700/60 group-hover:bg-slate-700/60  transition-colors duration-300">
+                                        {% if request.user.profile.photo %}
+                                        <img src="{{ request.user.profile.photo.url }}" alt="{{ request.user.username }}" class="select-none w-full h-full object-center object-cover shadow">
+                                        {% else %}
+                                        <span class="select-none sm:pt-0.5 sm:pl-0.5 md:pt-0 md:pl-0 lg:pt-0.5 lg:pl-0 font-geist font-semibold text-s flex items-center justify-center w-full h-full text-violet-400">
+                                            {{ request.user.username|slice:":1"|upper }}
+                                        </span>
+                                        {% endif %}
+                                    </div>
+                                    <span class="font-geist font-semibold text-sm text-slate-400 tracking-wide  group-focus:text-slate-200 group-hover:text-slate-200 transition-colors duration-300">{{ request.user.username }}</span>
+                                </div>
+
+                                <ul class="dropdown-content menu menu-md min-w-28 rounded-box z-10 mt-3 p-2 shadow bg-slate-900/95 top-full">
+                                    <li><a class = "block w-full text-left px-1.5 font-geist text-slate-200 hover:text-slate-100 hover:bg-slate-800/90 transition-colors duration-300" href="{% url 'members:profile_view' user_id=request.user.id %}">
+                                        Profile
+                                    </a></li>
+                                    <li><a class = "block w-full text-left px-1.5 font-geist text-slate-200 hover:text-slate-100 hover:bg-slate-800/90 transition-colors duration-300" href="{% url 'account_personal_info_edit' %}">
+                                        Settings
+                                    </a></li>
+                                    <li><a class = "block w-full text-left px-1.5 font-geist text-slate-200 hover:text-slate-100 hover:bg-slate-800/90 transition-colors duration-300" href="{% url 'account_logout' %}">Sign out</a></li>
+                                </ul>
+                            </div>
+                            {% else %}
+                            <div class="flex items-center gap-2 whitespace-nowrap">
+                                <a class = "flex items-center py-1.5 px-2 bg-slate-800/80 font-geist rounded-lg shadow text-sm font-semibold text-slate-200 border border-transparent hover:border-slate-600 hover:bg-slate-700/50 transition-colors duration-300" href="{% url 'account_login' %}">Log in</a>
+                                <a class ="flex items-center py-1.5 px-2 bg-slate-100 font-geist rounded-lg shadow text-sm font-semibold text-slate-950 border border-slate-600 hover:bg-slate-100/80 transition-colors duration-300" href="{% url 'account_signup' %}">Sign up</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </nav>
+            </header>
+        </main>
         {% if messages %}
-        <div class = "messages">
-            <ul class = 'messages_list'>
+        <div class = "sticky top-16 h-0 z-9999 overflow-visible flex justify-center pointer-events-none">
+            <ul class = 'list-none m-0 p-0 flex items-center flex-col gap-1.5 pointer-events-auto '>
                 {% for message in messages %}
-                <li class = "{{ message.tags }}">
-                    <span class = 'message_text'>{{ message | safe }}</span>
-                </li>
+                    {% if message.tags == "success" %}
+                        <li class = "animate-message py-2 px-3.5 bg-emerald-900/85 shadow rounded-full font-geist font-semibold text-sm text-slate-100">
+                            <span>{{ message | safe }}</span>
+                        </li>
+                    {% elif message.tags == "error" %}
+                        <li class = "animate-message py-2 px-3.5 bg-rose-950/85 shadow rounded-full font-geist font-semibold text-sm text-slate-100">
+                            <span>{{ message | safe }}</span>
+                        </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </div>
         {% endif %}
-
-        <div id = "content">
+        
+        <div class = "p-4">
             {% block content %}
             {% endblock %}
-        </div> 
-
+        </div>
         <script>
-            document.querySelectorAll('.navbar-item').forEach(function(item){
-                var button = item.querySelector('.navbar-button');
-                button.addEventListener('click', function(e){
-                    e.stopPropagation();
-                    var isOpen = item.classList.contains('open');
-                    document.querySelectorAll('.navbar-item.open').forEach(function(o) {
-                        o.classList.remove('open');
-                        var b = o.querySelector('.navbar-button');
-                        if(b) b.setAttribute('aria-expanded','false');
-                    });
-                    if(!isOpen){
-                        item.classList.add('open');
-                        button.setAttribute('aria-expanded','true');
-                    }
-                });
-            });
-            document.addEventListener('click', function(){
-                document.querySelectorAll('.navbar-item.open').forEach(function(o){
-                    o.classList.remove('open');
-                    var b = o.querySelector('.navbar-button');
-                    if(b) b.setAttribute('aria-expanded','false');
-                });
-            });
-            document.addEventListener('keydown', function(e){
-                if(e.key === 'Escape'){
-                    document.querySelectorAll('.navbar-item.open').forEach(function(o){ o.classList.remove('open'); });
+            window.addEventListener('scroll', () => {
+                const nav = document.getElementById('navbar');
+                if (window.scrollY) {
+                    nav.classList.add('bg-slate-950/75', 'border-slate-800/60', 'shadow-lg');
+                    nav.classList.remove('bg-transparent', 'border-transparent');
+                } else {
+                    nav.classList.remove('bg-slate-950/75', 'border-slate-800/60', 'shadow-lg');
+                    nav.classList.add('bg-transparent', 'border-transparent');
                 }
             });
-
-            /* message */
-            document.addEventListener('DOMContentLoaded', () => {
-                const elements = document.querySelectorAll('.message_element');
-
-                elements.forEach((element, index) => {
-                    setTimeout(() => {
-                        element.classList.add('show');
-                    }, index * 100);
-                    setTimeout(() => {
-                        element.classList.remove('show');
-            
-                        element.addEventListener('transitionend', () => {
-                            element.remove();
-                        });
-                    }, 3000 + (index * 100));
-                });
-            });
-    </script>
-
+        </script>
     </body>
 </html>

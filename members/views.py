@@ -1,17 +1,17 @@
-from django.shortcuts import render, get_object_or_404
-from account.models import Profile
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Profile
 from feed.models import Post
-from django.db.models import Count
+
+from django.contrib.auth.decorators import login_required
+
+from django.contrib import messages
 
 def profile_view(request, user_id):
-    user_profile = get_object_or_404(
-        Profile.objects.select_related('user'),
-        user__id=user_id,
-    )
+    user_profile, created = Profile.objects.get_or_create(user_id=user_id)
 
     user_posts = user_profile.user.feed_posts.filter(status = Post.Status.PUBLISHED).order_by('-publish')[:3]
 
-    published_posts_count = user_posts.count()
+    published_posts_count = user_profile.user.feed_posts.filter(status = Post.Status.PUBLISHED).count()
 
     published_comments_count = user_profile.user.comments.filter(active = True).count()
 
@@ -29,3 +29,7 @@ def profile_view(request, user_id):
             'published_comments_count' : published_comments_count,
         }
     )
+
+@login_required
+def my_profile(request):
+    return redirect("members:profile_view", user_id=request.user.id)

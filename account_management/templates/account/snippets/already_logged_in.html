@@ -1,0 +1,5 @@
+{% load i18n %}
+{% load account %}
+{% load allauth %}
+{% user_display user as user_display %}
+<span class = "w-full text-center text-sm font-semibold text-slate-400">(Note: You are already logged in as {{ user_display }})</span>

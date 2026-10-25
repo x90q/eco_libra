@@ -1,0 +1,77 @@
+{% extends "feed/base.html" %}
+
+{% load allauth account widget_tweaks%}
+
+{% block title %}eco_libra - sign up{% endblock title %}
+
+{% block content %}
+    <div class = 'flex flex-col gap-1 w-full max-w-lg rounded-xl px-6 py-4 mx-auto border border-slate-700 mt-20 font-geist'>
+        {% if not SOCIALACCOUNT_ONLY %}
+            <span class = "w-full text-center text-lg font-semibold text-slate-200">Sign up</span>
+            <a href="{% url 'account_login' %}" class = "w-full text-center text-sm text-slate-400 pb-2">(already have an account?)</a>
+            <form method="post" action="{% url 'account_signup' %}" class="w-full flex flex-col gap-3 items-center">
+                {% csrf_token %}
+                <div class="w-full flex flex-col gap-1">
+                    <label for = "{{ form.username.id_for_label }}" class="text-sm font-geist font-light text-slate-400">Username</label>
+                    {% render_field form.username class="w-full font-geist font-light text-slate-200 rounded-xl border border-slate-700 px-3 py-2 bg-slate-900 focus:border-slate-700/60 focus:outline-none focus:ring-2 focus:ring-purple-500/60 transition-all duration-300" %}
+                    {% if form.username.errors %}
+                        <div class="w-full text-center text-red-400 text-sm mt-1">
+                            {{ form.username.errors|lower }}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="w-full flex flex-col gap-1">
+                    <label for = "{{ form.email.id_for_label }}" class="text-sm font-geist font-light text-slate-400">Email</label>
+                    {% render_field form.email class="w-full font-geist font-light text-slate-200 rounded-xl border border-slate-700 px-3 py-2 bg-slate-900 focus:border-slate-700/60 focus:outline-none focus:ring-2 focus:ring-purple-500/60 transition-all duration-300" %}
+                    {% if form.email.errors %}
+                        <div class="w-full text-center text-red-400 text-sm mt-1">
+                            {{ form.email.errors|lower }}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="w-full flex flex-col gap-1">
+                    <label for = "{{ form.password1.id_for_label }}" class="text-sm font-geist font-light text-slate-400">Password</label>
+                    {% render_field form.password1 class="w-full font-geist font-light text-slate-200 rounded-xl border border-slate-700 px-3 py-2 bg-slate-900 focus:border-slate-700/60 focus:outline-none focus:ring-2 focus:ring-purple-500/60 transition-all duration-300" %}
+                    {% if form.password1.errors %}
+                        <div class="w-full text-center text-red-400 text-sm mt-1">
+                            {{ form.password1.errors|lower }}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="w-full flex flex-col gap-1">
+                    <label for = "{{ form.password2.id_for_label }}" class="text-sm font-geist font-light text-slate-400">Repeat password</label>
+                    {% render_field form.password2 class="w-full font-geist font-light text-slate-200 rounded-xl border border-slate-700 px-3 py-2 bg-slate-900 focus:border-slate-700/60 focus:outline-none focus:ring-2 focus:ring-purple-500/60 transition-all duration-300" %}
+                    {% if form.password2.errors %}
+                        <div class="w-full text-center text-red-400 text-sm mt-1">
+                            {{ form.password2.errors|lower }}
+                        </div>
+                    {% endif %}
+                </div>
+                {% if form.password1.help_text %}
+                    <div class="w-full font-geist text-sm font-light text-center text-slate-300">
+                        {{ form.password1.help_text|safe }}
+                    </div>
+                {% endif %}
+
+                {{ redirect_field }}
+
+                {% if form.non_field_errors %}
+                    <div class = 'flex flex-col gap-3 items-center'>
+                        {% for error in form.non_field_errors %}
+                            <span class = 'w-full text-center text-red-400 text-sm mt-1'>
+                                {{ error | lower }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <button type="submit" class="w-full text-center rounded-xl border border-violet-900 bg-violet-900/15 font-geist font-semibold text-sm text-slate-200 px-8 py-2 cursor-pointer">
+                    Sign in
+                </button>
+            </form>
+        {% endif %}
+        {% if SOCIALACCOUNT_ENABLED %}
+            {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+        {% endif %}
+    </div>
+{% endblock %}

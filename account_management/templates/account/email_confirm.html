@@ -1,0 +1,30 @@
+{% extends "feed/base.html" %}
+
+{% load allauth account %}
+
+{% block title %}eco_libra - confirm email{% endblock title %}
+
+{% block content %}
+    <div class = 'flex flex-col gap-3 w-full max-w-sm rounded-xl px-6 py-4 mx-auto border border-slate-700 mt-20 font-geist'>
+        <span class = "w-full text-center text-lg font-semibold text-slate-200">Confirm your email adress</span>
+        {% user_display confirmation.email_address.user as user_display %}
+        {% if confirmation %}
+             {% if can_confirm %}
+                <span class = "w-full text-center text-sm text-slate-400">Please, confirm that <a href="mailto:{{ email }}">{{ email }} is an email address for user {{ user_display }}.</a></span>
+
+                {% url 'account_confirm_email' confirmation.key as action_url %}
+
+                <form class = "w-full flex flex-col gap-3 items-center" method = "post" action = "{% url 'account_confirm_email' confirmation.key %}">
+                    {% csrf_token %}
+                    {{ redirect_field }}
+                    <button type = "submit" class = "w-full text-center rounded-xl border border-violet-900 bg-violet-900/15 font-geist font-semibold text-sm text-slate-200 px-8 py-2 cursor-pointer">Confirm</button>
+                </form>
+
+            {% else %}
+                <span class = "w-full text-center text-sm text-slate-400">Unable to confirm {{ email }} because it is already confirmed by a different account.</span>
+            {% endif %}
+        {% else %}
+            <span class = "w-full text-center text-sm text-slate-400">This email confirmation link expired or is invalid. Please <a href = "{% url 'account_email' %}">issue a new confirmation request</a>.</span>
+        {% endif %}
+    </div>
+{% endblock %}

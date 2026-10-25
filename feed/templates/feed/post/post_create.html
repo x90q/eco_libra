@@ -1,48 +1,46 @@
 {% extends 'feed/base.html' %}
 
-{% load static %}
+{% load widget_tweaks %}
 
 {% block title %}eco_libra - create post{% endblock %}
 
-{% block extra_js %}
-<link rel = 'stylesheet' href = '{% static "feed/css/post_create.css" %}'>
-{% endblock %}
-
 {% block content %}
 
-<div class = 'post_create_container'>
-    <a class = 'back_to_feed_create_link' href="{% url 'feed:home' %}">← back to feed</a>
-    <form class = 'post_create_form' method = 'post'>
-        <h3>create post</h3>
-        {% csrf_token %}
-        <div class = 'post_create_form_category'>
-            <label for = '{{ form.category.id_for_label }}'>category:</label>
-            {{ form.category }}
+<div class = "flex flex-col gap-3 text-left items-center max-w-xl w-full mx-auto mt-6">
+    <a class = 'mr-auto font-geist font-sm text-slate-300/70 font-light hover:text-slate-200 transition-colors duration-300' href="{% url 'feed:home' %}">← back to home page</a>
+    <form class="flex flex-col items-center gap-3 w-full border border-slate-700 rounded-xl p-4" method="post">
+        {% csrf_token %} 
+        <span class = "w-full text-center font-geist font-semibold text-slate-200">Create a thread</span>
+        <div class="w-full">
+            {% render_field form.category class="w-full lowercase font-geist font-light text-slate-200 rounded-xl border border-slate-700 px-3 py-2 bg-slate-900 focus:border-slate-700/60 focus:outline-none focus:ring-2 focus:ring-purple-500/60 transition-all duration-300" %}
             {% if form.category.errors %}
-            <div class = "field_errors">
-                {{ form.category.errors | lower }}
-            </div>
+                <div class="field_errors text-red-400 text-sm mt-1">
+                    {{ form.category.errors | lower }}
+                </div>
             {% endif %}
         </div>
-        <div class = 'post_create_form_title'>
-            <label for = '{{ form.title.id_for_label }}'>title:</label>
-            {{ form.title }}
+
+        <div class="w-full">
+            {% render_field form.title class="w-full font-geist font-light text-slate-200 rounded-xl border border-slate-700 px-3 py-2 bg-slate-900 focus:border-slate-700/60 focus:outline-none focus:ring-2 focus:ring-purple-500/60 transition-all duration-300" placeholder="Enter title..." %}
             {% if form.title.errors %}
-            <div class="field_errors">
-                {{ form.title.errors | lower }}
-            </div>
+                <div class="field_errors text-red-400 text-sm mt-1">
+                    {{ form.title.errors | lower }}
+                </div>
             {% endif %}
         </div>
-        <div class = 'post_create_form_body'>
-            <label for = '{{ form.body.id_for_label }}'>content:</label>
-            {{ form.body }}
+
+        <div class="w-full">
+            {% render_field form.body class="w-full font-geist font-light text-slate-200 rounded-xl border border-slate-700 px-3 py-2 bg-slate-900 focus:border-slate-700/60 focus:outline-none focus:ring-2 focus:ring-purple-500/60 transition-all duration-300 h-32 resize-none" placeholder="Write your thread content..." %}
             {% if form.body.errors %}
-            <div class="field_errors">
-                {{ form.body.errors | lower }}
-            </div>
+                <div class="field_errors text-red-400 text-sm mt-1">
+                    {{ form.body.errors | lower }}
+                </div>
             {% endif %}
         </div>
-        <button type = 'submit' class = 'post_create_submit_button'>post</button>
+
+        <button type="submit" class="cursor-pointer w-full py-2.5 px-4 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-medium transition-all duration-300 shadow-lg shadow-purple-900/30">
+            Create thread
+        </button>
     </form>
 </div>
 {% endblock %}

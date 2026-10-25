@@ -7,7 +7,7 @@ from django.contrib.postgres.search import (
     SearchRank
 )
 from feed.models import Post
-from account.models import Profile
+from members.models import Profile
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 from django.contrib.auth.decorators import login_required

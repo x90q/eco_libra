@@ -1,0 +1,72 @@
+{% extends "feed/base.html" %}
+
+{% load allauth account widget_tweaks %}
+
+{% block title %}eco_libra - sign-in code{% endblock title %}
+
+{% block content %}
+    <div class = 'flex flex-col gap-3 w-full max-w-sm rounded-xl px-6 py-4 mx-auto border border-slate-700 mt-20 font-geist'>
+        <span class = "w-full text-center text-lg font-semibold text-slate-200">Enter sign-in code</span>
+
+        <span class = "w-full text-center text-sm text-slate-400">We've sent a code to 
+            {% if email %}
+                <a href="mailto:{{ email }}">{{ email }}</a>.
+            {% else %}
+                <a href="tel:{{ phone }}">{{ phone }}</a>.
+            {% endif %}
+        the code expires shortly, so please enter it soon.
+        </span>
+
+        <form method = "post" action = "{% url 'account_confirm_login_code' %}" class = "w-full flex flex-col gap-3">
+            {% csrf_token %}
+            
+            <div class = 'w-full flex flex-col gap-1'>
+                <label for = '{{ form.code.id_for_label }}' class="text-sm font-geist font-light text-slate-400">Code</label>
+                {% render_field form.code class="w-full font-geist font-light text-slate-200 rounded-xl border border-slate-700 px-3 py-2 bg-slate-900 focus:border-slate-700/60 focus:outline-none focus:ring-2 focus:ring-purple-500/60 transition-all duration-300" %}
+                {% if form.code.errors %}
+                    <div class="w-full text-center text-red-400 text-sm mt-1">
+                        {{ form.code.errors|lower }}
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if form.non_field_errors %}
+                <div class = "flex flex-col gap-3 items-center">
+                    {% for error in form.non_field_errors %}
+                        <span class = "w-full text-center text-red-400 text-sm mt-1">
+                            {{ error | lower }}
+                        </span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {{ redirect_field }}
+
+            <button type = "submit" class = "w-full text-center rounded-xl border border-violet-900 bg-violet-900/15 font-geist font-semibold text-sm text-slate-200 px-8 py-2 cursor-pointer">Sign in</button>
+        </form>
+    {% if can_resend %}
+        <form method="post" action="{{ action_url }}" class="w-full flex flex-col gap-3">
+            {% csrf_token %}
+            {{ redirect_field }}
+            <input type="hidden" name="action" value="resend">
+
+            <button type="submit" class="w-full text-center rounded-xl border border-slate-700 bg-slate-900/60 font-geist font-semibold text-sm text-slate-400 px-8 py-2 cursor-pointer">
+                Request a new code
+            </button>
+        </form>
+    {% endif %}
+    {% if cancel_url %}
+        <a href="{{ cancel_url }}" class="w-full px-4 py-2 text-center rounded-xl border border-rose-950 bg-rose-950/15 text-rose-800 font-geist text-sm font-semibold cursor-pointer">
+            Cancel
+        </a>
+    {% else %}
+        <form method="post" action="{% url 'account_logout' %}" class="w-full flex flex-col gap-3">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{% url 'account_login' %}">
+
+            <button type="submit" class="w-full px-4 py-2 text-center rounded-xl border border-rose-950 bg-rose-950/15 text-rose-800 font-geist text-sm font-semibold cursor-pointer">
+                Cancel
+            </button>
+        </form>
+    {% endif %}
+{% endblock %}

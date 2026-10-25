@@ -5,96 +5,108 @@
 {% block title %}eco_libra - {{ user_profile.user.username }}'s profile{% endblock %}
 
 {% block extra_js %}
-<link rel = "stylesheet" href = "{% static 'members/css/profile_view.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class = 'profile_view_container'>
-    <div class = 'profile_view_left'>
-        <div class = 'profile_view_main'>
-            <div class = 'profile_view_main_header'>
-                <span class = 'profile_view_username'>
+<div class = 'grid grid-cols-[8fr_3fr] gap-3 items-start mx-auto w-full max-w-6xl mt-4'>
+    <div class = 'flex flex-col items-center w-full gap-3'>
+        <div class = "flex flex-col gap-1 items-center justify-start w-full font-geist rounded-xl border border-slate-700 pb-4">
+            <div class = "flex items-center w-full justify-between font-geist rounded-xl border border-violet-900 bg-violet-900/15 px-6 py-4">
+                <span class = 'text-lg text-slate-100 font-semibold'>
                     {{ user_profile.user.username }}
                 </span>
-                <span class = 'profile_view_last_online'>
-                    <span class = 'profile_view_last_online_label'>last seen: </span>
-                    <span class = 'profile_view_meta_item'>{{ user_profile.user.last_login | timesince }} ago</span>
+                <span class = 'text-sm font-light'>
+                    <span class = 'text-slate-400'>last seen: </span>
+                    <span class = 'text-slate-200'>{{ user_profile.user.last_login | timesince }} ago</span>
                 </span>
             </div>
-            <div class = 'profile_view_meta'>
-                <div class = 'profile_view_joined'>
-                    <span class ='profile_view_joined_label'>joined: </span>
-                    <span class = 'profile_view_meta_item'>{{ user_profile.user.date_joined | date:"j M Y" | lower }}</span>
-                </div>
-                <div class = 'profile_view_id'>
-                    <span class = 'profile_view_id_label'>id: </span>
-                    <span class = 'profile_view_meta_item'>{{ user.profile.user.id}}</span>
-                </div>
-                <div class = 'profile_view_date_of_birth'>
-                    {% if user_profile.date_of_birth %}
-                        <span class = 'profile_view_date_of_birth_label'>date of birth: </span>
-                        <span class = 'profile_view_meta_item'>{{ user_profile.date_of_birth | date:" j M Y" | lower }}</span>
-                    {% else %}
-                        <span class = 'profile_view_date_of_birth_label'>date of birth: </span>
-                        <span class = 'profile_view_meta_item'>-</span>
-                    {% endif %}
-                </div>
-                <div class = 'profile_view_bio'>
-                    {% if user_profile.bio %}
-                    <span class = 'profile_view_bio_label'>bio:</span> 
-                    <span class = 'profile_view_meta_item'>{{ user_profile.bio }}</span>
-                    {% else %}
-                    <span class = 'profile_view_bio_label'>bio:</span> 
-                    <span class = 'profile_view_meta_item'>-</span>
-                    {% endif %}
-                </div>
+            <div class = "grid grid-cols-[2fr_6fr] items-center w-full px-6 mt-3 text-sm">
+                <span class ='text-slate-400'>joined: </span>
+                <span class = 'text-slate-200'>{{ user_profile.user.date_joined | date:"j M Y" | lower }}</span>
             </div>
-            <div class = 'profile_view_counts'>
-                <a class = 'profile_view_count_link' href = '{% url "search:posts_from_user" user_id=user_profile.user.id %}'>
-                <div class = 'profile_view_posts_count'>
-                    <span class = 'profile_view_count_element'>
-                        {{ published_posts_count }}
-                    </span>
-                    <span class = 'profile_view_count_title'>posts</span>
-                </div>
+            <div class = "grid grid-cols-[2fr_6fr]  items-center w-full px-6 text-sm">
+                <span class = 'text-slate-400'>id: </span>
+                <span class = 'text-slate-200'>{{ user_id }}</span>
+            </div>
+            <div class = "grid grid-cols-[2fr_6fr]  items-center w-full px-6 text-sm">
+                {% if user_profile.date_of_birth %}
+                    <span class = 'text-slate-400'>date of birth: </span>
+                    <span class = 'text-slate-200'>{{ user_profile.date_of_birth | date:" j M Y" | lower }}</span>
+                {% else %}
+                    <span class = 'text-slate-400'>date of birth: </span>
+                    <span class = 'text-slate-200'>-</span>
+                {% endif %}
+            </div>
+            <div class = "grid grid-cols-[2fr_6fr] items-center w-full px-6 text-sm">
+                {% if user_profile.bio %}
+                    <span class = 'text-slate-400'>bio:</span> 
+                    <span class = 'text-slate-200'>{{ user_profile.bio }}</span>
+                {% else %}
+                    <span class = 'text-slate-400'>bio:</span> 
+                    <span class = 'text-slate-200'>-</span>
+                {% endif %}
+            </div>
+            <div class = "grid grid-cols-2 gap-3 w-full px-8 mt-3">
+                <a class = 'w-full text-center rounded-xl px-3 py-3 border border-slate-700' href = '{% url "search:posts_from_user" user_id=user_profile.user.id %}'>
+                    <div class = 'flex flex-col w-full font-geist'>
+                        <span class = 'text-xl font-semibold text-violet-500'>
+                            {{ published_posts_count }}
+                        </span>
+                        <span class = 'text-sm font-light'>posts</span>
+                    </div>
                 </a>
-                <a class = 'profile_view_count_link' href = '{% url "search:comments_from_user" user_id=user_profile.user.id %}'>
-                <div class = 'profile_view_comments_count'>
-                    <span class = 'profile_view_count_element'>
-                        {{ published_comments_count }}
-                    </span>
-                    <span class = 'profile_view_count_title'>comments</span>
-                </div>
+                <a class = 'w-full text-center rounded-xl px-3 py-3 border border-slate-700' href = '{% url "search:comments_from_user" user_id=user_profile.user.id %}'>
+                    <div class = 'flex flex-col w-full font-geist '>
+                        <span class = 'text-xl font-semibold text-violet-500'>
+                            {{ published_comments_count }}
+                        </span>
+                        <span class = 'text-sm font-light'>comments</span>
+                    </div>
                 </a>
             </div>
         </div>
         {% if user_posts %}
-        <div class = 'profile_view_topics_container'>
-            <h3>{{ user_profile.user.username }}'s latest posts:</h3>
-            
-            {% for post in user_posts %}
-            <a href = '{{ post.get_absolute_url }}'>
-                <div class = 'profile_view_topic' style = "--category_color:{{ post.category.color }};">
-                    <div class = 'profile_view_topic_top'>
-                        <span class = 'profile_view_topic_category'>/{{ post.category | upper }}</span>
-                        <span class = 'profile_view_topic_created'>{{ post.created | timesince }} ago</span>
-                    </div>
-                    
-                    
-                    <span class = 'profile_view_topic_title'>{{ post.title }}</span>
+            <div class = "w-full flex flex-col items-center gap-3 rounded-xl border border-slate-700 px-4 py-3">
+                <span class = "w-full text-left font-geist font-semibold text-slate-200">{{ user_profile.user.username }}'s latest posts:</span>
+                {% for post in user_posts %}
+                    <a class = "w-full rounded-xl border border-slate-700 px-4 py-3" href = '{{ post.get_absolute_url }}'>
+                        <div class = 'flex flex-col gap-2 w-full items-center font-geist' style = "--category_color:{{ post.category.color }};">
+                            <div class = 'w-full flex gap-3 items-center justify-start'>
+                                <span class = "px-1.5 py-0.5 rounded-full border border-(--cat-bg)/70 text-xs font-work tracking-tighter font-semibold text-(--cat-color)" 
+                                    style="--cat-color: {{ post.category.color }}; --cat-bg: {{ post.category.color }}">/{{ post.category | upper }}</span>
+                                <span class = 'text-sm text-slate-400'>{{ post.created | timesince }} ago</span>
+                            </div>
+                            
+                            <span class = 'w-full text-left font-semibold text-slate-200'>{{ post.title }}</span>
 
-                    <div class = 'profile_view_topic_bottom'>
-                        <span class = 'profile_view_topic_username'>{{ post.author }}</span>
-                        <span class = 'profile_view_topic_comments'>{{ post.comments.count }} comment{{post.views|pluralize}}</span>
-                        <span class = 'profile_view_topic_views'>{{ post.views }} view{{post.views |pluralize}}</span>
-                    </div>
-                </div>
-            </a>
-            {% endfor %}
-            <a class = "more_posts_link" href = '{% url "search:posts_from_user" user_profile.user.id %}'>more from {{ user_profile.user.username }} →</a>
-        </div>
+                            <div class = 'w-full flex gap-3 items-center justify-start text-sm font-light text-slate-400'>
+                                <span class = 'profile_view_topic_username'>{{ post.author }}</span>
+                                <span class = 'profile_view_topic_comments'>{{ post.comments.count }} comment{{post.views|pluralize}}</span>
+                                <span class = 'profile_view_topic_views'>{{ post.views }} view{{post.views |pluralize}}</span>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+                <a class = "w-full text-right font-geist text-sm text-slate-400" href = "{% url 'search:posts_from_user' user_profile.user.id %}">more from {{ user_profile.user.username }} →</a>
+            </div>
         {% endif %}
     </div>
+    <div class = "flex flex-col gap-3 w-full rounded-xl border border-slate-700 font-geist p-5">
+        <div class="w-full h-full rounded-lg overflow-hidden flex items-center justify-center shadow border border-slate-700 bg-slate-800/70 group-focus:bg-slate-700/60 group-hover:bg-slate-700/60  transition-colors duration-300">
+            {% if user_profile.photo %}
+                <img src="{{ user_profile.photo.url }}" alt="{{ user_profile.user.username }}" class="select-none w-full h-full object-center object-cover shadow">
+            {% else %}
+                <span class="w-full h-64 select-none text-6xl font-geist font-semibold flex items-center justify-center text-violet-400">
+                    {{ user_profile.user.username|slice:":1"|upper }}
+                </span>
+            {% endif %}
+        </div>
+         {% if is_me %}
+            <a href="{% url 'account_personal_info_edit' %}" class="w-full px-4 py-2 text-center rounded-xl border border-violet-900 bg-violet-900/15 font-geist text-sm font-semibold">Edit profile</a>
+            <a href="{% url 'account_logout' %}" class = "w-full px-4 py-2 text-center rounded-xl border border-rose-950 bg-rose-950/15 text-rose-800 font-geist text-sm font-semibold">Sign out</a>
+        {% endif %}
+    </div>
+    <!--
     <div class = 'profile_view_right'>
         <div class = 'profile_view_avatar_container'>
             {% if user_profile.photo %}
@@ -107,13 +119,13 @@
         </div>
         {% if is_me %}
         <div class = 'profile_view_edit_button'>
-            <a href="{% url 'account:edit' %}" class="profile_edit_link">edit profile</a>
+            <a href="{% url 'account_personal_info_edit' %}" class="profile_edit_link">edit profile</a>
         </div>
         <div class = 'profile_view_security_links'>
             <div class = 'profile_view_change_password_edit_button'>
-                <a href="{% url 'account:password_change' %}" class="profile_view_password_edit_link">change password</a>
+                <a href="" class="profile_view_password_edit_link">change password</a>
             </div>
-            <form method="post" action="{% url 'account:logout' %}" class="profile_view_logout_form">
+            <form method="post" action="" class="profile_view_logout_form">
                 {% csrf_token %}
                 <button type="submit" class="profile_view_logout_button">
                     logout
@@ -123,5 +135,7 @@
         {% endif %}
     </div>
 </div>
+
+ -->
 
 {% endblock %}

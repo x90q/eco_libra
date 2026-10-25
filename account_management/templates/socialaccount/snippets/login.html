@@ -1,0 +1,17 @@
+{% load i18n %}
+{% load allauth %}
+{% load socialaccount %}
+{% get_providers as socialaccount_providers %}
+{% if socialaccount_providers %}
+    <div class = "w-full flex flex-col gap-2 items-center">
+        {% if not SOCIALACCOUNT_ONLY %}
+            <div class="mt-2 flex items-center w-full">
+                <div class="flex-1 w-full h-px bg-slate-700"></div>
+                <span class="px-3 text-slate-400 font-light text-sm">or</span>
+                <div class="flex-1 w-full h-px bg-slate-700"></div>
+            </div>
+        {% endif %}
+        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+        {% include "socialaccount/snippets/login_extra.html" %}
+    </div>
+{% endif %}

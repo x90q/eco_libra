@@ -1,34 +1,38 @@
 {% extends 'feed/base.html' %}
 
-{% load static %}
-
 {% block title %}eco_libra - search results{% endblock%}
-
-{% block extra_js %}
-<link rel="stylesheet" href="{% static "search/css/search_results.css" %}">
-<link rel="stylesheet" href="{% static "feed/css/categories_list.css" %}">
-<link rel="stylesheet" href="{% static "feed/css/pagination.css" %}">
-{% endblock %}
 
 {% block content %}
 
-        <div class = "search_result">
-            <a class = 'search_result_back' href="{% url 'members:profile_view' posts_user.id %}">← back to {{ posts_user.username}}'s profile</a>
-            <h2> posts from {{ posts_user.username}}:</h2>
+        <div class = "flex flex-col gap-2 items-center w-full max-w-6xl mx-auto mt-4">
+            <a class = 'w-full font-light font-geist text-slate-400' href="{% url 'members:profile_view' posts_user.id %}">← back to {{ posts_user.username}}'s profile</a>
+            <span class = "w-full font-semibold font-geist text-slate-200">Posts from {{ posts_user.username}}:</span>
         </div>
-        <div class="search_posts_container">
-            <div class="search_posts">
+        <div class="grid grid-cols-[5fr_2fr] items-start w-full max-w-6xl mx-auto gap-4 mt-2">
+            <div class="flex flex-col items-center gap-4">
                 {% for post in posts %}
-                    <a href = "{{ post.get_absolute_url }}">
-                        <article class="post" style="--category_color:{{ post.category.color }};">
-                            <div class="post_top">
-                                <span class="category_label">/{{ post.category.name | upper }}</span>
-                                <span class="created_time">{{ post.created | timesince }} ago</span>
+                    <a class = "group w-full" href = "{{ post.get_absolute_url }}">
+                        <div class="flex flex-col gap-2 w-full border border-slate-700  rounded-xl px-4.5 py-4 group-hover:border-[color-mix(var(--cat_color)65%,#314158)] group-hover:shadow-md group-hover:shadow-slate-200/10 transition-[colors, shadow] duration-300" style="--cat_color:{{ post.category.color }};">
+                            <div class="flex items-center gap-2 text-sm">
+                                <span class="px-1.5 py-0.5 rounded-full border border-(--cat-bg)/70 text-xs font-work tracking-tighter font-semibold text-(--cat-color)" 
+                                style="--cat-color: {{ post.category.color }}; --cat-bg: {{ post.category.color }}">/{{ post.category.name | upper }}</span>
+                                <span class="text-slate-400/85 text-sm font-geist font-light">{{ post.created | timesince }} ago</span>
                             </div>
-                            <h3>{{ post.title }}</h3>
-                            <p>{{ post.body | truncatechars:250 }}</p>
-                            <div class="post_foot">
-                                <span>{{ post.author }}</span>
+                            <span class = "font-geist text-lg font-semibold text-slate-200">{{ post.title }}</span>
+                            <span class = "font-geist text-md font-light text-slate-300/85">{{ post.body | slice:256 }}{% if post.body|length > 256 %}...{% endif %}</span>
+                            <div class="flex items-center gap-4 text-slate-400/85 text-sm font-geist font-light">
+                                <div class = "flex items-center gap-2">
+                                    <div class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center  shadow bg-slate-800/70 group-focus:bg-slate-700/60 group-hover:bg-slate-700/60  transition-colors duration-300">
+                                        {% if post.author.profile.photo %}
+                                        <img src="{{ post.author.profile.photo.url }}" alt="{{ post.author.username }}" class="select-none w-full h-full object-center object-cover shadow">
+                                        {% else %}
+                                        <span class="select-none sm:pt-0.5 sm:pl-0.5 md:pt-0 md:pl-0 lg:pt-0.5 lg:pl-0 font-geist font-semibold flex items-center justify-center w-full h-full text-violet-400">
+                                            {{ post.author.username|slice:":1"|upper }}
+                                        </span>
+                                        {% endif %}
+                                    </div>
+                                    <span>{{ post.author }}</span>
+                                </div>
                                 {% with post.comments.count as comment_count %}
                                     <span>{{ comment_count }} comment{{ comment_count|pluralize }}</span>
                                 {% endwith %}
@@ -36,12 +40,10 @@
                                     <span>{{ views }} view{{ views | pluralize }}</span>
                                 {% endwith %}
                             </div>
-                        </article>
+                        </div>
                     </a>
                 {% empty %}
-                    <div class = "no_result">
-                        <p>sorry, {{ posts_user.username }} hasn't created any posts yet.</p>
-                    </div>
+                    <span class = "w-full font-light text-slate-400 font-geist">Sorry, {{ posts_user.username }} hasn't created any posts yet.</p>
                 {% endfor %}
                 {% if posts %}
                     {% include 'pagination.html' with page=posts %}

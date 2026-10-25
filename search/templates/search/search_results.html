@@ -1,79 +1,79 @@
 {% extends 'feed/base.html' %}
 
-{% load static %}
-
 {% block title %}eco_libra - search results{% endblock%}
-
-{% block extra_js %}
-<link rel="stylesheet" href="{% static "search/css/search_results.css" %}">
-<link rel="stylesheet" href="{% static "feed/css/categories_list.css" %}">
-<link rel="stylesheet" href="{% static "feed/css/pagination.css" %}">
-{% endblock %}
 
 {% block content %}
 
     {% if query %}
-        <div class = "search_result">
-            <a class = 'search_result_back' href="{% url 'feed:home' %}">← back to home</a>
-            {% if users %}
-            <div class = "search_users_container">
-                <h3>matching users:</h3>
-                <div class = 'search_users_rail'>
-                 {% for user_profile in users %}
-                 <a href = '{% url 'members:profile_view' user_id=user_profile.user.id %}'>
-                    <div class = 'search_users_block'>
-                        <span class = 'search_users_username'>{{ user_profile.user.username }}</span>
-                        <div class = 'user_search_avatar_container'>
-                            {% if user_profile.photo %}
-                            <img src="{{ user_profile.photo.url }}" alt="{{ user_profile.user.username }}" class="user_search_avatar">
-                            {% else %}
-                            <span class="user_search_avatar_placeholder">
-                                {{ user_profile.user.username|slice:":1"|upper }}
-                            </span>
-                            {% endif %}
-                        </div>
-                    </div>
-                </a>
-                {% endfor %}
-                </div>
-            </div>
-            {% endif %}
-            <h2> posts containing "{{ query | lower }}":</h2>
+        <div class = "flex items-center max-w-6xl w-full mx-auto mt-8">
+            <a class = 'my-1 flex justify-end font-geist font-sm text-slate-300/70 font-light hover:text-slate-200 transition-colors duration-300' href="{% url 'feed:home' %}">← back to home page</a>
         </div>
-        <div class="search_posts_container">
-            <div class="search_posts">
-                {% for post in results %}
-                    <a href = "{{ post.get_absolute_url }}">
-                        <article class="post" style="--category_color:{{ post.category.color }};">
-                            <div class="post_top">
-                                <span class="category_label">/{{ post.category.name | upper }}</span>
-                                <span class="created_time">{{ post.created | timesince }} ago</span>
-                            </div>
-                            <h3>{{ post.title }}</h3>
-                            <p>{{ post.body | truncatechars:250 }}</p>
-                            <div class="post_foot">
-                                <span>{{ post.author }}</span>
-                                {% with post.comments.count as comment_count %}
-                                    <span>{{ comment_count }} comment{{ comment_count|pluralize }}</span>
-                                {% endwith %}
-                                {% with post.views as views %}
-                                    <span>{{ views }} view{{ views | pluralize }}</span>
-                                {% endwith %}
-                            </div>
-                        </article>
-                    </a>
-                {% empty %}
-                    <div class = "no_result">
-                        <p>sorry, no posts matched your search</p>
+       <div class="{% if users %}grid grid-cols-[2fr_7fr]{% else %}flex{% endif %} items-start w-full max-w-6xl mx-auto gap-4 mt-2 ">
+            {% if users %}
+                <div class="flex flex-col gap-4 items-center w-full min-w-0 border border-slate-700 rounded-lg p-4">
+                    <span class="text-left w-full text-geist font-semibold text-slate-200">Found users</span>
+                    <div class="flex flex-col gap-4 w-full min-w-0 px-1">
+                        {% for user_profile in users %}
+                            <a href="{% url 'members:profile_view' user_id=user_profile.user.id %}" class="group block min-w-0">
+                                <div class="flex gap-3 items-center px-0.5 w-full min-w-0">
+                                    <div class="w-9 h-9 shrink-0 rounded-full overflow-hidden flex items-center justify-center shadow bg-slate-800/70 group-focus:bg-slate-700/60 group-hover:bg-slate-700/60 transition-colors duration-300">
+                                        {% if user_profile.photo %}
+                                            <img src="{{ user_profile.photo.url }}" alt="{{ user_profile.user.username }}" class="select-none w-full h-full object-center object-cover shadow">
+                                        {% else %}
+                                            <span class="shrink-0 select-none font-geist font-semibold flex items-center justify-center w-full h-full text-violet-400">
+                                                {{ user_profile.user.username|slice:":1"|upper }}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    <span class="min-w-0 break-all text-sm font-geist font-light leading-tight">{{ user_profile.user.username }}</span>
+                                </div>
+                            </a>
+                        {% endfor %}
                     </div>
-                {% endfor %}
+                </div>
+            {% endif %}
+            <div class="flex flex-col items-center gap-4 w-full">
                 {% if results %}
+                    <span class = "w-full text-left text-geist font-semibold text-slate-200 border border-slate-700 py-3 px-4 rounded-lg bg-slate-900/80">Search results for: {{ query }}</span>
+                    {% for post in results %}
+                        <a class = "group w-full" href = "{{ post.get_absolute_url }}">
+                            <div class="flex flex-col gap-2 w-full border border-slate-700  rounded-xl px-4.5 py-4 group-hover:border-[color-mix(var(--cat_color)65%,#314158)] group-hover:shadow-md group-hover:shadow-slate-200/10 transition-[colors, shadow] duration-300" style="--cat_color:{{ post.category.color }};">
+                                <div class="flex items-center gap-2 text-sm">
+                                    <span class="px-1.5 py-0.5 rounded-full border border-(--cat-bg)/70 text-xs font-work tracking-tighter font-semibold text-(--cat-color)" 
+                                    style="--cat-color: {{ post.category.color }}; --cat-bg: {{ post.category.color }}">/{{ post.category.name | upper }}</span>
+                                    <span class="text-slate-400/85 text-sm font-geist font-light">{{ post.created | timesince }} ago</span>
+                                </div>
+                                <span class = "font-geist text-lg font-semibold text-slate-200">{{ post.title }}</span>
+                                <span class = "font-geist text-md font-light text-slate-300/85">{{ post.body | slice:256 }}{% if post.body|length > 256 %}...{% endif %}</span>
+                                <div class="flex items-center gap-4 text-slate-400/85 text-sm font-geist font-light">
+                                    <div class = "flex items-center gap-2">
+                                        <div class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center  shadow bg-slate-800/70 group-focus:bg-slate-700/60 group-hover:bg-slate-700/60  transition-colors duration-300">
+                                            {% if post.author.profile.photo %}
+                                            <img src="{{ post.author.profile.photo.url }}" alt="{{ post.author.username }}" class="select-none w-full h-full object-center object-cover shadow">
+                                            {% else %}
+                                            <span class="select-none sm:pt-0.5 sm:pl-0.5 md:pt-0 md:pl-0 lg:pt-0.5 lg:pl-0 font-geist font-semibold flex items-center justify-center w-full h-full text-violet-400">
+                                                {{ post.author.username|slice:":1"|upper }}
+                                            </span>
+                                            {% endif %}
+                                        </div>
+                                        <span>{{ post.author }}</span>
+                                    </div>
+                                    {% with post.comments.count as comment_count %}
+                                        <span>{{ comment_count }} comment{{ comment_count|pluralize }}</span>
+                                    {% endwith %}
+                                    {% with post.views as views %}
+                                        <span>{{ views }} view{{ views | pluralize }}</span>
+                                    {% endwith %}
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
                     {% include 'pagination.html' with page=results %}
+                {% else %}
+                    <span class = "w-full text-left text-geist font-semibold text-lg text-slate-200 border border-slate-700 px-4 py-3 rounded-lg bg-slate-900/80">Search results for: {{ query | lower }}</span>
+                    <span class = "w-full text-left border text-geist  text-slate-300 border-slate-700 py-3 px-4 rounded-lg">Sorry, no content matched your search.</span>
                 {% endif %}
             </div>
-            {% if results %}
-                {% include 'feed/post/includes/categories_list.html' %}
-            {% endif %}
         </div>
     {% endif%}
 {% endblock %}

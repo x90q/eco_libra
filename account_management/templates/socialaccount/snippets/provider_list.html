@@ -1,0 +1,12 @@
+{% load static allauth socialaccount %}
+{% get_providers as socialaccount_providers %}
+{% if socialaccount_providers %}
+    <div class="w-full flex justify-center items-center gap-3 list-none">
+        {% for provider in socialaccount_providers %}
+            {% provider_login_url provider process=process scope=scope auth_params=auth_params as href %}
+            <a href="{{ href }}">
+                <img src="{% static 'account_management/images/providers/'|add:provider.id|add:'.svg' %}" alt="" class="rounded-sm border border-slate-400 w-7 h-7">
+            </a>
+        {% endfor %}
+    </div>
+{% endif %}

@@ -1,0 +1,61 @@
+{% extends 'feed/base.html' %}
+
+{% load widget_tweaks %}
+
+{% block title %}eco_libra - settings{% endblock %}
+
+{% block content %}
+<div class = "grid grid-cols-[3fr_8fr] gap-2 w-full max-w-6xl items-start mx-auto mt-6">
+    <div class = "flex flex-col px-5 py-3 gap-3 w-full items-center rounded-xl border border-slate-700">
+        <a href = "{% url 'account_personal_info_edit' %}" class = "w-full font-geist font-light text-slate-200">Personal info</a>
+        <a href = "{% url 'account_security_info_edit' %}" class = "w-full font-geist font-light text-slate-200">Security</a>
+    </div>
+    <div class = "flex flex-col gap-3 w-full border border-slate-700 rounded-xl px-5 py-3">
+        <span class = "w-full font-geist font-semibold">Personal info</span>
+        <form method = 'post' enctype="multipart/form-data" class = "flex flex-col items-center gap-3 w-full">
+            {% csrf_token %}
+            <div class="w-full flex flex-col gap-2">
+                <label class="text-sm font-geist font-light text-slate-400">Photo</label>
+                <div class="flex items-center gap-3 w-full">
+                    <div class="relative w-16 h-16 rounded-full overflow-hidden border border-slate-700 bg-slate-900 shrink-0 flex items-center justify-center">
+                        {% if request.user.profile.photo %}
+                            <img src="{{ request.user.profile.photo.url }}" class="w-full h-full object-cover" alt="User photo">
+                        {% else %}
+                            <span class="text-xs text-slate-400 font-geist">No photo</span>
+                        {% endif %}
+                    </div>
+                    <div class="w-full">
+                        {% render_field profile_form.photo class="w-full font-geist font-light text-slate-200 rounded-xl border border-slate-700 px-3 py-2 bg-slate-900 focus:border-slate-700/60 focus:outline-none focus:ring-2 focus:ring-purple-500/60 transition-all duration-300 file:mr-4 file:py-1 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-purple-600 file:text-white hover:file:bg-purple-700 cursor-pointer" %}
+                    </div>
+                </div>
+                {% if profile_form.photo.errors %}
+                    <div class="field_errors text-red-400 text-sm mt-1">
+                        {{ profile_form.photo.errors | lower }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="w-full flex flex-col gap-1">
+                <label class="text-sm font-geist font-light text-slate-400">Date of birth</label>
+                {% render_field profile_form.date_of_birth class="w-full font-geist font-light text-slate-200 rounded-xl border border-slate-700 px-3 py-2 bg-slate-900 focus:border-slate-700/60 focus:outline-none focus:ring-2 focus:ring-purple-500/60 transition-all duration-300" %}
+                {% if profile_form.date_of_birth.errors %}
+                    <div class="field_errors text-red-400 text-sm mt-1">
+                        {{ profile_form.date_of_birth.errors | lower }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="w-full flex flex-col gap-1">
+                <label class="text-sm font-geist font-light text-slate-400">Bio</label>
+                {% render_field profile_form.bio class="w-full font-geist font-light text-slate-200 rounded-xl border border-slate-700 px-3 py-2 bg-slate-900 focus:border-slate-700/60 focus:outline-none focus:ring-2 focus:ring-purple-500/60 transition-all duration-300 h-32 resize-none" rows="3" placeholder="Write something about yourself..." %}
+                {% if profile_form.bio.errors %}
+                    <div class="field_errors text-red-400 text-sm mt-1">
+                        {{ profile_form.bio.errors | lower }}
+                    </div>
+                {% endif %}
+            </div>
+            <button type = 'submit' class = "mx-auto text-center rounded-xl border border-violet-900 bg-violet-900/15 font-geist font-semibold text-sm text-slate-200 px-8 py-2">Save personal info</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

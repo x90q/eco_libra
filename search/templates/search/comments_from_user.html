@@ -1,47 +1,51 @@
 {% extends 'feed/base.html' %}
 
-{% load static %}
+{% load custom_filters %}
 
 {% block title %}eco_libra - search results{% endblock%}
 
-{% block extra_js %}
-<link rel="stylesheet" href="{% static "search/css/search_results.css" %}">
-<link rel="stylesheet" href="{% static "feed/css/categories_list.css" %}">
-<link rel="stylesheet" href="{% static "feed/css/pagination.css" %}">
-{% endblock %}
-
 {% block content %}
 
-        <div class = "search_result">
-            <a class = 'search_result_back' href="{% url 'members:profile_view' comments_user.id %}">← back to {{ comments_user.username}}'s profile</a>
-            <h2> comments from {{ comments_user.username}}:</h2>
+        <div class = "flex flex-col gap-2 items-center w-full max-w-6xl mx-auto mt-4">
+            <a class = 'w-full font-light font-geist text-slate-400' href="{% url 'members:profile_view' comments_user.id %}">← back to {{ comments_user.username}}'s profile</a>
+            <span class = "w-full font-semibold font-geist text-slate-200">Comments from {{ comments_user.username}}:</span>
         </div>
-        <div class="search_posts_container">
-            <div class="search_posts">
-                {% for comment in comments %}
-                    <a href = "{{ comment.get_absolute_url }}">
-                        <article class="post" style="--category_color:{{ post.category.color }};">
-                            <div class="post_top">
-                                <span class="created_time">{{ comment.created | timesince }} ago</span>
+        <div class="flex flex-col gap-3 items-center w-full max-w-6xl mx-auto mt-2">
+            {% for comment in comments %}
+                <a class="group w-full block" href="{{ comment.get_absolute_url }}">
+                    <div class="flex gap-4 items-start w-full px-4 py-4 rounded-xl border border-slate-700 bg-slate-900/50 group-hover:border-slate-600 transition-all duration-300">
+                        
+                        <div class="w-12 h-12 shrink-0 rounded-full overflow-hidden flex items-center justify-center shadow bg-slate-800 text-violet-400 font-geist font-semibold text-xl">
+                            {% if comment.user.profile.photo %}
+                                <img src="{{ comment.user.profile.photo.url }}" alt="{{ comment.user.username }}" class="select-none w-full h-full object-center object-cover">
+                            {% else %}
+                                {{ comment.user.username|slice:":1"|upper }}
+                            {% endif %}
+                        </div>
+
+                        <div class="flex flex-col gap-0.5 w-full min-w-0">
+                            
+                            <div class="flex items-center justify-between w-full font-geist text-sm">
+                                <span class="text-slate-200 font-semibold">{{ comment.user.username }}</span>
+                                <span class="text-slate-400 text-xs">{{ comment.created|timesince }} ago</span>
                             </div>
-                            <h3>{{ comment.post.title }}</h3>
-                            <p>{{ comment.body|truncatechars:150 }}</p>
-                            <div class="post_foot">
-                                <span>{{ comment.user.username }}</span>
+
+                            <div class="text-xs font-geist text-slate-400 truncate">
+                                Left on: <span class="text-slate-300">{{ comment.post.title }}</span>
                             </div>
-                        </article>
-                    </a>
-                {% empty %}
-                    <div class = "no_result">
-                        <p>sorry, {{ comments_user.username }} hasn't left any comments yet.</p>
+
+                            <span class="w-full text-left font-geist text-sm text-slate-200 mt-1">
+                                {{ comment.body|truncatechars:150 }}
+                            </span>
+
+                        </div>
                     </div>
-                {% endfor %}
-                {% if comments %}
-                    {% include 'pagination.html' with page=comments %}
-                {% endif %}
-            </div>
-            {% if posts %}
-                {% include 'feed/post/includes/categories_list.html' %}
+                </a>
+            {% empty %}
+                <span class = "w-full font-light text-slate-400 font-geist">Sorry, {{ comments_user.username }} hasn't left any comments yet.</span>
+            {% endfor %}
+            {% if comments %}
+                {% include 'pagination.html' with page=comments %}
             {% endif %}
         </div>
 {% endblock %}

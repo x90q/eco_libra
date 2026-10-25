@@ -2,116 +2,154 @@
 
 {% load static %}
 
+{% load custom_filters %}
+
 {% block title %}eco_libra - {{ post.title }}{% endblock %}
 
-{% block extra_js %}
-<link rel="stylesheet" href="{% static "feed/css/post_detail.css" %}">
-<link rel="stylesheet" href="{% static "feed/css/comment_form.css" %}">
-<link rel="stylesheet" href="{% static "feed/css/categories_list.css" %}">
-{% endblock %}
-
 {% block content %}
-    <div class="post_detail_page_container">
-        <div class="post_main_container">
-            <a href="{% url 'feed:post_list_by_category' post.category.slug %}" class="back_to_feed_button">← back to /{{ post.category.name | lower }}</a>
-
-            <article class="post_detail_view" style="--category_color:{{ post.category.color }};">
-                <div class="post_detail_top">
-                    <a href="{% url 'feed:post_list_by_category' post.category.slug %}"><span class="category_label">/{{ post.category.name|upper }}</span></a>
-                    <span class="created_time">{{ post.created|timesince }} ago</span>
+    <div class="flex flex-col gap-3 max-w-6xl w-full mx-auto items-center mt-4">
+        <a class = 'my-1 mr-auto font-geist font-sm text-slate-300/70 font-light hover:text-slate-200 transition-colors duration-300' href="{% url 'feed:post_list_by_category' post.category.slug %}">← back to /{{ post.category.name | lower }}</a>
+    
+        <div class = "flex items-start gap-4 px-4 py-3 w-full border border-slate-700 rounded-xl min-h-20">
+            <a href = "{% url 'members:profile_view' post.author.id %}" class = "group">
+                <div class="w-15 h-15 shrink-0 rounded-full overflow-hidden flex items-center justify-center  shadow bg-slate-800/70 group-focus:bg-slate-700/60 group-hover:bg-slate-700/60 transition-colors duration-300">
+                    {% if post.author.profile.photo %}
+                        <img src="{{ post.author.profile.photo.url }}" alt="{{ post.author.user.username }}" class="select-none w-full h-full object-center object-cover shadow">
+                    {% else %}
+                        <span class="select-none sm:pt-0.5 sm:pl-0.5 md:pt-0 md:pl-0 lg:pt-0.5 lg:pl-0 font-geist font-semibold text-2xl flex items-center justify-center w-full h-full text-violet-400">
+                            {{ post.author.username|slice:":1"|upper }}
+                        </span>
+                    {% endif %}
                 </div>
-
-                <h1>{{ post.title }}</h1>
-
-                <div class="post_body">{{ post.body|linebreaksbr }}</div>
-
-                <div class="post_detail_foot">
-                    <span><a href = "{% url 'members:profile_view' user_id=post.author.id %}">{{ post.author }}</a></span>
-                    <span>{{ post.comments.count }} comments</span>
-                    {% with post.views as views %}
-                        <span>{{ views }} view{{ views|pluralize }}</span>
-                    {% endwith %}
-                    <div class ='post_tags'>
-                        {% if post.tags.all %}
-                        {% for tag in post.tags.all %}
-                        <a href="{% url 'feed:post_list_by_tag' tag.slug %}"><span class="tags_label">#{{ tag.name }} </span></a>
-                        {% endfor %}
-                        {% endif %}
-                    </div>
-                </div>
-            </article>
-
-            <section class="comments">
-                <h2>comments</h2>
-
-                {% for comment in comments %}
-                    <div class="comment_container">
-                        {% if comment.user.profile.photo %}
-                        <a class = 'comment_avatar_link' href = "{% url 'members:profile_view' user_id=comment.user.id %}">
-                            <span class = "comment_avatar">
-                                <img src="{{ comment.user.profile.photo.url }}" alt="{{ comment.user.username }}">
-                            </span>
-                        </a>
-                        {% else %}
-                        <a class = 'comment_avatar_placeholder_link' href = "{% url 'members:profile_view' user_id=comment.user.id %}">
-                            <span class = "comment_avatar_placeholder">
-                                    {{ comment.user.username|slice:":1"|upper }}
-                            </span>
-                        </a>
-                        {% endif %}
-                        <div class = 'comment_meta'>
-                            <div class = "comment_info">
-                                <span class="comment_name"><a href = "{% url 'members:profile_view' user_id=comment.user.id %}">{{ comment.user.username }}</a></span>
-                                <span class="created_time">{{ comment.created | timesince }} ago</span>
-                            </div>
-                            <span class = 'comment_body'>{{ comment.body | linebreaks }}</span>
+            </a>
+            <div class = "flex flex-col gap-2 items-center w-full">
+                <span class = "font-geist text-slate-200 text-xl mr-auto font-semibold">{{ post.title }}</span>
+                <div class = "flex items-center w-full justify-between">
+                    <span class = "font-geist text-slate-400 text-sm justify-start">thread in <a href = "{% url 'feed:post_list_by_category' post.category.slug %}"><span class="mx-0.5 px-1.5 py-0.5 rounded-full border border-(--cat-bg) 
+                    text-xs font-work tracking-tighter font-semibold text-(--cat-color)" 
+                    style="--cat-color: {{ post.category.color }}; --cat-bg: {{ post.category.color }}">/{{ post.category.name | upper }}</span></a> created by <a href = "{% url 'members:profile_view' post.author.id %}"><span class = "text-slate-200">{{ post.author.username }}</span></a>, {{ post.created }}</span>
+                    <div class = "flex items-center gap-3 text-slate-400 font-geist text-sm">
+                        <div class = "flex items-center gap-1">
+                            <img src="{% static 'feed/home/views.svg' %}" class = "w-4 h-4">
+                            <span>{{ post.views }}</span>
+                        </div>
+                        <div class = "flex items-center gap-1">
+                            <img src="{% static 'feed/home/comments.svg' %}" class = "w-4 h-4">
+                            <span>{{ post.comments.count }}</span>
                         </div>
                     </div>
-                    <div class = 'add_comment_container'>
-                        
-                    </div>
-                {% empty %}
-                    <p class="no_comm">no comments yet</p>
-                {% endfor %}
-            </section>
-            
-            {% if request.user.is_authenticated %}
-            <a class = "share_post_button" href = '{% url 'feed:post_share' post.id %}'>share this post via email</a>
-            {% endif %}
-            {% if request.user.is_authenticated %}
-            <section class = "add_comment">
-                <h2> leave a comment </h2>
-                {% include 'feed/post/includes/comment_form.html' %}
-            </section>
-            {% endif %}
+                </div>
+            </div>
         </div>
-        <div class = 'detail_sidebar'>
-            {% if similar_posts %}
-            <div class = "similar_posts">
-                <h2>posts with the same tags:</h2>
+
+        <div class="flex flex-col items-center gap-8 px-6 pb-5 pt-6 w-full border border-[color-mix(var(--category_color)65%,#314158)] rounded-xl min-h-20" style="--category_color:{{ post.category.color }};">
+            <div class="w-full font-geist text-slate-300 text-left">{{ post.body|linebreaksbr }}</div>
+            <div class="flex justify-between w-full font-geist text-sm text-slate-400">
+                <div class = "flex gap-1.5 items-center  hover:text-slate-200 transition-colors duration-300">
+                <img src = "{% static 'feed/home/profile.svg' %}" class = "w-4 h-4">
+                <span><a href = "{% url 'members:profile_view' user_id=post.author.id %}">{{ post.author }}</a></span>
+                </div>
+                <div class = 'flex gap-2 items-center'>
+                    {% if post.tags.all %}
+                        {% for tag in post.tags.all %}
+                            <a href="{% url 'feed:post_list_by_tag' tag.slug %}"><span class="mx-0.5 px-2 py-1 rounded-full border border-slate-400 
+                            text-xs font-work tracking-tighter font-semibold text-slate-400">#{{ tag.name | upper }}</span></a>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class = "flex gap-3">
+                    <div class = "flex items-center gap-1">
+                        <img src="{% static 'feed/home/views.svg' %}" class = "w-4 h-4">
+                        <span>{{ post.views }}</span>
+                    </div>
+                    <div class = "flex items-center gap-1">
+                        <img src="{% static 'feed/home/comments.svg' %}" class = "w-4 h-4">
+                        <span>{{ post.comments.count }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         {% if similar_posts %}
+            
+            <div class = "flex flex-col gap-3 items-center w-full rounded-xl pb-3 border border-slate-700">
+                <span class = "w-full text-left font-geist font-light rounded-xl border border-violet-900 bg-violet-900/15 text-purple-400 px-4 py-3">Threads with the same tags</span>
                 {% for post in similar_posts %}
-                <a href = "{{ post.get_absolute_url }}">
-                    <article class="post" style="--category_color:{{ post.category.color }};">
-                        <div class="post_top">
-                            <span class="category_label">/{{ post.category.name | upper }}</span>
-                            <span class="created_time">{{ post.created | timesince }} ago</span>
-                        </div>
-                        <h3>{{ post.title }}</h3>
-                        <div class="post_foot">
-                            <span>{{ post.author }}</span>
-                            {% with post.comments.count as comment_count %}
-                                <span>{{ comment_count }} comment{{ comment_count|pluralize }}</span>
-                            {% endwith %}
-                            {% with post.views as views %}
-                                <span>{{ views }} view{{ views | pluralize }}</span>
-                            {% endwith %}
-                        </div>
-                    </article>
-                </a>
+                    <div class = "flex items-center px-1 w-full">
+                        <a href = "{{ post.get_absolute_url }}" class="block w-full px-3 py-1 rounded-xl hover:bg-slate-700/50 transition-colors duration-300">
+                            <div class = "flex items-center justify-between w-full">
+                                <span class = "font-geist text-sm text-slate-200 ">{{ post.title }}</span>
+                                <div class = "flex items-center gap-3 font-geist text-sm text-slate-400">
+                                    <span class="px-1.5 py-0.5 rounded-full border border-purple-500/60 text-xs font-work tracking-tighter font-semibold text-purple-500/80">/{{ post.category.name | upper }}</span>
+                                    <div class = "flex gap-1.5 items-center">
+                                        <img src="{% static 'feed/home/clock.svg' %}" class = "w-4 h-4">
+                                        <span>{{ post.created | simple_timesince}}</span>
+                                    </div>
+                                    <div class = "flex gap-1.5 items-center">
+                                        <img src="{% static 'feed/home/comments.svg' %}" class = "w-4 h-4">
+                                        <span>{{ post.comments.count }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 {% endfor %}
             </div>
-        {% endif %} 
-        {% include 'feed/post/includes/categories_list.html' %}
+        {% endif %}
+
+        <div class = "flex flex-col items-center rounded-xl border border-slate-700 w-full divide-y divide-slate-700/60">
+            {% if comments %}
+                {% for comment in comments %}
+                    <div class = "flex gap-4 items-start w-full px-3 py-4">
+                        <div class="w-13 h-13 shrink-0 rounded-full overflow-hidden flex items-center justify-center  shadow bg-slate-800/70 group-focus:bg-slate-700/60 group-hover:bg-slate-700/60 transition-colors duration-300">
+                            {% if comment.user.profile.photo %}
+                                <img src="{{ comment.user.profile.photo.url }}" alt="{{ comment.user.username }}" class="select-none w-full h-full object-center object-cover shadow">
+                            {% else %}
+                                <span class="select-none sm:pt-0.5 sm:pl-0.5 md:pt-0 md:pl-0 lg:pt-0.5 lg:pl-0 font-geist font-semibold text-2xl flex items-center justify-center w-full h-full text-violet-400">
+                                    {{ comment.user.username|slice:":1"|upper }}
+                                </span>
+                            {% endif %}
+                        </div>
+                        <div class = "flex flex-col items-center gap-2 w-full">
+                            <div class = "flex items-center justify-between w-full font-geist  text-sm">
+                                <span class = "text-slate-400">{{ comment.user.username }}</span>
+                                <span class = "text-slate-400">{{ comment.created|simple_timesince }} ago</span>
+                            </div>
+                            <span class = "w-full text-left font-geist text-slate-300">{{ comment.body }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                {% if not request.user.is_authenticated %}
+                    <span class = "flex w-full items-center px-5 py-6 font-geist text-sm text-slate-400">No comments yet...</span>
+                {% endif %}
+            {% endif %}
+            {% if request.user.is_authenticated %}
+                <div class = "flex items-center gap-3 w-full p-3">
+                    <div class="w-10 h-10 shrink-0 rounded-full overflow-hidden flex items-center justify-center  shadow bg-slate-800/70 group-focus:bg-slate-700/60 group-hover:bg-slate-700/60 transition-colors duration-300">
+                        {% if request.user.profile.photo %}
+                            <img src="{{ request.user.profile.photo.url }}" alt="{{ request.user.username }}" class="select-none w-full h-full object-center object-cover shadow">
+                        {% else %}
+                            <span class="select-none sm:pt-0.5 sm:pl-0.5 md:pt-0 md:pl-0 lg:pt-0.5 lg:pl-0 font-geist font-semibold text-2xl flex items-center justify-center w-full h-full text-violet-400">
+                                {{ request.user.username|slice:":1"|upper }}
+                            </span>
+                        {% endif %}
+                    </div>
+                    <form class="flex items-center gap-2 w-full" action="{% url 'feed:post_comment' post_id=post.id %}" method="POST">
+                        {% csrf_token %}
+                        <div class="flex-1">
+                            {{ form.body }}
+                        </div>
+                        <button type="submit" class="cursor-pointer shrink-0 p-2 text-slate-400 hover:text-purple-400 transition-colors duration-300 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 fill-current" viewBox="0 0 256 256">
+                                <path d="M231.626,128a16.015,16.015,0,0,1-8.18262,13.96094L54.53027,236.55273a15.87654,15.87654,0,0,1-18.14648-1.74023,15.87132,15.87132,0,0,1-4.74024-17.60156L60.64746,136H136a8,8,0,0,0,0-16H60.64746L31.64355,38.78906A16.00042,16.00042,0,0,1,54.5293,19.44727l168.915,94.59179A16.01613,16.01613,0,0,1,231.626,128Z"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            {% endif %}
         </div>
+
+       
     </div>
 {% endblock %}

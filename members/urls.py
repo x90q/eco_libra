@@ -8,5 +8,8 @@ urlpatterns = [
         '<int:user_id>/',
         views.profile_view,
         name = 'profile_view',
-    )
+    ),
+    path('my_profile/', views.my_profile, name = 'my_profile'),
+
+
 ]

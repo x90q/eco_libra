@@ -1,15 +1,15 @@
-<div class="pagination">
-    <div class="pagination-left">
+<div class="flex items-center justify-between w-full">
+    <div class="flex flex-1 justify-start">
         {% if page.has_previous %}
-            <a href = "?{% if query %}query={{ query }}&{% endif %}page={{ page.previous_page_number }}">← previous page</a>
+            <a class = "font-geist font-sm text-slate-300/70 font-light hover:text-slate-200 transition-colors duration-300" href = "?{% if query %}query={{ query }}&{% endif %}page={{ page.previous_page_number }}">← previous page</a>
         {% endif %}
     </div>
-    <div class="pagination-center">
-        page {{ page.number }} of {{ page.paginator.num_pages }}
+    <div class="flex items-center justify-center">
+        <span class = "font-geist font-sm text-slate-300/70 font-light">page {{ page.number }} of {{ page.paginator.num_pages }}</span>
     </div>
-    <div class="pagination-right">
+    <div class="flex flex-1 justify-end">
         {% if page.has_next %}
-            <a href="?{% if query %}query={{ query }}&{% endif %}page={{ page.next_page_number }}">next page →</a>
+            <a class = "font-geist font-sm text-slate-300/70 font-light hover:text-slate-200 transition-colors duration-300" href="?{% if query %}query={{ query }}&{% endif %}page={{ page.next_page_number }}">next page →</a>
         {% endif %}
     </div>
 </div>

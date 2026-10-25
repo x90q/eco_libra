@@ -1,0 +1,23 @@
+{% extends 'feed/base.html' %}
+
+{% load allauth %}
+
+{% block title %}eco_libra - third-party login{% endblock %}
+
+{% block content %}
+    <div class = 'flex flex-col gap-3 w-full max-w-sm rounded-xl px-6 py-4 mx-auto border border-slate-700 mt-20 font-geist'>
+        {% with provider.name as provider %}
+            {% if process == "connect" %}
+                    <span class = "w-full text-center text-lg font-semibold text-slate-200">Connect {{ provider }}</span>
+                    <span class = "w-full text-center text-sm text-slate-400">You are about to connect a new third-party account from {{ provider }}.</span>
+            {% else %}
+                <span class = "w-full text-center text-lg font-semibold text-slate-200">Sign in via {{ provider }}</span>
+                <span class = "w-full text-center text-sm text-slate-400">You are about to sign in using a third-party account from {{ provider }}.</span>
+            {% endif %}
+        {% endwith %}
+        <form method="post" class = "w-full flex flex-col gap-3 items-center">
+            {% csrf_token %}
+            <button type = "submit" class = "w-full text-center rounded-xl border border-violet-900 bg-violet-900/15 font-geist font-semibold text-sm text-slate-200 px-8 py-2 cursor-pointer">Continue</button>
+        </form>
+    </div>
+{% endblock %}

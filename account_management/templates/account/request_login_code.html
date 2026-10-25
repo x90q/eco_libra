@@ -1,0 +1,29 @@
+{% extends "feed/base.html" %}
+
+{% load widget_tweaks %}
+
+{% load allauth account %}
+
+{% block title %}eco_libra - sign-in code{% endblock title %}
+
+{% block content %}
+    <div class = 'flex flex-col gap-3 w-full max-w-sm rounded-xl px-6 py-4 mx-auto border border-slate-700 mt-20 font-geist'>
+        <span class = "w-full text-center text-lg font-semibold text-slate-200">Send me a sign-in code</span>
+        <span class = "w-full text-center text-sm text-slate-400">You will receive a special code for a password-free sign-in.</span>
+        <form method = "post" action = "{% url 'account_request_login_code' %}" class = "w-full flex flex-col gap-3">
+            {% csrf_token %}
+            <div class = 'w-full flex flex-col gap-1'>
+                <label for = '{{ form.email.id_for_label }}' class="text-sm font-geist font-light text-slate-400">Email</label>
+                {% render_field form.email class="w-full font-geist font-light text-slate-200 rounded-xl border border-slate-700 px-3 py-2 bg-slate-900 focus:border-slate-700/60 focus:outline-none focus:ring-2 focus:ring-purple-500/60 transition-all duration-300" %}
+                {% if form.email.errors %}
+                    <div class="w-full text-center text-red-400 text-sm mt-1">
+                        {{ form.email.errors|lower }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <button type = "submit" class = "w-full text-center rounded-xl border border-violet-900 bg-violet-900/15 font-geist font-semibold text-sm text-slate-200 px-8 py-2 cursor-pointer">Request code</button>
+        </form>
+        <a href = "{% url 'account_login' %}" class = "w-full text-center rounded-xl border border-slate-700 bg-slate-900/60 font-geist font-semibold text-sm text-slate-400 px-8 py-2 cursor-pointer">Other sign-in options</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,158 @@
+{% extends 'feed/base.html' %}
+
+{% load allauth socialaccount widget_tweaks %}
+{% get_providers as socialaccount_providers %}
+
+{% block title %}eco_libra - security settings{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-[3fr_8fr] gap-2 w-full max-w-6xl items-start mx-auto mt-6">
+
+    <div class="flex flex-col px-5 py-3 gap-3 w-full items-center rounded-xl border border-slate-700">
+        <a href="{% url 'account_personal_info_edit' %}" class="w-full font-geist font-light text-slate-200">Personal info</a>
+        <a href="{% url 'account_security_info_edit' %}" class="w-full font-geist font-light text-slate-200">Security</a>
+    </div>
+
+    <div class="flex flex-col gap-3 w-full">
+
+        <div class="flex flex-col gap-3 w-full border border-slate-700 rounded-xl px-5 py-3">
+            <span class="w-full font-geist font-semibold">Password</span>
+
+            {% if request.user.has_usable_password %}
+                <form method="post" class="flex flex-col gap-3 w-full">
+                    {% csrf_token %}
+                    <input type="hidden" name="action_password" value="1">
+                    
+                    {% for field in password_form %}
+                        <div class="w-full flex flex-col gap-1">
+                            <label class="text-sm font-geist font-light text-slate-400">{{ field.label }}</label>
+                            {% render_field field class="w-full font-geist font-light text-slate-200 rounded-xl border border-slate-700 px-3 py-2 bg-slate-900 focus:border-slate-700/60 focus:outline-none focus:ring-2 focus:ring-purple-500/60 transition-all duration-300" %}
+                            {% if field.errors %}
+                                <div class="text-red-400 text-sm mt-1">
+                                    {{ field.errors|lower }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    
+                    <button type="submit" class="mx-auto text-center rounded-xl border border-violet-900 bg-violet-900/15 font-geist font-semibold text-sm text-slate-200 px-8 py-2 cursor-pointer">
+                        Change password
+                    </button>
+                </form>
+            {% else %}
+                <form method="post" class="flex flex-col gap-3 w-full">
+                    {% csrf_token %}
+                    <input type="hidden" name="action_password" value="1">
+                    
+                    {% for field in password_set_form %}
+                        <div class="w-full flex flex-col gap-1">
+                            <label class="text-sm font-geist font-light text-slate-400">{{ field.label }}</label>
+                            {% render_field field class="w-full font-geist font-light text-slate-200 rounded-xl border border-slate-700 px-3 py-2 bg-slate-900 focus:border-slate-700/60 focus:outline-none focus:ring-2 focus:ring-purple-500/60 transition-all duration-300" %}
+                            {% if field.errors %}
+                                <div class="text-red-400 text-sm mt-1">
+                                    {{ field.errors|lower }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    
+                    <button type="submit" class="mx-auto text-center rounded-xl border border-violet-900 bg-violet-900/15 font-geist font-semibold text-sm text-slate-200 px-8 py-2 cursor-pointer">
+                        Set password
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+
+        <div class="flex flex-col gap-3 w-full border border-slate-700 rounded-xl px-5 py-3">
+            <span class="w-full font-geist font-semibold">Email</span>
+
+            {% if current_emailaddress %}
+                <div class="w-full flex flex-col gap-1">
+                    <label class="text-sm font-geist font-light text-slate-400">Current email</label>
+                    <input type="email" value="{{ current_emailaddress.email }}" disabled class="w-full font-geist font-light text-slate-400 rounded-xl border border-slate-800 px-3 py-2 bg-slate-900/50 cursor-not-allowed">
+                </div>
+            {% endif %}
+
+            {% if new_emailaddress %}
+                <div class="w-full flex flex-col gap-2 p-3.5 rounded-xl border border-yellow-500/30 bg-yellow-500/5">
+                    <div class="w-full flex flex-col gap-1">
+                        <label class="text-sm font-geist font-light text-slate-300">Changing to:</label>
+                        <input type="email" value="{{ new_emailaddress.email }}" disabled class="w-full font-geist font-light text-slate-400 rounded-xl border border-slate-800 px-3 py-2 bg-slate-900/50 cursor-not-allowed">
+                    </div>
+                    <p class="text-xs text-yellow-400 font-geist font-light">Your email address is still pending verification.</p>
+
+                    <div class="flex items-center gap-2 mt-1">
+                        <form method="post" class="inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="action_send" value="1">
+                            <input type="hidden" name="email" value="{{ new_emailaddress.email }}">
+                            <button type="submit" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-geist rounded-lg transition-all duration-300 cursor-pointer">
+                                Re-send verification
+                            </button>
+                        </form>
+
+                        <form method="post" class="inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="action_remove" value="1">
+                            <input type="hidden" name="email" value="{{ new_emailaddress.email }}">
+                            <button type="submit" class="px-3 py-1.5 bg-red-950/50 hover:bg-red-900/50 text-red-300 text-xs font-geist rounded-lg border border-red-900/50 transition-all duration-300 cursor-pointer">
+                                Cancel change
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+
+            <form method="post" class="flex flex-col gap-3 w-full mt-1">
+                {% csrf_token %}
+                <input type="hidden" name="action_add" value="1">
+                
+                {% for field in email_form %}
+                    <div class="w-full flex flex-col gap-1">
+                        <label class="text-sm font-geist font-light text-slate-400">{{ field.label }}</label>
+                        {% render_field field class="w-full font-geist font-light text-slate-200 rounded-xl border border-slate-700 px-3 py-2 bg-slate-900 focus:border-slate-700/60 focus:outline-none focus:ring-2 focus:ring-purple-500/60 transition-all duration-300" %}
+                        {% if field.errors %}
+                            <div class="text-red-400 text-sm mt-1">
+                                {{ field.errors|lower }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="mx-auto text-center rounded-xl border border-violet-900 bg-violet-900/15 font-geist font-semibold text-sm text-slate-200 px-8 py-2 cursor-pointer">
+                    Change Email
+                </button>
+            </form>
+        </div>
+
+        {% if social_accounts %}
+            <div class="flex flex-col gap-3 w-full border border-slate-700 rounded-xl px-5 py-3">
+                <span class="w-full font-geist font-semibold">Connected social accounts</span>
+                <div class="flex flex-col gap-2 w-full">
+                    {% for account in social_accounts %}
+                        <div class="flex items-center justify-between px-3.5 py-2.5 rounded-xl border border-slate-800 bg-slate-900">
+                            <span class="text-sm font-geist font-medium text-slate-200">{{ account.get_provider|title }}</span>
+                            <span class="text-xs font-geist text-slate-400">{{ account.get_provider_account }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if available_provider_ids %}
+            <div class="flex flex-col gap-3 w-full border border-slate-700 rounded-xl px-5 py-3">
+                <span class="w-full font-geist font-semibold">Connect a third-party account</span>
+                <div class="flex flex-wrap gap-2 w-full">
+                    {% for provider_id in available_provider_ids %}
+                        {% provider_login_url provider_id process='connect' as href %}
+                        <a href="{{ href }}" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 font-geist text-sm rounded-xl transition-all duration-300 flex items-center gap-2">
+                            Connect {{ provider_id|title }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}
