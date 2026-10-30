@@ -16,7 +16,7 @@ class CommentForm(forms.ModelForm):
                     'text-sm rounded-xl px-4 py-2.5 border border-slate-700/60 '
                     'focus:outline-none focus:border-slate-500 transition-colors duration-300 '
                     'resize-none overflow-hidden block'
-                ),
+                    ),
                 'oninput': 'this.style.height = "auto"; this.style.height = (this.scrollHeight) + "px";',
             })
         }

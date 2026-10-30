@@ -104,6 +104,13 @@
          {% if is_me %}
             <a href="{% url 'account_personal_info_edit' %}" class="w-full px-4 py-2 text-center rounded-xl border border-violet-900 bg-violet-900/15 font-geist text-sm font-semibold">Edit profile</a>
             <a href="{% url 'account_logout' %}" class = "w-full px-4 py-2 text-center rounded-xl border border-rose-950 bg-rose-950/15 text-rose-800 font-geist text-sm font-semibold">Sign out</a>
+        {% else %}
+            {% if follow_form %}
+                <form method = "POST" class = "w-full">
+                    {% csrf_token %}
+                    <button type = "submit" class="w-full px-4 py-2 text-center rounded-xl border border-violet-900 bg-violet-900/15 font-geist text-sm font-semibold cursor-pointer">{% if following %}Unfollow{% else %}Follow{% endif %}</button>
+                </form>
+            {% endif %}
         {% endif %}
     </div>
     <!--

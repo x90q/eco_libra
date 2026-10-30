@@ -101,15 +101,17 @@
             {% if comments %}
                 {% for comment in comments %}
                     <div class = "flex gap-4 items-start w-full px-3 py-4">
-                        <div class="w-13 h-13 shrink-0 rounded-full overflow-hidden flex items-center justify-center  shadow bg-slate-800/70 group-focus:bg-slate-700/60 group-hover:bg-slate-700/60 transition-colors duration-300">
-                            {% if comment.user.profile.photo %}
-                                <img src="{{ comment.user.profile.photo.url }}" alt="{{ comment.user.username }}" class="select-none w-full h-full object-center object-cover shadow">
-                            {% else %}
-                                <span class="select-none sm:pt-0.5 sm:pl-0.5 md:pt-0 md:pl-0 lg:pt-0.5 lg:pl-0 font-geist font-semibold text-2xl flex items-center justify-center w-full h-full text-violet-400">
-                                    {{ comment.user.username|slice:":1"|upper }}
-                                </span>
-                            {% endif %}
-                        </div>
+                        <a href = "{% url 'members:profile_view' user_id=comment.user.id %}">
+                            <div class="w-13 h-13 shrink-0 rounded-full overflow-hidden flex items-center justify-center  shadow bg-slate-800/70 group-focus:bg-slate-700/60 group-hover:bg-slate-700/60 transition-colors duration-300">
+                                {% if comment.user.profile.photo %}
+                                    <img src="{{ comment.user.profile.photo.url }}" alt="{{ comment.user.username }}" class="select-none w-full h-full object-center object-cover shadow">
+                                {% else %}
+                                    <span class="select-none sm:pt-0.5 sm:pl-0.5 md:pt-0 md:pl-0 lg:pt-0.5 lg:pl-0 font-geist font-semibold text-2xl flex items-center justify-center w-full h-full text-violet-400">
+                                        {{ comment.user.username|slice:":1"|upper }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </a>
                         <div class = "flex flex-col items-center gap-2 w-full">
                             <div class = "flex items-center justify-between w-full font-geist  text-sm">
                                 <span class = "text-slate-400">{{ comment.user.username }}</span>

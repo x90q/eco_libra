@@ -61,3 +61,7 @@ pip-delete-this-directory.txt
 .coverage
 .pytest_cache/
 htmlcov/
+
+# Migrations
+
+migrations/
